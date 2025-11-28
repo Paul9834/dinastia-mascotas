@@ -1,13 +1,26 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+    // 1. Ruta Pública: Login (Sin el Layout Principal)
+    {
+        path: 'login',
+        loadComponent: () => import('./features/login/login.component')
+            .then(m => m.LoginComponent)
+    },
+
+    // 2. Redirección por defecto: Ir al Login al abrir la app
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+
+    // 3. Rutas Privadas (Dentro del MainLayout con Menú)
     {
         path: '',
         loadComponent: () => import('./layouts/main-layout/main-layout.component')
             .then(m => m.MainLayoutComponent),
         children: [
-            { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-
             {
                 path: 'dashboard',
                 loadComponent: () => import('./features/dashboard/dashboard.component')
@@ -28,10 +41,9 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/pets-profile/pets-profile.component')
                     .then(m => m.PetProfileComponent)
             },
-            // --------------------------------------------------
             {
                 path: 'vacunas',
-                loadComponent: () => import('./features/vaccines/vacunas.component') // Asegúrate que la carpeta coincida (vacunas vs vaccines)
+                loadComponent: () => import('./features/vaccines/vacunas.component')
                     .then(m => m.VacunasComponent)
             },
             {
@@ -47,5 +59,6 @@ export const routes: Routes = [
         ]
     },
 
-    { path: '**', redirectTo: 'dashboard' }
+    // 4. Ruta de seguridad: Cualquier URL desconocida lleva al login
+    { path: '**', redirectTo: 'login' }
 ];

@@ -1,0 +1,284 @@
+/* --- VARIABLES --- */
+$primary-green: #2E7D32;
+$bg-color: #F1F8E9;
+$text-dark: #1a1a1a;
+$text-light: #666;
+
+/* Mixin para tarjetas */
+@mixin card-style {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.03);
+  padding: 24px;
+  overflow: hidden;
+}
+
+.profile-page {
+  background-color: $bg-color;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  /* Asegura que nada se salga del viewport */
+  overflow-x: hidden;
+}
+
+.profile-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    &:hover { color: $primary-green; }
+  }
+  .separator { color: #aaa; }
+  .current { color: $primary-green; font-weight: 700; }
+}
+
+/* Grid Principal - CORRECCIÓN AQUÍ */
+.profile-grid {
+  display: grid;
+  /* minmax(0, 1fr) es vital para que el contenido (tabla) no fuerce el ancho */
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  width: 100%;
+}
+
+/* Columna derecha necesita esto para contener la tabla */
+.right-col {
+  min-width: 0;
+}
+
+/* --- TARJETAS --- */
+.info-card {
+  @include card-style;
+  margin-bottom: 24px;
+}
+
+/* Identidad */
+.identity-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 3px solid white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+.pet-name { margin: 0; font-size: 1.6rem; font-weight: 800; color: $text-dark; letter-spacing: -0.5px; }
+.pet-breed { margin: 4px 0 16px; color: $text-light; font-size: 0.95rem; }
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #E8F5E9;
+  color: $primary-green;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+}
+
+.identity-actions { width: 100%; }
+.edit-btn { width: 100%; border-radius: 8px; color: $text-light; border-color: #e0e0e0; height: 40px; }
+
+/* Datos Rápidos */
+.quick-facts-card {
+  padding: 20px 24px;
+}
+
+.quick-facts-card h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-dark;
+  margin: 0 0 16px 0;
+}
+
+.facts-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.fact-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+
+  &:last-child { border-bottom: none; padding-bottom: 0; }
+  &:first-child { padding-top: 0; }
+}
+
+.fact-label { color: #888; font-weight: 500; }
+.fact-value { color: #333; font-weight: 600; text-align: right; }
+
+/* --- SECCIÓN DERECHA --- */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 { font-size: 1.5rem; font-weight: 700; color: $text-dark; margin: 0; }
+}
+
+.header-actions { display: flex; gap: 8px; }
+
+.share-btn {
+  background-color: #4FC3F7;
+  color: white;
+  border-radius: 8px;
+  box-shadow: none;
+}
+.delete-btn { color: #FF7043; background: white; border: 1px solid #ffebee; border-radius: 8px;}
+
+/* Tabs */
+.profile-tabs { margin-bottom: 20px; max-width: 100%; overflow: hidden; }
+::ng-deep .profile-tabs .mat-mdc-tab-link { font-family: 'Roboto', sans-serif; color: $text-light; }
+::ng-deep .profile-tabs .mdc-tab-indicator--active .mdc-tab-indicator__content { border-color: $primary-green !important; border-bottom-width: 3px; }
+::ng-deep .profile-tabs .mdc-tab--active .mdc-tab__text-label { color: $primary-green !important; }
+
+/* Tabla */
+.vaccine-table-card {
+  @include card-style;
+  padding: 0;
+  max-width: 100%; /* Asegura contención */
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+
+  h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
+}
+
+.register-btn { color: #3f51b5; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; font-size: 0.85rem; }
+
+/* CONTENEDOR DE TABLA RESPONSIVA */
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto; /* Scroll horizontal interno */
+  -webkit-overflow-scrolling: touch;
+}
+
+.simple-table {
+  width: 100%;
+  min-width: 600px; /* Fuerza el ancho para activar el scroll */
+}
+
+th.mat-header-cell {
+  color: #9E9E9E;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 12px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  white-space: nowrap;
+}
+
+td.mat-cell {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f9f9f9;
+  font-size: 0.9rem;
+  color: #444;
+  white-space: nowrap;
+}
+
+.vaccine-name { font-weight: 600; color: #2c3e50; }
+
+.status-badge-pill {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: inline-block;
+}
+.st-active { background-color: #E8F5E9; color: $primary-green; }
+.st-soon { background-color: #FFF8E1; color: #FBC02D; }
+.st-overdue { background-color: #FFEBEE; color: #D32F2F; }
+
+/* --- OPTIMIZACIONES MÓVILES --- */
+@media (max-width: 900px) {
+  .profile-grid {
+    /* Usar minmax(0, 1fr) aquí también evita desbordes en móvil */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .profile-page { padding: 16px 12px; }
+
+  /* Tarjeta Identidad */
+  .identity-card {
+    padding: 24px 16px;
+  }
+
+  .avatar-wrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .status-badge { margin-bottom: 16px; }
+
+  /* Header de sección */
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  /* Tabla Header */
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
+  }
+  .register-btn { width: 100%; }
+}
