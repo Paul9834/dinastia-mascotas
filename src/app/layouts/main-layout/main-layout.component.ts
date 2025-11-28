@@ -208,10 +208,11 @@ export class MainLayoutComponent implements OnInit {
     sidenavMode: 'side' | 'over' = 'side';
     isSidenavOpen = true;
 
-    // Menú con las rutas corregidas
+    // Menú con las rutas corregidas + VACUNAS agregado
     menuItems: MenuItem[] = [
         { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
         { icon: 'pets', label: 'Mis Mascotas', route: '/mascotas' },
+        { icon: 'vaccines', label: 'Vacunas', route: '/vacunas' }, // Nueva opción agregada
         { icon: 'event', label: 'Calendario', route: '/calendario' },
         { icon: 'settings', label: 'Configuración', route: '/configuracion' }
     ];

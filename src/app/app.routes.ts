@@ -3,11 +3,9 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
     {
         path: '',
-        // Lazy Loading del Layout
         loadComponent: () => import('./layouts/main-layout/main-layout.component')
             .then(m => m.MainLayoutComponent),
         children: [
-            // Redirección inicial
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 
             {
@@ -16,16 +14,25 @@ export const routes: Routes = [
                     .then(m => m.DashboardComponent)
             },
             {
-                // Ruta para ver la lista
                 path: 'mascotas',
                 loadComponent: () => import('./features/mis-mascotas/mis-mascotas.component')
                     .then(m => m.MisMascotasComponent)
             },
             {
-                // NUEVA RUTA: Formulario para añadir (Insertada correctamente)
                 path: 'mascotas/nueva',
                 loadComponent: () => import('./features/mis-mascotas/anadir-mascota.component')
                     .then(m => m.AnadirMascotaComponent)
+            },
+            {
+                path: 'mascotas/perfil',
+                loadComponent: () => import('./features/pets-profile/pets-profile.component')
+                    .then(m => m.PetProfileComponent)
+            },
+            // --------------------------------------------------
+            {
+                path: 'vacunas',
+                loadComponent: () => import('./features/vaccines/vacunas.component') // Asegúrate que la carpeta coincida (vacunas vs vaccines)
+                    .then(m => m.VacunasComponent)
             },
             {
                 path: 'calendario',
@@ -40,6 +47,5 @@ export const routes: Routes = [
         ]
     },
 
-    // Ruta de seguridad
     { path: '**', redirectTo: 'dashboard' }
 ];
