@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build"
+    "build": "ng build",
+    "serve:ssr:dinastia-mascotas": "node dist/dinastia-mascotas/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -17,7 +18,10 @@
     "@angular/material": "^19.0.0",
     "@angular/platform-browser": "^19.0.0",
     "@angular/platform-browser-dynamic": "^19.0.0",
+    "@angular/platform-server": "^19.2.16",
     "@angular/router": "^19.0.0",
+    "@angular/ssr": "^19.2.19",
+    "express": "^4.18.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -26,6 +30,8 @@
     "@angular-devkit/build-angular": "^19.0.0",
     "@angular/cli": "^19.0.0",
     "@angular/compiler-cli": "^19.0.0",
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.18.0",
     "typescript": "~5.5.0"
   }
 }

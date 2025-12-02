@@ -23,7 +23,7 @@
                     <mat-icon matSuffix>mail_outline</mat-icon>
                 </mat-form-field>
 
-                <!-- Mensajes de error fuera del field para alinearlos como en la foto -->
+                <!-- Mensajes de error -->
                 <div class="error-msg" *ngIf="hasError('email', 'required')">
                     El email es requerido
                 </div>
@@ -63,10 +63,11 @@
                 Iniciar Sesión
             </button>
 
-            <!-- Registro -->
+            <!-- Registro (AQUÍ ESTÁ EL CAMBIO) -->
             <div class="register-container">
                 <span>¿No tienes una cuenta? </span>
-                <a href="#" class="register-link">Regístrate</a>
+                <!-- Usamos routerLink para navegar sin recargar la página -->
+                <a routerLink="/registro" class="register-link">Regístrate</a>
             </div>
 
         </form>

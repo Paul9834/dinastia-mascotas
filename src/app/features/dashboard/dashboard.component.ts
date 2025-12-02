@@ -1,9 +1,10 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { AuthService } from '../../core/services/auth.service'; // 1. Importar AuthService
 
 @Component({
     selector: 'app-dashboard',
@@ -16,19 +17,25 @@ import { MatChipsModule } from '@angular/material/chips';
         MatChipsModule
     ],
     template: `
-        <!-- Wrapper principal del contenido (sin menú lateral extra) -->
         <div class="dashboard-content">
 
             <!-- Header de Bienvenida -->
             <div class="page-header">
-                <!-- El título se adapta si es móvil o escritorio -->
-                <h1 *ngIf="!mobileQuery">Bienvenido de nuevo! 👋</h1>
-                <h1 *ngIf="mobileQuery">Hola, Alex! 👋</h1>
+                <div class="header-text">
+                    <h1 *ngIf="!mobileQuery">Bienvenido de nuevo! 👋</h1>
+                    <h1 *ngIf="mobileQuery">Hola, Alex! 👋</h1>
+                    <p *ngIf="!mobileQuery">Gestión integral de tus mascotas</p>
+                </div>
 
-                <p *ngIf="!mobileQuery">Gestión integral de tus mascotas</p>
+                <!-- 3. BOTÓN DE LOGOUT (NUEVO) -->
+                <!-- Solo muestra icono en móvil para ahorrar espacio -->
+                <button mat-flat-button color="warn" (click)="cerrarSesion()">
+                    <mat-icon>logout</mat-icon>
+                    <span *ngIf="!mobileQuery">Cerrar Sesión</span>
+                </button>
             </div>
 
-            <!-- Stats Cards (Grid Responsivo) -->
+            <!-- Stats Cards -->
             <div class="stats-grid">
                 <mat-card *ngFor="let stat of stats" class="stat-card">
                     <mat-card-content>
@@ -43,17 +50,16 @@ import { MatChipsModule } from '@angular/material/chips';
                 </mat-card>
             </div>
 
-            <!-- Sección Mis Mascotas (Carrusel Responsivo) -->
+            <!-- Mis Mascotas -->
             <h2 class="section-title">Mis Mascotas</h2>
 
             <div class="carousel-container">
-                <!-- Botón Izquierda -->
                 <button
                         mat-icon-button
                         class="carousel-button left"
                         (click)="scrollLeft()"
                         [disabled]="!canGoBack"
-                        [style.display]="mobileQuery ? 'none' : 'flex'"> <!-- Ocultar flechas en móvil si prefieres scroll -->
+                        [style.display]="mobileQuery ? 'none' : 'flex'">
                     <mat-icon>chevron_left</mat-icon>
                 </button>
 
@@ -78,7 +84,6 @@ import { MatChipsModule } from '@angular/material/chips';
                     </mat-card>
                 </div>
 
-                <!-- Botón Derecha -->
                 <button
                         mat-icon-button
                         class="carousel-button right"
@@ -89,14 +94,12 @@ import { MatChipsModule } from '@angular/material/chips';
                 </button>
             </div>
 
-            <!-- Sección Próximas Citas -->
+            <!-- Próximas Citas -->
             <h2 class="section-title" style="margin-top: 48px;">Próximas Citas</h2>
 
             <div class="appointments-container">
                 <mat-card *ngFor="let appointment of appointments" class="appointment-card">
-                    <!-- Franja de color -->
                     <div class="color-strip" [style.background-color]="appointment.iconColor + '20'"></div>
-
                     <mat-card-content class="card-content-wrapper">
                         <div class="appointment-icon-wrapper">
                             <mat-icon [style.color]="appointment.iconColor">{{ appointment.icon }}</mat-icon>
@@ -114,7 +117,6 @@ import { MatChipsModule } from '@angular/material/chips';
                     </mat-card-content>
                 </mat-card>
 
-                <!-- Botón Flotante para Añadir -->
                 <div class="fab-container">
                     <button mat-fab extended color="warn" class="add-pet-btn">
                         <mat-icon>add</mat-icon>
@@ -126,23 +128,26 @@ import { MatChipsModule } from '@angular/material/chips';
         </div>
     `,
     styles: [`
-        /* Contenedor principal limpio */
         .dashboard-content {
             padding: 24px;
-            max-width: 1400px; /* Ancho máximo para pantallas muy grandes */
+            max-width: 1400px;
             margin: 0 auto;
             font-family: 'Roboto', sans-serif;
             box-sizing: border-box;
         }
 
-        .page-header { margin-bottom: 32px; }
+        /* Header Ajustado con Flexbox para el Logout */
+        .page-header {
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
         .page-header h1 { margin: 0; font-size: 2rem; color: #1a1a1a; font-weight: 700; }
         .page-header p { margin: 8px 0 0; color: #666; font-size: 1.1rem; }
 
-        /* --- STATS GRID --- */
         .stats-grid {
             display: grid;
-            /* Grid responsivo: se adapta automáticamente */
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 24px;
             margin-bottom: 48px;
@@ -164,7 +169,6 @@ import { MatChipsModule } from '@angular/material/chips';
         .stat-info .stat-label { font-size: 0.9rem; color: #666; margin-bottom: 4px; }
         .stat-info .stat-value { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; }
 
-        /* --- CAROUSEL --- */
         .section-title { font-size: 1.5rem; color: #1a1a1a; margin-bottom: 24px; font-weight: 500; }
 
         .carousel-container {
@@ -179,11 +183,8 @@ import { MatChipsModule } from '@angular/material/chips';
             gap: 24px;
             padding: 4px;
             flex: 1;
-            /* En móvil, permite scroll horizontal nativo si se desborda */
             overflow-x: auto;
             scroll-behavior: smooth;
-
-            /* Ocultar barra de scroll estética */
             scrollbar-width: none;
             &::-webkit-scrollbar { display: none; }
         }
@@ -212,7 +213,6 @@ import { MatChipsModule } from '@angular/material/chips';
             width: 40px; height: 40px;
         }
 
-        /* --- APPOINTMENTS --- */
         .appointments-container { display: flex; flex-direction: column; gap: 16px; }
 
         .appointment-card {
@@ -245,26 +245,20 @@ import { MatChipsModule } from '@angular/material/chips';
         .fab-container { margin-top: 24px; }
         .add-pet-btn { height: 56px !important; border-radius: 28px !important; font-weight: 600; font-size: 1rem; padding: 0 24px !important; }
 
-        /* --- MEDIA QUERIES (RESPONSIVE) --- */
         @media (max-width: 768px) {
             .dashboard-content { padding: 16px; padding-bottom: 80px; }
-
             .page-header h1 { font-size: 1.5rem; }
-
-            .stats-grid { grid-template-columns: 1fr; } /* 1 columna en móvil */
-
-            .mascota-card {
-                min-width: 85vw; /* En móvil la tarjeta ocupa casi todo el ancho */
-                margin-right: 8px;
-            }
-
+            .stats-grid { grid-template-columns: 1fr; }
+            .mascota-card { min-width: 85vw; margin-right: 8px; }
             .carousel-container { gap: 0; }
         }
     `]
 })
 export class DashboardComponent implements OnInit {
+    // 2. INYECCIÓN DEL SERVICIO
+    private authService = inject(AuthService);
 
-    mobileQuery = false; // Variable para detectar móvil
+    mobileQuery = false;
 
     stats = [
         { icon: 'event', label: 'Citas Pendientes', value: '5', color: '#ff9800' },
@@ -315,7 +309,6 @@ export class DashboardComponent implements OnInit {
         }
     ];
 
-    // Variables para el carrusel
     currentIndex = 0;
     visibleCards = 4;
 
@@ -323,7 +316,11 @@ export class DashboardComponent implements OnInit {
         this.checkScreenSize();
     }
 
-    // Listener para detectar cambios de tamaño de ventana
+    // 4. MÉTODO PARA CERRAR SESIÓN
+    cerrarSesion() {
+        this.authService.logout();
+    }
+
     @HostListener('window:resize', ['$event'])
     onResize(event: any) {
         this.checkScreenSize();
@@ -331,11 +328,8 @@ export class DashboardComponent implements OnInit {
 
     checkScreenSize() {
         const width = window.innerWidth;
-
-        // Detectar si es móvil para ajustar titulos y grids
         this.mobileQuery = width < 768;
 
-        // Lógica responsiva del carrusel (cuántas tarjetas mostrar)
         if (width < 768) {
             this.visibleCards = 1;
         } else if (width < 1280) {
@@ -343,18 +337,15 @@ export class DashboardComponent implements OnInit {
         } else {
             this.visibleCards = 4;
         }
-
         this.validateIndex();
     }
 
     validateIndex() {
-        // Evita errores si cambias de tamaño y el índice queda fuera de rango
         if (this.currentIndex + this.visibleCards > this.mascotas.length) {
             this.currentIndex = Math.max(0, this.mascotas.length - this.visibleCards);
         }
     }
 
-    // Helpers para el carrusel
     get visibleMascotas() {
         return this.mascotas.slice(this.currentIndex, this.currentIndex + this.visibleCards);
     }

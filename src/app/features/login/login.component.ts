@@ -1,58 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { RouterModule, Router } from '@angular/router'; // 1. Importar Router
+import { AuthService } from '../../core/services/auth.service'; // Asegúrate que la ruta sea correcta
 
 @Component({
     selector: 'app-login',
-    standalone: true,
+    standalone: true, // Importante: veo que usas standalone
     imports: [
         CommonModule,
         ReactiveFormsModule,
         MatCardModule,
-        MatInputModule,
         MatButtonModule,
+        MatInputModule,
         MatIconModule,
-        MatFormFieldModule,
         RouterModule
     ],
     templateUrl: './login.component.html',
-    styleUrl: './login.component.scss'
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+    // Inyecciones de dependencias (Moderna sintaxis de Angular 16+)
+    private fb = inject(FormBuilder);
+    private authService = inject(AuthService);
+    private router = inject(Router);
+
     loginForm: FormGroup;
     hidePassword = true;
+    isLoading = false; // Para deshabilitar el botón mientras carga
 
-    // 2. Inyectar el Router en el constructor
-    constructor(private fb: FormBuilder, private router: Router) {
+    constructor() {
         this.loginForm = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            email: ['', [Validators.required, Validators.email]], // 'email' coincide con tu HTML
+            password: ['', [Validators.required, Validators.minLength(6)]] // 'password' coincide con tu HTML
         });
     }
 
-    // Método helper para validar en el HTML
+    // Función auxiliar para tu HTML (hasError)
     hasError(controlName: string, errorName: string): boolean {
         const control = this.loginForm.get(controlName);
-        return control ? control.hasError(errorName) : false;
+        return !!(control && control.hasError(errorName) && control.touched);
     }
 
-    togglePassword(event: Event) {
-        event.preventDefault();
+    togglePassword(event: MouseEvent) {
+        event.preventDefault(); // Evita que el botón haga submit
         this.hidePassword = !this.hidePassword;
     }
 
     onSubmit() {
-        if (this.loginForm.valid) {
-            console.log('Login Data:', this.loginForm.value);
+        if (this.loginForm.invalid) return;
 
-            // 3. ¡Línea de prueba agregada! Redirige al dashboard
-            this.router.navigate(['/dashboard']);
-        }
+        this.isLoading = true;
+
+        // Preparamos los datos como los espera Spring Boot (LoginDto)
+        const credentials = {
+            correo: this.loginForm.value.email,      // Mapeamos 'email' del form a 'correo' del backend
+            contrasena: this.loginForm.value.password // Mapeamos 'password' a 'contrasena'
+        };
+
+        this.authService.login(credentials).subscribe({
+            next: () => {
+                console.log('Login Exitoso!');
+                this.isLoading = false;
+                // Redirigir al Dashboard o Home
+                this.router.navigate(['/dashboard']);
+            },
+            error: (err) => {
+                console.error('Error de login', err);
+                this.isLoading = false;
+                alert('Usuario o contraseña incorrectos'); // Puedes usar MatSnackBar aquí para algo más bonito
+            }
+        });
     }
 }

@@ -1,0 +1,96 @@
+<div class="landing-container">
+
+    <!-- NAVBAR FLOTANTE -->
+    <nav class="landing-nav animate-fade-in-down">
+        <div class="logo">
+            <mat-icon>pets</mat-icon> <span>Dinastía</span>
+        </div>
+        <div class="nav-actions">
+            <!-- Botones de Acción -->
+            <button mat-button (click)="irALogin()" class="nav-link">Iniciar Sesión</button>
+            <button mat-flat-button color="primary" (click)="irARegistro()" class="nav-cta">
+                Registrarse
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg-overlay"></div>
+
+        <div class="container hero-content">
+            <div class="text-col animate-fade-in-up">
+                <span class="badge-premium">💎 Calidad Dinastía</span>
+                <h1>Tu compañero,<br> <span class="gradient-text">Tu Legado.</span></h1>
+                <p>La plataforma exclusiva para propietarios Dinastía. Gestiona vacunas, certificados y la salud de tu mascota en un solo lugar.</p>
+
+                <div class="hero-buttons">
+                    <button mat-flat-button class="btn-glow primary" (click)="irARegistro()">
+                        <mat-icon>person_add</mat-icon> Unirme Ahora
+                    </button>
+                    <button mat-stroked-button class="btn-glow secondary" (click)="irALogin()">
+                        <mat-icon>login</mat-icon> Acceder a mi Cuenta
+                    </button>
+                </div>
+            </div>
+
+            <!-- PASAPORTE FLOTANTE (Visual) -->
+            <div class="image-col animate-float">
+                <div class="pet-passport-card">
+                    <div class="passport-header">
+                        <mat-icon>pets</mat-icon>
+                        <span>DINASTÍA PASSPORT</span>
+                    </div>
+                    <div class="passport-body">
+                        <div class="pet-avatar">
+                            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&auto=format&fit=crop" alt="Mascota">
+                            <div class="status-indicator"></div>
+                        </div>
+                        <div class="pet-details">
+                            <h2>Maximus</h2>
+                            <p class="raza">Golden Retriever</p>
+
+                            <div class="detail-row">
+                                <div class="d-item">
+                                    <span class="label">Estado</span>
+                                    <span class="value success">Protegido</span>
+                                </div>
+                                <div class="d-item">
+                                    <span class="label">Membresía</span>
+                                    <span class="value">Premium</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="passport-footer">
+                            <div class="seal">
+                                <mat-icon>verified</mat-icon> AUTÉNTICO
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES GRID -->
+    <section class="features container">
+        <div class="feature-card animate-pop-in" *ngFor="let item of trustFeatures">
+            <div class="icon-box" [style.background]="item.bg">
+                <mat-icon>{{ item.icon }}</mat-icon>
+            </div>
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.desc }}</p>
+        </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner">
+        <div class="cta-overlay"></div>
+        <div class="cta-content">
+            <h2>¿Ya eres parte de la familia?</h2>
+            <p>Accede a tu panel de control y revisa el calendario de salud de tu mascota.</p>
+            <button mat-raised-button color="accent" (click)="irALogin()">Iniciar Sesión</button>
+        </div>
+    </section>
+
+</div>

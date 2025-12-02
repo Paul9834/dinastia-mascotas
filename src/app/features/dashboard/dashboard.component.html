@@ -1,71 +1,69 @@
 <div class="dashboard">
-  <!-- Header -->
-  <div class="page-header">
-    <h1>Bienvenido de nuevo! 👋</h1>
-    <p>Gestión integral de tus mascotas</p>
-  </div>
 
-  <!-- Stats Cards - Las 4 -->
-  <div class="stats-grid">
-    <mat-card *ngFor="let stat of stats" class="stat-card">
-      <mat-card-content>
-        <div class="stat-icon" [style.background-color]="stat.color + '20'">
-          <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+    <!-- Header con Botón de Logout -->
+    <div class="page-header">
+        <div class="header-text">
+            <h1>Bienvenido de nuevo! 👋</h1>
+            <p>Gestión integral de tus mascotas</p>
         </div>
-        <div class="stat-info">
-          <div class="stat-label">{{ stat.label }}</div>
-          <div class="stat-value">{{ stat.value }}</div>
-        </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
 
-  <!-- Mis Mascotas Section -->
-  <h2 class="section-title">Mis Mascotas</h2>
-
-  <!-- Carousel de Mascotas con Fotos -->
-  <div class="carousel-container">
-    <button 
-      mat-icon-button 
-      class="carousel-button left" 
-      (click)="scrollLeft()"
-      [disabled]="!canGoBack"
-    >
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-
-    <div class="carousel-track">
-      <mat-card *ngFor="let mascota of visibleMascotas" class="mascota-card">
-        <div class="mascota-image" [style.background-image]="'url(' + mascota.imagen + ')'"></div>
-        <mat-card-content>
-          <div class="mascota-header">
-            <mat-icon class="mascota-icon" [style.color]="stats[0].color">pets</mat-icon>
-            <div class="mascota-info">
-              <h3 class="mascota-nombre">{{ mascota.nombre }}</h3>
-              <p class="mascota-raza">{{ mascota.raza }} • {{ mascota.tipo }}</p>
-            </div>
-          </div>
-          <mat-chip class="edad-chip">{{ mascota.edad }}</mat-chip>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary">Ver Detalles</button>
-        </mat-card-actions>
-      </mat-card>
+        <!-- BOTÓN DE CERRAR SESIÓN -->
+        <button mat-flat-button color="warn" (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+            Cerrar Sesión
+        </button>
     </div>
 
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <mat-card *ngFor="let stat of stats" class="stat-card">
+            <mat-card-content>
+                <div class="stat-icon" [style.background-color]="stat.color + '20'">
+                    <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">{{ stat.label }}</div>
+                    <div class="stat-value">{{ stat.value }}</div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
 
+    <!-- Mis Mascotas Section -->
+    <h2 class="section-title">Mis Mascotas</h2>
 
-    <button 
-      mat-icon-button 
-      class="carousel-button right" 
-      (click)="scrollRight()"
-      [disabled]="!canGoForward"
-    >
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
-    <!-- Upcoming Vaccinations & Appointments -->
-    <h2 class="section-title" style="margin-top: 48px;">Upcoming Vaccinations & Appointments</h2>
+    <!-- Carousel -->
+    <div class="carousel-container">
+        <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <div class="carousel-track">
+            <mat-card *ngFor="let mascota of visibleMascotas" class="mascota-card">
+                <div class="mascota-image" [style.background-image]="'url(' + mascota.imagen + ')'"></div>
+                <mat-card-content>
+                    <div class="mascota-header">
+                        <mat-icon class="mascota-icon">pets</mat-icon>
+                        <div class="mascota-info">
+                            <h3 class="mascota-nombre">{{ mascota.nombre }}</h3>
+                            <p class="mascota-raza">{{ mascota.raza }} • {{ mascota.tipo }}</p>
+                        </div>
+                    </div>
+                    <mat-chip class="edad-chip">{{ mascota.edad }}</mat-chip>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button color="primary">Ver Detalles</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
+
+    <!-- Appointments -->
+    <h2 class="section-title" style="margin-top: 48px;">Próximas Vacunas y Citas</h2>
 
     <div class="appointments-container">
         <mat-card *ngFor="let appointment of appointments" class="appointment-card">
@@ -75,7 +73,7 @@
                 </div>
                 <div class="appointment-info">
                     <h3 class="appointment-title">{{ appointment.title }}</h3>
-                    <p class="appointment-pet">For: {{ appointment.pet }}</p>
+                    <p class="appointment-pet">Para: {{ appointment.pet }}</p>
                 </div>
                 <div class="appointment-date">
                     <div class="date-text">{{ appointment.date }}</div>
@@ -88,7 +86,6 @@
 
         <button mat-fab class="add-pet-button" color="warn">
             <mat-icon>add</mat-icon>
-            <span>Add Pet</span>
         </button>
     </div>
 

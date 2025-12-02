@@ -1,25 +1,34 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
+import { LoginComponent } from './features/login/login.component';
+import { RegisterComponent } from './features/register/register.component';
+// 1. IMPORTANTE: Importar el componente de la Landing Page
+import { LandingPageComponent } from '@features/landing/landing-page.component';
 
 export const routes: Routes = [
-    // 1. Ruta Pública: Login (Sin el Layout Principal)
-    {
-        path: 'login',
-        loadComponent: () => import('./features/login/login.component')
-            .then(m => m.LoginComponent)
-    },
-
-    // 2. Redirección por defecto: Ir al Login al abrir la app
+    // 2. RUTA PRINCIPAL (HOME): Ahora carga la Landing Page
     {
         path: '',
-        redirectTo: 'login',
+        component: LandingPageComponent,
         pathMatch: 'full'
     },
 
-    // 3. Rutas Privadas (Dentro del MainLayout con Menú)
+    // 3. Rutas Públicas de Autenticación
+    {
+        path: 'login',
+        component: LoginComponent
+    },
+    {
+        path: 'registro',
+        component: RegisterComponent
+    },
+
+    // 4. Rutas Privadas (Dashboard y gestión)
     {
         path: '',
         loadComponent: () => import('./layouts/main-layout/main-layout.component')
             .then(m => m.MainLayoutComponent),
+        canActivate: [authGuard], // 🔒 Solo usuarios logueados pasan de aquí
         children: [
             {
                 path: 'dashboard',
@@ -59,6 +68,6 @@ export const routes: Routes = [
         ]
     },
 
-    // 4. Ruta de seguridad: Cualquier URL desconocida lleva al login
-    { path: '**', redirectTo: 'login' }
+    // 5. Ruta comodín: Si la URL no existe, mandar a la Landing Page (o al login si prefieres)
+    { path: '**', redirectTo: '' }
 ];
