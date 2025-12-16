@@ -28,11 +28,7 @@
               "src/styles.scss"
             ],
             "scripts": [],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "outputMode": "static"
           }
         },
         "serve": {
@@ -48,3 +44,4 @@
     "analytics": "83ec27bb-b965-4658-ba8a-1f2f53431f67"
   }
 }
+

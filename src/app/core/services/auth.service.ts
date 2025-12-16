@@ -10,8 +10,7 @@ export class AuthService {
     private http = inject(HttpClient);
     private router = inject(Router);
 
-    // CAMBIO 1: Apuntamos a la base de la API, no solo a /auth
-    private backendUrl = 'https://postesophageal-evita-nontimbered.ngrok-free.dev/api';
+    private backendUrl = 'http://localhost:8080/api';
 
     // Método para Iniciar Sesión
     login(credentials: { correo: string; contrasena: string }): Observable<any> {
