@@ -1,0 +1,75 @@
+<div class="page-container">
+
+    <div class="page-header">
+        <div>
+            <h1 class="title">Mis Mascotas</h1>
+            <p class="subtitle">Gestiona los perfiles médicos de tus compañeros</p>
+        </div>
+
+        <button
+                mat-flat-button
+                color="primary"
+                routerLink="/mascotas/nueva"
+                class="add-btn"
+        >
+            <mat-icon>add</mat-icon>
+            AÑADIR MASCOTA
+        </button>
+    </div>
+
+    <div class="pets-grid">
+
+        <mat-card *ngFor="let pet of pets" class="pet-card">
+            <div
+                    class="pet-image"
+                    [style.background-image]="'url(' + getPetImageUrl(pet.photoUrl) + ')'"
+            ></div>
+
+
+            <mat-card-content class="pet-content">
+                <div class="pet-header">
+                    <h2 class="pet-name">{{ pet.name }}</h2>
+                    <mat-chip class="status-chip">{{ pet.age }}</mat-chip>
+                </div>
+
+                <p class="pet-breed">{{ pet.breed }}</p>
+
+                <div class="pet-stats">
+                    <div class="stat">
+                        <mat-icon>vaccines</mat-icon>
+                        <span>{{ pet.vaccines }} Vacunas</span>
+                    </div>
+
+                    <div class="stat">
+                        <mat-icon>event</mat-icon>
+                        <span>Próx: {{ pet.nextAppt }}</span>
+                    </div>
+                </div>
+            </mat-card-content>
+
+            <mat-card-actions align="end">
+                <button
+                        mat-stroked-button
+                        color="primary"
+                        routerLink="/mascotas/perfil"
+                        class="carnet-btn"
+                >
+                    CARNET DE VACUNAS
+                </button>
+            </mat-card-actions>
+        </mat-card>
+
+        <div
+                class="add-card-placeholder"
+                routerLink="/mascotas/nueva"
+        >
+            <div class="placeholder-content">
+                <div class="icon-circle">
+                    <mat-icon>add</mat-icon>
+                </div>
+                <h3>Registrar Nuevo</h3>
+            </div>
+        </div>
+
+    </div>
+</div>

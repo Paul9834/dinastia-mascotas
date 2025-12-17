@@ -2,33 +2,25 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../models/auth.model';
+import { environment } from '../../../environments/environment';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     private http = inject(HttpClient);
     private router = inject(Router);
 
-    private backendUrl = 'http://localhost:8080/api';
+    private readonly baseUrl = environment.apiBaseUrl;
 
-    // Método para Iniciar Sesión
-    login(credentials: { correo: string; contrasena: string }): Observable<any> {
-        // CAMBIO 2: Ajustamos la ruta para que sea /auth/login
-        return this.http.post<{ token: string }>(`${this.backendUrl}/auth/login`, credentials).pipe(
-            tap(response => {
-                localStorage.setItem('token', response.token);
-            })
+    login(credentials: LoginRequest): Observable<LoginResponse> {
+        return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials).pipe(
+            tap(res => localStorage.setItem('token', res.token))
         );
     }
 
-    // NUEVO MÉTODO: Registro de Usuario
-    registro(datosUsuario: any): Observable<any> {
-        // Si no viene el rol, le ponemos 'CLIENTE' por defecto para que el backend no falle
-        const payload = { ...datosUsuario, rolNombre: 'CLIENTE' };
-
-        // Enviamos a /usuarios/registro
-        return this.http.post(`${this.backendUrl}/usuarios/registro`, payload);
+    registro(data: RegisterRequest): Observable<RegisterResponse> {
+        const payload = { ...data, rolNombre: 'CLIENTE' };
+        return this.http.post<RegisterResponse>(`${this.baseUrl}/usuarios/registro`, payload);
     }
 
     logout() {

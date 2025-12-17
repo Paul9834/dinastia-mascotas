@@ -1,0 +1,173 @@
+<div class="page-container">
+
+    <div class="nav-header">
+        <button mat-icon-button routerLink="/mascotas">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <span class="breadcrumb">Mascotas / <strong>Añadir Nueva</strong></span>
+    </div>
+
+    <h1 class="page-title">Añadir Mascota</h1>
+
+    <div class="content-grid">
+
+        <mat-card class="main-form-card">
+            <mat-card-content>
+
+                <div class="photo-section">
+
+                    <div class="avatar-placeholder">
+                        <img
+                                [src]="petForm.photoUrl || 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=150&h=150&fit=crop'"
+                                alt="Mascota"
+                        >
+                    </div>
+
+                    <div class="photo-info">
+                        <h3>Foto de Perfil</h3>
+                        <p>Selecciona una imagen desde tu equipo</p>
+                    </div>
+
+                    <!-- INPUT FILE OCULTO -->
+                    <input
+                            type="file"
+                            accept="image/*"
+                            #fileInput
+                            hidden
+                            (change)="onFileSelected($event)"
+                    >
+
+                    <!-- BOTÓN -->
+                    <button
+                            mat-stroked-button
+                            type="button"
+                            class="upload-btn"
+                            (click)="fileInput.click()"
+                    >
+                        SUBIR FOTO
+                    </button>
+
+                </div>
+
+
+                <div class="divider"></div>
+
+                <!-- FORM -->
+                <form class="pet-form" (ngSubmit)="guardarMascota()">
+
+                    <div class="form-row">
+                        <mat-form-field appearance="outline" class="custom-field">
+                            <mat-label>Nombre</mat-label>
+                            <input
+                                    matInput
+                                    name="name"
+                                    required
+                                    [(ngModel)]="petForm.name"
+                            >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="custom-field">
+                            <mat-label>Fecha de Nacimiento</mat-label>
+                            <input
+                                    matInput
+                                    name="birthDate"
+                                    [matDatepicker]="picker"
+                                    [(ngModel)]="petForm.birthDate"
+                            >
+                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                        <mat-form-field appearance="outline" class="custom-field">
+                            <mat-label>Especie</mat-label>
+                            <input
+                                    matInput
+                                    name="species"
+                                    required
+                                    [(ngModel)]="petForm.species"
+                            >
+                        </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="custom-field">
+                            <mat-label>Raza</mat-label>
+                            <input
+                                    matInput
+                                    name="breed"
+                                    [(ngModel)]="petForm.breed"
+                            >
+                        </mat-form-field>
+                    </div>
+
+                    <div class="form-row align-center">
+                        <div class="sex-radio-group">
+                            <span class="label">Sexo</span>
+                            <mat-radio-group
+                                    name="sex"
+                                    [(ngModel)]="petForm.sex"
+                                    color="primary"
+                            >
+                                <mat-radio-button value="Male">Macho</mat-radio-button>
+                                <mat-radio-button value="Female">Hembra</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="custom-field">
+                            <mat-label>Foto URL</mat-label>
+                            <input
+                                    matInput
+                                    name="photoUrl"
+                                    placeholder="https://..."
+                                    [(ngModel)]="petForm.photoUrl"
+                            >
+                        </mat-form-field>
+                    </div>
+
+                    <!-- FOOTER -->
+                    <div class="action-footer">
+                        <button
+                                mat-button
+                                type="button"
+                                class="cancel-btn"
+                                routerLink="/mascotas"
+                        >
+                            CANCELAR
+                        </button>
+
+                        <button
+                                mat-flat-button
+                                color="primary"
+                                class="save-btn"
+                                type="submit"
+                        >
+                            GUARDAR MASCOTA
+                        </button>
+                    </div>
+
+                </form>
+
+            </mat-card-content>
+        </mat-card>
+
+        <div class="side-column">
+            <mat-card class="vaccine-card">
+                <mat-card-content>
+                    <div class="vaccine-header">
+                        <h3>Historial de<br>Vacunación</h3>
+                        <button mat-flat-button type="button" class="register-btn">
+                            <mat-icon>add</mat-icon>
+                            REGISTRAR
+                        </button>
+                    </div>
+
+                    <div class="empty-vaccines">
+                        <p>Aún no hay vacunas registradas</p>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+
+    </div>
+
+</div>

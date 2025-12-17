@@ -1,85 +1,84 @@
-.dashboard {
+.dashboard-content {
+  padding: 24px;
   max-width: 1400px;
   margin: 0 auto;
+  font-family: 'Roboto', sans-serif;
+  box-sizing: border-box;
 }
 
 .page-header {
   margin-bottom: 32px;
-  
-  h1 {
-    font-size: 28px;
-    font-weight: 500;
-    margin-bottom: 8px;
-  }
-  
-  p {
-    color: rgba(0, 0, 0, 0.6);
-    margin: 0;
-    font-size: 16px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-// Stats Grid - 4 cards
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 48px;
 }
 
 .stat-card {
-  border-radius: 20px !important;
-  overflow: hidden;
-  
-  mat-card-content {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 20px !important;
-  }
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-card mat-card-content {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .stat-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 20px;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  
-  mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-  }
 }
 
-.stat-info {
-  flex: 1;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
+.stat-info .stat-label {
+  font-size: 0.9rem;
+  color: #666;
   margin-bottom: 4px;
 }
 
-.stat-value {
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 1;
+.stat-info .stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
-// Section Title
 .section-title {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 1.5rem;
+  color: #1a1a1a;
   margin-bottom: 24px;
-  color: rgba(0, 0, 0, 0.87);
+  font-weight: 500;
 }
 
-// Carousel Styles
 .carousel-container {
   position: relative;
   display: flex;
@@ -87,143 +86,97 @@
   gap: 16px;
 }
 
-.carousel-button {
-  flex-shrink: 0;
-  width: 48px;
-  height: 48px;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border-radius: 16px !important;
-  z-index: 2;
-  
-  &:disabled {
-    opacity: 0.3;
-  }
-  
-  &:not(:disabled):hover {
-    background: #f5f5f5;
-  }
-  
-  mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-  }
-}
-
 .carousel-track {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  display: flex;
+  gap: 24px;
+  padding: 4px;
   flex: 1;
   overflow: hidden;
 }
 
 .mascota-card {
-  border-radius: 24px !important;
+  width: 280px;
+  max-width: 280px;
+  flex: 0 0 280px;
+  border-radius: 16px;
   overflow: hidden;
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.15);
-  }
-  
-  mat-card-content {
-    padding: 16px !important;
-  }
-  
-  mat-card-actions {
-    padding: 0 16px 16px !important;
-  }
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 0;
+  transition: transform 0.2s;
+}
+
+.mascota-card:hover {
+  transform: translateY(-4px);
 }
 
 .mascota-image {
-  width: 100%;
-  height: 200px;
+  height: 160px;
   background-size: cover;
   background-position: center;
-  margin: 0;
-  border-radius: 0;
 }
 
 .mascota-header {
   display: flex;
-  align-items: flex-start;
   gap: 12px;
-  margin-bottom: 12px;
+  margin: 16px 0 12px;
 }
 
-.mascota-icon {
-  font-size: 40px;
+.mascota-info h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.mascota-info p {
+  margin: 2px 0 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.carousel-button {
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
-  flex-shrink: 0;
-}
-
-.mascota-info {
-  flex: 1;
-}
-
-.mascota-nombre {
-  font-size: 20px;
-  font-weight: 500;
-  margin: 0 0 4px 0;
-  color: rgba(0, 0, 0, 0.87);
-}
-
-.mascota-raza {
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.6);
-  margin: 0;
 }
 
 .appointments-container {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Espacio entre tarjetas */
-  padding-bottom: 80px; /* Espacio para el botón flotante si fuera fixed */
+  gap: 16px;
 }
 
 .appointment-card {
-  border-radius: 16px; /* Bordes redondeados modernos */
-  overflow: hidden;    /* Asegura que la franja de color respete el borde redondeado */
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Sombra suave */
-  transition: transform 0.2s;
-
-  /* Eliminamos el padding nativo del mat-card para manejarlo nosotros */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   padding: 0 !important;
-
-  &:hover {
-    transform: translateY(-2px);
-  }
 }
 
-/* La barra de color superior (aprox 12px de alto) */
 .color-strip {
   width: 100%;
-  height: 12px;
-  /* El color de fondo viene inline desde el HTML */
+  height: 14px;
 }
 
-.card-content {
-  padding: 16px 20px; /* Padding interno del contenido */
+.card-content-wrapper {
+  padding: 16px 24px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  gap: 12px;
 }
 
-.icon-wrapper {
-  margin-bottom: 4px;
+.appointment-icon-wrapper mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
 
-  mat-icon {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
-    /* El color del icono viene inline */
-  }
+.appointment-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .appointment-title {
@@ -235,103 +188,65 @@
 
 .appointment-pet {
   margin: 0;
-  font-size: 0.9rem;
-  color: #666;
-
-  strong {
-    color: #444;
-  }
-}
-
-.appointment-meta {
-  margin-top: 4px;
-  display: flex;
-  flex-direction: column; /* Pone la fecha arriba del estado como en la foto */
-  gap: 2px;
-  font-size: 0.85rem;
-}
-
-.date-text {
+  font-size: 0.95rem;
   color: #555;
 }
 
-.status-text {
-  color: #666;
-  font-weight: 500;
-
-  &.overdue {
-    color: #d32f2f; /* Rojo para overdue */
-    font-weight: bold;
-  }
+.appointment-meta {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.9rem;
 }
 
-/* Estilo para el botón flotante */
+.date-text {
+  color: #666;
+}
+
+.status-text {
+  font-weight: 500;
+  color: #666;
+}
+
+.status-text.overdue {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
 .fab-container {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-start; /* Alineado a la izquierda */
+  margin-top: 24px;
 }
 
 .add-pet-btn {
-  /* Si usas Angular Material 15+, 'extended' funciona nativo.
-     Si no, estas reglas aseguran que se vea bien */
-  border-radius: 28px !important;
-  padding: 0 24px !important;
   height: 56px !important;
+  border-radius: 28px !important;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
-
-  mat-icon {
-    margin-right: 8px;
-  }
-}component
-
-.edad-chip {
-  background-color: #f5f5f5;
-  color: rgba(0, 0, 0, 0.87);
-  font-weight: 500;
-  border-radius: 12px !important;
-}
-
-// Responsive
-@media (max-width: 1200px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .carousel-track {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  font-size: 1rem;
+  padding: 0 24px !important;
 }
 
 @media (max-width: 768px) {
+  .dashboard-content {
+    padding: 16px;
+    padding-bottom: 80px;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
   }
-  
-  .carousel-track {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .carousel-button {
-    display: none;
-  }
-}
 
-@media (max-width: 480px) {
-  .carousel-track {
-    grid-template-columns: 1fr;
-  }
-  
-  .page-header h1 {
-    font-size: 24px;
-  }
-  
-  .stat-card {
-    border-radius: 16px !important;
-  }
-  
   .mascota-card {
-    border-radius: 20px !important;
+    width: 85vw;
+    max-width: 85vw;
+    flex: 0 0 85vw;
+  }
+
+  .carousel-container {
+    gap: 0;
   }
 }

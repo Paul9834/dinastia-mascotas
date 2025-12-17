@@ -42,7 +42,7 @@ export const routes: Routes = [
             },
             {
                 path: 'mascotas/nueva',
-                loadComponent: () => import('./features/mis-mascotas/anadir-mascota.component')
+                loadComponent: () => import('@features/mis-mascotas/anadir-mascota/anadir-mascota.component')
                     .then(m => m.AnadirMascotaComponent)
             },
             {

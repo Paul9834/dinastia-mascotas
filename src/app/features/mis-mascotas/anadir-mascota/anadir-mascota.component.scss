@@ -1,0 +1,153 @@
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nav-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  color: #666;
+}
+
+.breadcrumb strong {
+  color: #2E7D32;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 32px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 24px;
+}
+
+.main-form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  padding: 16px;
+}
+
+.photo-section {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #eee;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.photo-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.photo-info p {
+  margin: 4px 0 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.divider {
+  height: 1px;
+  background-color: #eee;
+  margin: 24px 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.custom-field {
+  width: 100%;
+}
+
+.sex-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+mat-radio-group {
+  display: flex;
+  gap: 24px;
+}
+
+.vaccine-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.vaccine-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.register-btn {
+  background-color: #e8f5e9;
+  color: #2E7D32;
+  font-weight: 600;
+}
+
+.empty-vaccines {
+  text-align: center;
+  color: #999;
+  padding: 20px 0;
+  font-style: italic;
+}
+
+.action-footer {
+  margin-top: 32px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.save-btn {
+  background-color: #2E7D32;
+  color: white;
+  height: 48px;
+  padding: 0 32px;
+  font-weight: 700;
+  border-radius: 8px;
+}
+
+.cancel-btn {
+  color: #666;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

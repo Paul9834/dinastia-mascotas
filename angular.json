@@ -15,27 +15,51 @@
             "outputPath": "dist/dinastia-mascotas",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": [],
             "outputMode": "static"
-          }
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            },
+            "production": {
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "namedChunks": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "dinastia-mascotas:build"
-          }
+          },
+          "configurations": {
+            "development": {
+              "buildTarget": "dinastia-mascotas:build:development"
+            },
+            "production": {
+              "buildTarget": "dinastia-mascotas:build:production"
+            }
+          },
+          "defaultConfiguration": "development"
         }
       }
     }
@@ -44,4 +68,3 @@
     "analytics": "83ec27bb-b965-4658-ba8a-1f2f53431f67"
   }
 }
-

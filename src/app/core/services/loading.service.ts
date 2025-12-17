@@ -1,17 +1,25 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class LoadingService {
-    // Signal que guarda el estado: true (cargando) o false (listo)
-    isLoading = signal<boolean>(false);
+    private counter = new BehaviorSubject<number>(0);
+
+    readonly isLoading$: Observable<boolean> = this.counter.asObservable().pipe(
+        map(v => v > 0),
+        distinctUntilChanged()
+    );
 
     show() {
-        this.isLoading.set(true);
+        this.counter.next(this.counter.value + 1);
     }
 
     hide() {
-        this.isLoading.set(false);
+        this.counter.next(Math.max(0, this.counter.value - 1));
+    }
+
+    reset() {
+        this.counter.next(0);
     }
 }

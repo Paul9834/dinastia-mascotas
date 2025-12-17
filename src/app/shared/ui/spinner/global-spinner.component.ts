@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-// Asegúrate que la ruta al servicio sea correcta
 import { LoadingService } from '@core/services/loading.service';
 
 @Component({
@@ -9,11 +8,9 @@ import { LoadingService } from '@core/services/loading.service';
     standalone: true,
     imports: [CommonModule, MatProgressSpinnerModule],
     template: `
-        @if (loadingService.isLoading()) {
-            <div class="spinner-overlay">
-                <mat-spinner diameter="50" color="accent"></mat-spinner>
-            </div>
-        }
+        <div class="spinner-overlay" *ngIf="loadingService.isLoading$ | async">
+            <mat-spinner diameter="50" color="accent"></mat-spinner>
+        </div>
     `,
     styles: [`
         .spinner-overlay {
