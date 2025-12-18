@@ -6,26 +6,30 @@ export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
     const authService = inject(AuthService);
     const token = authService.getToken();
 
-    // Clonamos la petición para agregar las cabeceras necesarias
-    let request = req.clone({
-        setHeaders: {
-            // 1. ¡ESTA ES LA CLAVE! 🗝️
-            // Le dice a Ngrok que se salte la pantalla de advertencia
-            'ngrok-skip-browser-warning': 'true',
+    // 1. OBTENER LA URL EN MINÚSCULAS PARA COMPARAR
+    const url = req.url.toLowerCase();
 
-            // 2. Aseguramos que siempre hablemos JSON
-            // 'Content-Type': 'application/json' // (Opcional, Angular suele ponerlo solo)
-        }
-    });
+    // 2. LISTA NEGRA: Rutas donde NUNCA debemos enviar token
+    // Agregamos 'login', 'registro', 'auth' para asegurarnos
+    const isAuthRoute =
+        url.includes('/auth/login') ||
+        url.includes('/login') ||      // <--- Agregamos esto por seguridad
+        url.includes('/registro') ||
+        url.includes('/usuarios/registro');
 
-    // 3. Si tenemos token, lo agregamos (como ya hacíamos antes)
-    if (token) {
-        request = request.clone({
-            setHeaders: {
-                Authorization: `Bearer ${token}`
-            }
-        });
+    // Headers base
+    let headersConfig: any = {
+        'ngrok-skip-browser-warning': 'true'
+    };
+
+    // 3. SOLO AGREGAR TOKEN SI NO ES RUTA DE AUTH
+    if (token && !isAuthRoute) {
+        headersConfig['Authorization'] = `Bearer ${token}`;
     }
+
+    const request = req.clone({
+        setHeaders: headersConfig
+    });
 
     return next(request);
 };

@@ -15,6 +15,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { PetApiService } from '@core/services/pet-api.service';
 import { UploadService } from '@core/services/upload.service';
 import { CreatePetForm } from '@core/models/pet.model';
+import {environment} from "../../../../environments/environment";
 
 @Component({
     selector: 'app-anadir-mascota',
@@ -61,11 +62,13 @@ export class AnadirMascotaComponent {
 
         this.uploadService.uploadPetPhoto(file).subscribe({
             next: (res) => {
-                this.petForm.photoUrl = res.url;
+                // TRUCO: Quitamos el "/api" de la URL base para las fotos
+                const serverUrl = environment.apiBaseUrl.replace('/api', '');
+
+                // Ahora queda: "http://190.24.6.141:9090" + "/uploads/..."
+                this.petForm.photoUrl = `${serverUrl}${res.url}`;
             },
-            error: (err) => {
-                console.error('Error subiendo imagen', err);
-            }
+            error: (err) => console.error(err)
         });
     }
 

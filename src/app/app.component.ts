@@ -1,14 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common'; // <--- 1. Importar esto
+import { LoadingService } from './core/services/loading.service'; // <--- 2. Importar tu servicio
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet], // Importamos RouterOutlet
+    imports: [RouterOutlet, CommonModule],
     template: `
-        <!-- Volvemos al modo dinámico -->
         <router-outlet></router-outlet>
-    `
+
+        <div *ngIf="loadingService.isLoading$ | async" class="loading-overlay">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <p>Cargando...</p>
+            </div>
+        </div>
+    `,
+    styleUrls: ['./app.component.scss'] // Asegúrate de tener los estilos aquí
 })
 export class AppComponent {
+    public loadingService = inject(LoadingService);
 }

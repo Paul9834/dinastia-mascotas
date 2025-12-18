@@ -30,20 +30,19 @@
     <h2 class="section-title">Mis Mascotas</h2>
 
     <div class="carousel-container">
-        <button
-                mat-icon-button
-                class="carousel-button left"
-                (click)="scrollLeft()"
-                [disabled]="!canGoBack"
+        <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack"
                 [style.display]="mobileQuery ? 'none' : 'flex'">
             <mat-icon>chevron_left</mat-icon>
         </button>
 
         <div class="carousel-track">
+            <div *ngIf="mascotas.length === 0" class="empty-message">
+                No tienes mascotas registradas.
+            </div>
+
             <mat-card *ngFor="let pet of visibleMascotas" class="mascota-card">
-                <div
-                        class="mascota-image"
-                        [style.background-image]="'url(' + (pet.photoUrl || fallbackImage) + ')'">
+                <div class="mascota-image"
+                     [style.background-image]="'url(' + (pet.photoUrl || fallbackImage) + ')'">
                 </div>
 
                 <mat-card-content>
@@ -62,11 +61,7 @@
             </mat-card>
         </div>
 
-        <button
-                mat-icon-button
-                class="carousel-button right"
-                (click)="scrollRight()"
-                [disabled]="!canGoForward"
+        <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward"
                 [style.display]="mobileQuery ? 'none' : 'flex'">
             <mat-icon>chevron_right</mat-icon>
         </button>
@@ -75,23 +70,36 @@
     <h2 class="section-title" style="margin-top: 48px;">Próximas Citas</h2>
 
     <div class="appointments-container">
+
+        <div *ngIf="appointments.length === 0" class="empty-message-citas">
+            <p>No tienes citas programadas.</p>
+        </div>
+
         <mat-card *ngFor="let appointment of appointments" class="appointment-card">
-            <div class="color-strip" [style.background-color]="appointment.iconColor + '20'"></div>
+
+            <div class="color-strip" [style.background-color]="getColorForType(appointment.type)"></div>
 
             <mat-card-content class="card-content-wrapper">
-                <div class="appointment-icon-wrapper">
-                    <mat-icon [style.color]="appointment.iconColor">{{ appointment.icon }}</mat-icon>
+
+                <div class="appointment-icon-wrapper" [style.background-color]="getColorForType(appointment.type) + '20'">
+                    <mat-icon [style.color]="getColorForType(appointment.type)">
+                        {{ getIconForType(appointment.type) }}
+                    </mat-icon>
                 </div>
 
                 <div class="appointment-details">
                     <h3 class="appointment-title">{{ appointment.title }}</h3>
-                    <p class="appointment-pet">Para: <strong>{{ appointment.pet }}</strong></p>
+
+                    <p class="appointment-pet">Para: <strong>{{ appointment.petName }}</strong></p>
 
                     <div class="appointment-meta">
-                        <span class="date-text">{{ appointment.date }}</span>
-                        <span class="status-text" [class.overdue]="appointment.status === 'overdue'">
-              {{ appointment.statusText }}
-            </span>
+                        <span class="date-text">
+                            {{ appointment.dateTime | date:'mediumDate' }} • {{ appointment.dateTime | date:'shortTime' }}
+                        </span>
+
+                        <span class="status-text" [class]="getStatusClass(appointment.status)">
+                            {{ translateStatus(appointment.status) }}
+                        </span>
                     </div>
                 </div>
             </mat-card-content>

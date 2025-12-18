@@ -1,0 +1,34 @@
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+  position: fixed; // Fijo respecto a la pantalla
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.7); // Blanco transparente
+  z-index: 9999; // ¡Encima de todo!
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(2px); // Efecto borroso moderno
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #4CAF50; // Tu color verde
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -2,18 +2,14 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { LoginComponent } from './features/login/login.component';
 import { RegisterComponent } from './features/register/register.component';
-// 1. IMPORTANTE: Importar el componente de la Landing Page
 import { LandingPageComponent } from '@features/landing/landing-page.component';
 
 export const routes: Routes = [
-    // 2. RUTA PRINCIPAL (HOME): Ahora carga la Landing Page
     {
         path: '',
         component: LandingPageComponent,
         pathMatch: 'full'
     },
-
-    // 3. Rutas Públicas de Autenticación
     {
         path: 'login',
         component: LoginComponent
@@ -23,12 +19,12 @@ export const routes: Routes = [
         component: RegisterComponent
     },
 
-    // 4. Rutas Privadas (Dashboard y gestión)
+    // Rutas Privadas
     {
         path: '',
         loadComponent: () => import('./layouts/main-layout/main-layout.component')
             .then(m => m.MainLayoutComponent),
-        canActivate: [authGuard], // 🔒 Solo usuarios logueados pasan de aquí
+        canActivate: [authGuard],
         children: [
             {
                 path: 'dashboard',
@@ -40,13 +36,17 @@ export const routes: Routes = [
                 loadComponent: () => import('./features/mis-mascotas/mis-mascotas.component')
                     .then(m => m.MisMascotasComponent)
             },
+            // ⚠️ ORDEN IMPORTANTE:
+            // Primero la ruta específica "nueva"
             {
                 path: 'mascotas/nueva',
                 loadComponent: () => import('@features/mis-mascotas/anadir-mascota/anadir-mascota.component')
                     .then(m => m.AnadirMascotaComponent)
             },
+            // ⚠️ LUEGO la ruta dinámica con :id (Reemplaza a 'mascotas/perfil')
+            // Esto captura /mascotas/1, /mascotas/5, etc.
             {
-                path: 'mascotas/perfil',
+                path: 'mascotas/:id',
                 loadComponent: () => import('./features/pets-profile/pets-profile.component')
                     .then(m => m.PetProfileComponent)
             },
@@ -68,6 +68,5 @@ export const routes: Routes = [
         ]
     },
 
-    // 5. Ruta comodín: Si la URL no existe, mandar a la Landing Page (o al login si prefieres)
     { path: '**', redirectTo: '' }
 ];

@@ -51,7 +51,7 @@
                 <button
                         mat-stroked-button
                         color="primary"
-                        routerLink="/mascotas/perfil"
+                        [routerLink]="['/mascotas', pet.id]"
                         class="carnet-btn"
                 >
                     CARNET DE VACUNAS

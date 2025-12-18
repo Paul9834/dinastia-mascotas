@@ -1,134 +1,141 @@
-<div class="profile-page">
-    <div class="profile-container">
+<div class="profile-page" *ngIf="pet"> <div class="profile-container">
 
-        <!-- Navegación superior -->
-        <div class="breadcrumbs">
-            <a routerLink="/mascotas" class="back-link">
-                <mat-icon>arrow_back</mat-icon> Mis Mascotas
-            </a>
-            <span class="separator">/</span>
-            <span class="current">Max</span>
-        </div>
+    <div class="breadcrumbs">
+        <a routerLink="/mascotas" class="back-link">
+            <mat-icon>arrow_back</mat-icon> Mis Mascotas
+        </a>
+        <span class="separator">/</span>
+        <span class="current">{{ pet.name }}</span>
+    </div>
 
-        <div class="profile-grid">
+    <div class="profile-grid">
 
-            <!-- COLUMNA IZQUIERDA -->
-            <div class="left-col">
+        <div class="left-col">
 
-                <!-- Tarjeta de Identidad -->
-                <mat-card class="info-card identity-card">
-                    <div class="avatar-container">
-                        <div class="avatar-wrapper">
-                            <img src="https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400&h=300&fit=crop" alt="Max">
-                        </div>
-                    </div>
-
-                    <div class="identity-content">
-                        <h1 class="pet-name">Max</h1>
-                        <p class="pet-breed">Golden Retriever</p>
-
-                        <div class="status-badge">
-                            <mat-icon>check_circle</mat-icon>
-                            <span>Calendario al día</span>
-                        </div>
-                    </div>
-
-                    <div class="identity-actions">
-                        <button mat-stroked-button class="edit-btn">Editar Perfil</button>
-                    </div>
-                </mat-card>
-
-                <!-- Datos Rápidos -->
-                <mat-card class="info-card quick-facts-card">
-                    <h3>Datos Rápidos</h3>
-
-                    <div class="facts-list">
-                        <div class="fact-row">
-                            <span class="fact-label">Nacimiento</span>
-                            <span class="fact-value">15 Ene, 2020</span>
-                        </div>
-                        <div class="fact-row">
-                            <span class="fact-label">Sexo</span>
-                            <span class="fact-value">Macho</span>
-                        </div>
-                        <div class="fact-row">
-                            <span class="fact-label">Peso</span>
-                            <span class="fact-value">32 kg</span>
-                        </div>
-                        <div class="fact-row">
-                            <span class="fact-label">Microchip</span>
-                            <span class="fact-value">98511200223</span>
-                        </div>
-                        <div class="fact-row">
-                            <span class="fact-label">Veterinaria</span>
-                            <span class="fact-value">City Vet Clinic</span>
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
-
-            <!-- COLUMNA DERECHA -->
-            <div class="right-col">
-
-                <div class="section-header">
-                    <h2>Historial Médico</h2>
-                    <div class="header-actions">
-                        <button mat-flat-button class="share-btn">
-                            <mat-icon>share</mat-icon> COMPARTIR
-                        </button>
-                        <button mat-icon-button color="warn" class="delete-btn">
-                            <mat-icon>delete_outline</mat-icon>
-                        </button>
+            <mat-card class="info-card identity-card">
+                <div class="avatar-container">
+                    <div class="avatar-wrapper">
+                        <img [src]="pet.photoUrl || 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=400&h=300&fit=crop'"
+                             [alt]="pet.name">
                     </div>
                 </div>
 
-                <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" class="profile-tabs">
-                    <mat-tab label="Historial Vacunas"></mat-tab>
-                    <mat-tab label="Tratamientos"></mat-tab>
-                    <mat-tab label="Documentos"></mat-tab>
-                </mat-tab-group>
+                <div class="identity-content">
+                    <h1 class="pet-name">{{ pet.name }}</h1>
+                    <p class="pet-breed">{{ pet.breed }} • {{ pet.species }}</p>
 
-                <!-- Tabla de Vacunas -->
-                <mat-card class="vaccine-table-card">
-                    <div class="table-header">
-                        <h3>Registro de Vacunación</h3>
-                        <button mat-stroked-button class="register-btn">
-                            + Registrar Vacuna
-                        </button>
+                    <div class="status-badge">
+                        <mat-icon>check_circle</mat-icon>
+                        <span>Activo</span>
                     </div>
+                </div>
 
-                    <div class="table-responsive">
-                        <table mat-table [dataSource]="vaccines" class="simple-table">
-                            <!-- (El contenido de la tabla sigue igual que antes) -->
-                            <ng-container matColumnDef="vaccine">
-                                <th mat-header-cell *matHeaderCellDef> VACUNA </th>
-                                <td mat-cell *matCellDef="let element" class="vaccine-name">{{element.vaccine}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="date">
-                                <th mat-header-cell *matHeaderCellDef> FECHA </th>
-                                <td mat-cell *matCellDef="let element">{{element.date}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="expires">
-                                <th mat-header-cell *matHeaderCellDef> VENCE </th>
-                                <td mat-cell *matCellDef="let element">{{element.expires}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="vet">
-                                <th mat-header-cell *matHeaderCellDef> VETERINARIO </th>
-                                <td mat-cell *matCellDef="let element">{{element.vet}}</td>
-                            </ng-container>
-                            <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef> ESTADO </th>
-                                <td mat-cell *matCellDef="let element">
-                                    <span class="status-badge-pill" [ngClass]="element.statusClass">{{element.status}}</span>
-                                </td>
-                            </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
+                <div class="identity-actions">
+                    <button mat-stroked-button class="edit-btn">Editar Perfil</button>
+                </div>
+            </mat-card>
+
+            <mat-card class="info-card quick-facts-card">
+                <h3>Datos Rápidos</h3>
+
+                <div class="facts-list">
+                    <div class="fact-row">
+                        <span class="fact-label">Nacimiento</span>
+                        <span class="fact-value">{{ pet.birthDate || 'No registrada' }}</span>
                     </div>
-                </mat-card>
+                    <div class="fact-row">
+                        <span class="fact-label">Sexo</span>
+                        <span class="fact-value">{{ pet.sex || 'N/A' }}</span>
+                    </div>
+                    <div class="fact-row">
+                        <span class="fact-label">Dueño ID</span>
+                        <span class="fact-value">#{{ pet.userId }}</span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
 
+        <div class="right-col">
+
+            <div class="section-header">
+                <h2>Historial Médico</h2>
+                <div class="header-actions">
+                    <button mat-flat-button class="share-btn">
+                        <mat-icon>share</mat-icon> COMPARTIR
+                    </button>
+                    <button mat-icon-button color="warn" class="delete-btn">
+                        <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </div>
             </div>
+
+            <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" class="profile-tabs">
+                <mat-tab label="Historial Vacunas"></mat-tab>
+                <mat-tab label="Tratamientos"></mat-tab>
+                <mat-tab label="Documentos"></mat-tab>
+            </mat-tab-group>
+
+            <mat-card class="vaccine-table-card">
+                <div class="table-header">
+                    <h3>Registro de Vacunación</h3>
+                    <button mat-stroked-button class="register-btn">
+                        + Registrar Vacuna
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="vaccines" class="simple-table">
+
+                        <ng-container matColumnDef="vaccine">
+                            <th mat-header-cell *matHeaderCellDef> VACUNA </th>
+                            <td mat-cell *matCellDef="let element" class="vaccine-name">
+                                {{ element.name }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef> FECHA </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.applicationDate | date:'mediumDate' }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="expires">
+                            <th mat-header-cell *matHeaderCellDef> VENCE </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ (element.nextDueDate | date:'mediumDate') || 'N/A' }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="vet">
+                            <th mat-header-cell *matHeaderCellDef> VETERINARIO </th>
+                            <td mat-cell *matCellDef="let element">
+                                {{ element.veterinarian || 'No registrado' }}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> ESTADO </th>
+                            <td mat-cell *matCellDef="let element">
+                                    <span class="status-badge-pill" [ngClass]="getStatusClass(element.status)">
+                                        {{ translateStatus(element.status) }}
+                                    </span>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="5" style="text-align: center; padding: 20px; color: #888;">
+                                No hay vacunas registradas para esta mascota.
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </mat-card>
+
         </div>
     </div>
+</div>
 </div>

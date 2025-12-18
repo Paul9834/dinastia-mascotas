@@ -1,25 +1,17 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService {
-    private counter = new BehaviorSubject<number>(0);
-
-    readonly isLoading$: Observable<boolean> = this.counter.asObservable().pipe(
-        map(v => v > 0),
-        distinctUntilChanged()
-    );
+    private loadingSubject = new BehaviorSubject<boolean>(false);
+    public isLoading$ = this.loadingSubject.asObservable();
 
     show() {
-        this.counter.next(this.counter.value + 1);
+        // Usamos Promise.resolve().then() para esperar al siguiente ciclo
+        Promise.resolve().then(() => this.loadingSubject.next(true));
     }
 
     hide() {
-        this.counter.next(Math.max(0, this.counter.value - 1));
-    }
-
-    reset() {
-        this.counter.next(0);
+        Promise.resolve().then(() => this.loadingSubject.next(false));
     }
 }
