@@ -1,8 +1,13 @@
-/* Variables de diseño */
-$primary-green: #00e676;
-$bg-color: #f5f5f5;
-$card-padding: 40px 32px;
-$error-red: #f44336;
+// =========================================
+// 🎨 PALETA DINASTÍA (Nature UI)
+// =========================================
+$primary: #1B5E20;
+$primary-light: #E8F5E9;
+$bg-color: #F5F7F6;
+$surface: #FFFFFF;
+$text-primary: #1A1C19;
+$text-secondary: #444744;
+$error: #BA1A1A;
 
 .login-container {
   min-height: 100vh;
@@ -11,153 +16,146 @@ $error-red: #f44336;
   justify-content: center;
   align-items: center;
   background-color: $bg-color;
-  padding: 20px;
+  padding: 24px;
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 .login-card {
   width: 100%;
-  max-width: 420px;
-  padding: $card-padding;
-  border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  background: white;
+  max-width: 400px;
+  padding: 48px 40px;
+  border-radius: 28px;
+  background: $surface;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0,0,0,0.02);
   box-sizing: border-box;
 }
 
 /* --- HEADER --- */
 .card-header {
   text-align: center;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 .icon-circle {
-  width: 72px;
-  height: 72px;
-  background-color: #d1fae5;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, $primary-light, #C8E6C9);
+  color: $primary;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 16px rgba(27, 94, 32, 0.08);
 
   mat-icon {
-    font-size: 36px;
-    width: 36px;
-    height: 36px;
-    color: $primary-green;
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
   }
 }
 
 h1 {
-  font-size: 1.6rem;
-  font-weight: 500; /* Material prefiere pesos medios en títulos */
-  color: #1a1a1a;
-  margin-bottom: 12px;
-  letter-spacing: -0.2px;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $primary;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 p {
-  color: #666;
+  color: $text-secondary;
   font-size: 0.95rem;
   margin: 0;
   line-height: 1.5;
+  font-weight: 400;
 }
 
-/* --- FORMULARIO --- */
+/* --- FORMULARIO (CORREGIDO) --- */
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  width: 100%;
 }
 
-label {
-  display: block;
-  font-weight: 500;
-  font-size: 0.9rem;
-  color: #444;
-  margin-bottom: 8px;
-}
-
-/* Personalización de Inputs Material */
-::ng-deep .custom-input {
+// AQUÍ ESTÁ EL ARREGLO 👇
+mat-form-field {
   width: 100%;
 
-  .mat-mdc-text-field-wrapper {
-    background-color: white !important;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px; /* Radio estándar de 8px o 4px */
-    padding: 0 12px;
+  // Esta es la forma CORRECTA de redondear inputs en Material 3
+  // sin romper la etiqueta flotante ni los errores.
+  --mdc-outlined-text-field-container-shape: 16px;
+
+  // Aseguramos que el color del texto y borde sea consistente
+  --mdc-outlined-text-field-focus-outline-color: #{$primary};
+  --mdc-outlined-text-field-label-text-color: #666;
+
+  // Ajuste fino para la fuente dentro del input
+  .mat-mdc-input-element {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.3px;
   }
-
-  .mdc-line-ripple { display: none; }
-  .mdc-notched-outline { border: none !important; }
-
-  /* Estado de Error */
-  &.has-error .mat-mdc-text-field-wrapper {
-    border-color: $error-red !important;
-    background-color: #fff8f8 !important;
-  }
-}
-
-.custom-error {
-  font-size: 0.75rem; /* Caption size */
-  margin-top: 4px;
-  color: $error-red;
-  display: block;
-  font-weight: 400;
-  padding-left: 4px;
 }
 
 /* --- ACCIONES --- */
 .forgot-container {
-  text-align: right;
-  margin-bottom: 24px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 32px;
+  margin-top: -4px;
 }
 
 .link-text {
-  color: #666;
+  color: $text-secondary;
   text-decoration: none;
   font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
   transition: color 0.2s;
 
-  &:hover { color: $primary-green; }
+  &:hover { color: $primary; }
 }
 
-/* BOTÓN CORREGIDO SEGÚN MATERIAL DESIGN */
+/* BOTÓN PRINCIPAL */
 .login-btn {
   width: 100%;
-  height: 48px; /* Altura estándar de target táctil (48px) */
+  height: 56px !important;
   font-size: 1rem;
-  font-weight: 500; /* Medium weight para botones */
-  letter-spacing: 0.5px; /* Tracking estándar de botones */
-  border-radius: 24px; /* Botón tipo "Stadium" (Píldora) moderno */
-  margin-bottom: 24px;
-
-  /* Sobreescribimos colores del tema para branding */
-  background-color: $primary-green !important;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 16px !important;
+  background-color: $primary !important;
   color: white !important;
+  box-shadow: 0 8px 24px rgba(27, 94, 32, 0.25);
+  transition: all 0.2s ease;
 
-  /* Eliminamos sombra manual para respetar mat-flat-button */
-  box-shadow: none !important;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(27, 94, 32, 0.35);
+  }
 
-  /* Estado Deshabilitado Estándar Material */
   &:disabled {
-    background-color: rgba(0, 0, 0, 0.12) !important; /* Gris estándar */
-    color: rgba(0, 0, 0, 0.38) !important; /* Texto gris estándar */
-    cursor: not-allowed;
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38) !important;
+    box-shadow: none;
+    transform: none;
   }
 }
 
 .register-container {
   text-align: center;
   font-size: 0.9rem;
-  color: #666;
+  color: $text-secondary;
+  margin-top: 24px;
 }
 
 .register-link {
-  color: $primary-green;
+  color: $primary;
   font-weight: 600;
   text-decoration: none;
+  margin-left: 4px;
+  cursor: pointer;
 
   &:hover {
     text-decoration: underline;
@@ -168,27 +166,17 @@ label {
 @media (max-width: 480px) {
   .login-container {
     padding: 0;
-    background-color: white;
-    align-items: flex-start;
+    background-color: $surface;
   }
 
   .login-card {
     box-shadow: none;
+    border: none;
     border-radius: 0;
-    padding: 24px;
+    padding: 32px 24px;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-
-  .card-header {
-    margin-bottom: 40px;
-  }
-
-  h1 { font-size: 1.8rem; }
-
-  .login-btn {
-    position: relative;
   }
 }

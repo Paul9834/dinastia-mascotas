@@ -1,78 +1,79 @@
-/* --- VARIABLES --- */
-$primary-green: #2E7D32;
-$bg-color: #F1F8E9;
-$text-dark: #1a1a1a;
-$text-light: #666;
+// =========================================
+// 🎨 PALETA DINASTÍA (Nature UI)
+// =========================================
+$primary: #1B5E20;
+$primary-light: #E8F5E9;
+$bg-color: #F5F7F6;
+$text-primary: #1A1C19;
+$text-secondary: #444744;
+$surface: #FFFFFF;
+$card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
 
-/* Mixin para tarjetas */
-@mixin card-style {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.03);
-  border: 1px solid rgba(0,0,0,0.03);
-  padding: 24px;
-  overflow: hidden;
+// --- HOST & GLOBAL ---
+:host {
+  font-family: 'Poppins', sans-serif !important;
+  display: block;
 }
 
 .profile-page {
   background-color: $bg-color;
   min-height: 100vh;
   width: 100%;
-  padding: 20px 16px;
+  padding: 32px 20px;
   box-sizing: border-box;
-  /* Asegura que nada se salga del viewport */
   overflow-x: hidden;
 }
 
 .profile-container {
   max-width: 1200px;
-  width: 100%;
   margin: 0 auto;
-  font-family: 'Roboto', sans-serif;
 }
 
-/* Breadcrumbs */
+/* --- BREADCRUMBS --- */
 .breadcrumbs {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 20px;
-  font-size: 0.9rem;
-  flex-wrap: wrap;
+  margin-bottom: 32px;
+  font-size: 0.95rem;
 
   .back-link {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     text-decoration: none;
-    color: #555;
+    color: $text-secondary;
     font-weight: 500;
-    &:hover { color: $primary-green; }
+    transition: color 0.2s;
+    mat-icon { font-size: 20px; width: 20px; height: 20px; }
+    &:hover { color: $primary; }
   }
-  .separator { color: #aaa; }
-  .current { color: $primary-green; font-weight: 700; }
+  .separator { color: #ccc; }
+  .current { color: $primary; font-weight: 700; }
 }
 
-/* Grid Principal - CORRECCIÓN AQUÍ */
+/* --- GRID & LAYOUT --- */
 .profile-grid {
   display: grid;
-  /* minmax(0, 1fr) es vital para que el contenido (tabla) no fuerce el ancho */
-  grid-template-columns: 300px minmax(0, 1fr);
-  gap: 24px;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 32px;
   align-items: start;
-  width: 100%;
-}
 
-/* Columna derecha necesita esto para contener la tabla */
-.right-col {
-  min-width: 0;
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* --- TARJETAS --- */
-.info-card {
-  @include card-style;
-  margin-bottom: 24px;
+@mixin card-nature {
+  background: $surface;
+  border-radius: 24px;
+  box-shadow: $card-shadow;
+  border: 1px solid rgba(0,0,0,0.02);
+  padding: 24px;
 }
+
+.info-card { @include card-nature; margin-bottom: 24px; }
 
 /* Identidad */
 .identity-card {
@@ -80,205 +81,142 @@ $text-light: #666;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .avatar-wrapper {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 4px solid white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  // 🏆 NOMBRE: Poppins Medium 500
+  .pet-name {
+    margin: 0;
+    font-size: 1.8rem;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    color: $primary;
+    letter-spacing: -0.5px;
+  }
+
+  .pet-breed { margin: 4px 0 16px; color: $text-secondary; font-weight: 500; }
+
+  .status-badge {
+    background-color: $primary-light;
+    color: $primary;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 24px;
+    mat-icon { font-size: 16px; width: 16px; height: 16px; }
+  }
+
+  .edit-btn {
+    width: 100%;
+    border-radius: 14px;
+    font-weight: 600;
+    height: 48px;
+    font-family: 'Poppins', sans-serif !important;
+  }
 }
-
-.avatar-wrapper {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-bottom: 16px;
-  border: 3px solid white;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-
-  img { width: 100%; height: 100%; object-fit: cover; }
-}
-
-.pet-name { margin: 0; font-size: 1.6rem; font-weight: 800; color: $text-dark; letter-spacing: -0.5px; }
-.pet-breed { margin: 4px 0 16px; color: $text-light; font-size: 0.95rem; }
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background-color: #E8F5E9;
-  color: $primary-green;
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-
-  mat-icon { font-size: 16px; width: 16px; height: 16px; }
-}
-
-.identity-actions { width: 100%; }
-.edit-btn { width: 100%; border-radius: 8px; color: $text-light; border-color: #e0e0e0; height: 40px; }
 
 /* Datos Rápidos */
 .quick-facts-card {
-  padding: 20px 24px;
+  h3 { font-size: 1.1rem; font-weight: 700; color: $text-primary; margin-bottom: 20px; }
+  .fact-row {
+    display: flex; justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f3f0;
+    font-size: 0.95rem;
+    &:last-child { border-bottom: none; }
+    .fact-label { color: #888; font-weight: 500; }
+    .fact-value { color: $text-primary; font-weight: 600; }
+  }
 }
-
-.quick-facts-card h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: $text-dark;
-  margin: 0 0 16px 0;
-}
-
-.facts-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.fact-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 0.9rem;
-
-  &:last-child { border-bottom: none; padding-bottom: 0; }
-  &:first-child { padding-top: 0; }
-}
-
-.fact-label { color: #888; font-weight: 500; }
-.fact-value { color: #333; font-weight: 600; text-align: right; }
 
 /* --- SECCIÓN DERECHA --- */
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 
-  h2 { font-size: 1.5rem; font-weight: 700; color: $text-dark; margin: 0; }
+  // 🏆 HISTORIAL: Poppins Medium 500
+  h2 {
+    font-size: 2rem;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    color: $primary;
+  }
 }
-
-.header-actions { display: flex; gap: 8px; }
 
 .share-btn {
-  background-color: #4FC3F7;
-  color: white;
-  border-radius: 8px;
-  box-shadow: none;
+  background-color: #03A9F4 !important;
+  color: white !important;
+  border-radius: 12px !important;
+  font-weight: 600 !important;
 }
-.delete-btn { color: #FF7043; background: white; border: 1px solid #ffebee; border-radius: 8px;}
 
-/* Tabs */
-.profile-tabs { margin-bottom: 20px; max-width: 100%; overflow: hidden; }
-::ng-deep .profile-tabs .mat-mdc-tab-link { font-family: 'Roboto', sans-serif; color: $text-light; }
-::ng-deep .profile-tabs .mdc-tab-indicator--active .mdc-tab-indicator__content { border-color: $primary-green !important; border-bottom-width: 3px; }
-::ng-deep .profile-tabs .mdc-tab--active .mdc-tab__text-label { color: $primary-green !important; }
+/* Tabs Estilo Dinastía */
+::ng-deep .profile-tabs {
+  margin-bottom: 24px;
+  .mdc-tab__text-label { font-family: 'Poppins', sans-serif !important; font-weight: 600 !important; }
+  .mat-mdc-tab-indicator .mdc-tab-indicator__content--underline { border-color: $primary !important; border-width: 3px !important; }
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label { color: $primary !important; }
+}
 
-/* Tabla */
+/* --- TABLA REGISTRO --- */
 .vaccine-table-card {
-  @include card-style;
+  @include card-nature;
   padding: 0;
-  max-width: 100%; /* Asegura contención */
+
+  .table-header {
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f0f3f0;
+    h3 { margin: 0; font-weight: 700; color: $text-primary; }
+  }
+
+  .register-btn {
+    color: $primary !important;
+    border-color: rgba(27, 94, 32, 0.2) !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+  }
 }
 
-.table-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 24px;
-  border-bottom: 1px solid #f0f0f0;
-
-  h3 { margin: 0; font-size: 1.1rem; font-weight: 600; }
-}
-
-.register-btn { color: #3f51b5; border: 1px solid #e0e0e0; border-radius: 8px; background: #f8f9fa; font-size: 0.85rem; }
-
-/* CONTENEDOR DE TABLA RESPONSIVA */
-.table-responsive {
-  display: block;
-  width: 100%;
-  overflow-x: auto; /* Scroll horizontal interno */
-  -webkit-overflow-scrolling: touch;
-}
+.table-responsive { width: 100%; overflow-x: auto; }
 
 .simple-table {
   width: 100%;
-  min-width: 600px; /* Fuerza el ancho para activar el scroll */
+  th.mat-header-cell {
+    font-family: 'Poppins', sans-serif !important;
+    color: #9E9E9E; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; padding: 16px 24px;
+  }
+  td.mat-cell { padding: 16px 24px; font-size: 0.95rem; border-bottom: 1px solid #f8faf8; }
+  .vaccine-name { font-weight: 700; color: $primary; }
 }
 
-th.mat-header-cell {
-  color: #9E9E9E;
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 12px 24px;
-  border-bottom: 1px solid #f0f0f0;
-  white-space: nowrap;
-}
-
-td.mat-cell {
-  padding: 16px 24px;
-  border-bottom: 1px solid #f9f9f9;
-  font-size: 0.9rem;
-  color: #444;
-  white-space: nowrap;
-}
-
-.vaccine-name { font-weight: 600; color: #2c3e50; }
-
+/* Status Badges */
 .status-badge-pill {
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 30px;
   font-size: 0.75rem;
   font-weight: 700;
-  display: inline-block;
-}
-.st-active { background-color: #E8F5E9; color: $primary-green; }
-.st-soon { background-color: #FFF8E1; color: #FBC02D; }
-.st-overdue { background-color: #FFEBEE; color: #D32F2F; }
+  text-transform: uppercase;
 
-/* --- OPTIMIZACIONES MÓVILES --- */
-@media (max-width: 900px) {
-  .profile-grid {
-    /* Usar minmax(0, 1fr) aquí también evita desbordes en móvil */
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .profile-page { padding: 16px 12px; }
-
-  /* Tarjeta Identidad */
-  .identity-card {
-    padding: 24px 16px;
-  }
-
-  .avatar-wrapper {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 12px;
-  }
-
-  .status-badge { margin-bottom: 16px; }
-
-  /* Header de sección */
-  .section-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .header-actions {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  /* Tabla Header */
-  .table-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    padding: 16px;
-  }
-  .register-btn { width: 100%; }
+  &.st-active { background-color: $primary-light; color: $primary; }
+  &.st-soon { background-color: #FFF8E1; color: #F57F17; }
+  &.st-overdue { background-color: #FFEBEE; color: #D32F2F; }
 }

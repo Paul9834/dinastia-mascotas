@@ -1,69 +1,121 @@
+// =========================================
+// 🎨 PALETA DINASTÍA (Nature UI)
+// =========================================
+$primary: #1B5E20;
+$primary-light: #E8F5E9;
+$bg-color: #F5F7F6;
+$surface: #FFFFFF;
+$text-primary: #1A1C19;
+$text-secondary: #444744;
+$card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
+
+// --- HOST & GLOBAL ---
+:host {
+  font-family: 'Poppins', sans-serif !important;
+  display: block;
+}
+
 .page-container {
   padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
+  color: $text-primary;
 }
 
+// --- HEADER ---
 .page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 48px;
   flex-wrap: wrap;
-  gap: 16px;
-}
-
-.title {
-  font-size: 2rem;
-  margin: 0;
-  color: #1a1a1a;
-  font-weight: 700;
-}
-
-.subtitle {
-  margin: 4px 0 0;
-  color: #666;
-  font-size: 1rem;
-}
-
-.add-btn {
-  height: 48px;
-  padding: 0 24px;
-  border-radius: 24px;
-  font-weight: 600;
-  background-color: #2E7D32;
-  color: white;
-}
-
-.pets-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
-}
 
-.pet-card {
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  // 🏆 TÍTULO: POPPINS MEDIUM 500
+  h1.title {
+    font-size: 2.4rem;
+    margin: 0;
+    color: $primary;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important; // Peso Medium elegante
+    letter-spacing: -0.5px;
+    -webkit-font-smoothing: antialiased;
+  }
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  .subtitle {
+    margin: 4px 0 0;
+    color: $text-secondary;
+    font-size: 1.1rem;
+    font-weight: 400;
   }
 }
 
+// Botón Añadir (Poppins)
+.add-btn {
+  height: 48px;
+  padding: 0 24px !important;
+  border-radius: 16px !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  background-color: $primary !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(27, 94, 32, 0.3);
+  }
+  mat-icon { margin-right: 8px; }
+}
+
+// --- GRID ---
+.pets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+
+// --- TARJETA DE MASCOTA (Nature UI) ---
+.pet-card {
+  border-radius: 24px !important;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.02);
+  background: $surface;
+  box-shadow: $card-shadow;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(27, 94, 32, 0.12);
+  }
+}
+
+// 🏆 FIX: ALTURA DE IMAGEN ASEGURADA
 .pet-image {
-  height: 200px;
+  height: 220px;
+  width: 100%;
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to top, rgba(0,0,0,0.05), transparent);
+  }
 }
 
 .pet-content {
-  padding: 16px 20px 0;
+  padding: 24px;
   flex: 1;
 }
 
@@ -71,99 +123,117 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .pet-name {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif !important;
   font-weight: 600;
-}
-
-.pet-breed {
-  color: #666;
-  margin: 0 0 16px;
-  font-size: 0.95rem;
+  color: $text-primary;
 }
 
 .status-chip {
-  min-height: 24px;
+  padding: 6px 14px;
   font-size: 0.8rem;
-  background-color: #e8f5e9;
-  color: #2E7D32;
+  font-weight: 700;
+  background-color: $primary-light;
+  color: $primary;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pet-breed {
+  color: $text-secondary;
+  margin: 0 0 24px;
+  font-size: 0.95rem;
+  font-weight: 500;
 }
 
 .pet-stats {
   display: flex;
-  gap: 16px;
-  padding-top: 12px;
-  border-top: 1px solid #eee;
-  margin-bottom: 8px;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0,0,0,0.04);
 }
 
 .stat {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  color: #555;
+  gap: 12px;
+  font-size: 0.9rem;
+  color: $text-secondary;
+  font-weight: 500;
 
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-    color: #81c784;
+  .icon-box {
+    width: 32px; height: 32px;
+    border-radius: 10px;
+    background-color: $bg-color;
+    display: flex; align-items: center; justify-content: center;
+    color: $primary;
+    mat-icon { font-size: 18px; width: 18px; height: 18px; }
   }
 }
 
 .carnet-btn {
-  width: 100%;
-  border: 1px solid #2E7D32;
-  color: #2E7D32;
-  font-weight: 600;
-  margin: 8px 16px 16px;
-}
-
-.add-card-placeholder {
-  border: 2px dashed #ccc;
-  border-radius: 16px;
-  min-height: 380px;
-  background-color: #fafafa;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
+  width: calc(100% - 48px);
+  margin: 0 24px 24px;
+  border: 1.5px solid rgba(27, 94, 32, 0.15) !important;
+  color: $primary !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  border-radius: 14px !important;
+  height: 48px;
 
   &:hover {
-    border-color: #2E7D32;
-    background-color: #e8f5e9;
-
-    .icon-circle {
-      background-color: #2E7D32;
-      color: white;
-    }
-
-    h3 {
-      color: #2E7D32;
-    }
+    background-color: $primary-light !important;
+    border-color: $primary !important;
   }
 }
 
-.icon-circle {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: #eee;
+// --- PLACEHOLDER (Dashed Style) ---
+.add-card-placeholder {
+  border: 3px dashed #D0D7DE;
+  border-radius: 24px;
+  min-height: 450px;
+  cursor: pointer;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto 16px;
-  color: #666;
-  transition: all 0.2s;
-}
+  transition: all 0.3s ease;
 
-h3 {
-  margin: 0;
-  color: #666;
-  font-weight: 500;
+  .icon-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background-color: #E0E0E0;
+    color: #9E9E9E;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 24px;
+    transition: all 0.3s;
+    mat-icon { font-size: 40px; width: 40px; height: 40px; }
+  }
+
+  h3 {
+    margin: 0;
+    font-family: 'Poppins', sans-serif !important;
+    color: $text-secondary;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    border-color: $primary;
+    background-color: $primary-light;
+    transform: translateY(-4px);
+
+    .icon-circle {
+      background-color: $primary;
+      color: white;
+    }
+    h3 { color: $primary; }
+  }
 }

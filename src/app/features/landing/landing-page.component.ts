@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-
-import { Router, RouterModule } from '@angular/router'; // Importamos Router y RouterModule
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,11 +9,11 @@ import { Title, Meta } from '@angular/platform-browser';
     selector: 'app-landing-page',
     standalone: true,
     imports: [
-    RouterModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule
-],
+        RouterModule,
+        MatCardModule,
+        MatButtonModule,
+        MatIconModule
+    ],
     templateUrl: './landing-page.component.html',
     styleUrls: ['./landing-page.component.scss']
 })
@@ -37,26 +36,28 @@ export class LandingPageComponent implements OnInit {
         this.router.navigate(['/registro']);
     }
 
-    // Datos para la vista (Landing) con gradientes vibrantes
+    // Datos Nature UI (Gradientes Verdes y Frescos)
     trustFeatures = [
         {
             title: 'Genética Certificada',
             desc: 'Trazabilidad completa del linaje y pureza de raza garantizada.',
             icon: 'verified_user',
-            bg: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            // Verde Bosque a Esmeralda
+            bg: 'linear-gradient(135deg, #1B5E20 0%, #43A047 100%)'
         },
         {
             title: 'Salud Blindada',
             desc: 'Protocolo de vacunación premium aplicado por especialistas.',
             icon: 'health_and_safety',
-            // CAMBIO: Gradiente Verde Salud (Green to Emerald)
-            bg: 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)'
+            // Verde Lima a Menta (Salud)
+            bg: 'linear-gradient(135deg, #2E7D32 0%, #66BB6A 100%)'
         },
         {
             title: 'Identidad Global',
             desc: 'Microchip ISO homologado para viajes internacionales.',
             icon: 'public',
-            bg: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%)'
+            // Verde Azulado (Mundo)
+            bg: 'linear-gradient(135deg, #00695C 0%, #26A69A 100%)'
         }
     ];
 }

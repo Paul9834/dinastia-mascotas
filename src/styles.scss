@@ -1,26 +1,58 @@
 @use '@angular/material' as mat;
 
-// Material 3 Theme Configuration
+// ===============================================
+// 1. CONFIGURACIÓN DEL TEMA (Nature UI)
+// ===============================================
+
 @include mat.elevation-classes();
 @include mat.app-background();
 
-$dinastia-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
-$dinastia-accent: mat.m2-define-palette(mat.$m2-pink-palette, A200, A100, A400);
+// A. TIPOGRAFÍA POPPINS
+// Definimos la configuración para que Angular Material sepa qué fuente usar
+$dinastia-typography: mat.m2-define-typography-config(
+        $font-family: 'Poppins, sans-serif',
+        $headline-1: mat.m2-define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+        $headline-6: mat.m2-define-typography-level(20px, 32px, 600), // Títulos SemiBold
+        $button: mat.m2-define-typography-level(14px, 14px, 600),     // Botones SemiBold
+        $body-1: mat.m2-define-typography-level(14px, 20px, 400)      // Texto base Regular
+);
+
+// B. PALETAS DE COLOR (Verde Bosque)
+// Usamos la paleta Green de Material, tono 800 que es muy cercano a tu #1B5E20
+$dinastia-primary: mat.m2-define-palette(mat.$m2-green-palette, 800);
+$dinastia-accent: mat.m2-define-palette(mat.$m2-light-green-palette, A200);
 $dinastia-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
+// C. DEFINICIÓN DEL TEMA
 $dinastia-theme: mat.m2-define-light-theme((
         color: (
                 primary: $dinastia-primary,
                 accent: $dinastia-accent,
                 warn: $dinastia-warn,
         ),
-        typography: mat.m2-define-typography-config(),
+        typography: $dinastia-typography, // 👈 AQUÍ INYECTAMOS POPPINS
         density: 0,
 ));
 
+// Aplicar el tema a todos los componentes
 @include mat.all-component-themes($dinastia-theme);
 
-// Reset
+// ===============================================
+// 2. VARIABLES CSS (Obligatorio para Material 3)
+// ===============================================
+// Esto fuerza a los componentes nuevos a obedecer la fuente
+:root {
+  --mat-sys-typescale-primary-font: 'Poppins', sans-serif;
+  --mdc-typography-font-family: 'Poppins', sans-serif;
+  --mat-mdc-button-typography-font-family: 'Poppins', sans-serif;
+  --mat-toolbar-title-text-font: 'Poppins', sans-serif;
+}
+
+// ===============================================
+// 3. ESTILOS GLOBALES
+// ===============================================
+
+// Reset básico
 * {
   margin: 0;
   padding: 0;
@@ -29,15 +61,22 @@ $dinastia-theme: mat.m2-define-light-theme((
 
 html, body {
   height: 100%;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  // Forzamos Poppins en todo el documento con !important por seguridad
+  font-family: 'Poppins', "Helvetica Neue", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
   margin: 0;
-  background-color: #fafafa;
+  background-color: #F5F7F6; // Fondo gris-verdoso suave (Nature UI)
+  color: #1A1C19; // Texto casi negro
 }
 
-// Utilidades
+// ===============================================
+// 4. UTILIDADES Y OVERRIDES VISUALES
+// ===============================================
+
 .full-width {
   width: 100%;
 }
@@ -46,23 +85,16 @@ body {
   flex: 1 1 auto;
 }
 
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-// Material Design 3 - Rounded Corners Global
+// Tarjetas redondeadas (Estilo Dashboard moderno)
 mat-card, .mat-mdc-card {
   border-radius: 20px !important;
 }
 
-mat-toolbar {
-  border-radius: 0 !important;
-}
-
-.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-outlined-button {
+// Botones redondeados y con peso visual (SemiBold)
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button, .mat-mdc-outlined-button {
   border-radius: 12px !important;
+  font-weight: 600 !important; // Poppins SemiBold
+  letter-spacing: 0.3px;
 }
 
 .mat-mdc-chip {
@@ -74,25 +106,30 @@ mat-toolbar {
 }
 
 button[mat-icon-button] {
-  border-radius: 16px !important;
+  border-radius: 50% !important; // Mejor circular para iconos
 }
 
-// Custom scrollbar
+// --- SCROLLBAR PERSONALIZADO ---
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
+  background: transparent; // Más limpio
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 10px;
+  background: #B0BEC5; // Gris suave
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #78909C; // Gris más oscuro al hover
+}
+
+/* Fuerza el peso Medium para títulos de bienvenida en todo el sitio */
+h1.welcome-title {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 500 !important;
 }

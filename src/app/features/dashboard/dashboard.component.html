@@ -1,61 +1,57 @@
 <div class="dashboard-content">
 
-    <div class="page-header">
+    <div class="page-header" @fadeInUp>
         <div class="header-text">
             @if (!mobileQuery) {
-                <h1>¡Bienvenido de nuevo! 👋</h1>
+                <h1 class="welcome-title">¡Bienvenido de nuevo! 👋</h1>
             } @else {
-            <h1>Hola, Alex! 👋</h1>
+            <h1 class="welcome-title">Hola, Alex! 👋</h1>
         }
 
             @if (!mobileQuery) {
-                <p>Gestión integral de tus mascotas</p>
+                <p class="header-subtitle">Gestión integral de tus mascotas</p>
             }
         </div>
 
-        <button mat-stroked-button (click)="cerrarSesion()">
+        <button mat-stroked-button (click)="cerrarSesion()" class="logout-btn">
             <mat-icon>logout</mat-icon>
-            @if (!mobileQuery) {
-                <span>Cerrar Sesión</span>
-            }
+            <span>Cerrar Sesión</span>
         </button>
     </div>
 
-    <div class="stats-grid">
+    <div class="stats-grid" @staggerList>
         @for (stat of stats; track stat) {
-            <div class="stat-card"> <mat-card-content>
-                <div class="stat-icon" [style.background-color]="stat.color + '20'">
-                    <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
-                </div>
-                <div class="stat-info">
-                    <div class="stat-label">{{ stat.label }}</div>
-                    <div class="stat-value">{{ stat.value }}</div>
-                </div>
-            </mat-card-content>
+            <div class="stat-card">
+                <mat-card-content>
+                    <div class="stat-icon" [style.background-color]="stat.color + '20'">
+                        <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">{{ stat.label }}</div>
+                        <div class="stat-value">{{ stat.value }}</div>
+                    </div>
+                </mat-card-content>
             </div>
         }
     </div>
 
-    <h2 class="section-title">Mis Mascotas</h2>
+    <h2 class="section-title" @fadeInUp>Mis Mascotas</h2>
 
-    <div class="carousel-container">
-        @if (!mobileQuery) {
-            <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack">
-                <mat-icon>chevron_left</mat-icon>
-            </button>
-        }
+    <div class="carousel-container" @fadeInUp>
+        <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
 
-        <div class="carousel-track">
+        <div class="carousel-track" #carouselTrack @staggerList>
             @if (mascotas.length === 0) {
-                <div class="empty-message">
-                    No tienes mascotas registradas.
-                </div>
+                <div class="empty-message">No tienes mascotas registradas.</div>
             }
 
-            @for (pet of visibleMascotas; track pet) {
-                <div class="mascota-card" (click)="verDetalle(pet)"> <div class="mascota-image"
-                                                                          [style.background-image]="'url(' + (pet.photoUrl || 'assets/avatar-placeholder.png') + ')'">
-                </div>
+            @for (pet of mascotas; track pet) {
+                <div class="mascota-card" (click)="verDetalle(pet)">
+                    <div class="mascota-image"
+                         [style.background-image]="'url(' + (pet.photoUrl || 'assets/avatar-placeholder.png') + ')'">
+                    </div>
 
                     <div class="mascota-header">
                         <div class="mascota-info">
@@ -67,17 +63,14 @@
             }
         </div>
 
-        @if (!mobileQuery) {
-            <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward">
-                <mat-icon>chevron_right</mat-icon>
-            </button>
-        }
+        <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
     </div>
 
-    <h2 class="section-title">Próximas Citas</h2>
+    <h2 class="section-title" @fadeInUp>Próximas Citas</h2>
 
-    <div class="appointments-container">
-
+    <div class="appointments-container" @staggerList>
         @if (appointments.length === 0) {
             <div class="empty-message-citas">
                 <p>No tienes citas programadas.</p>
@@ -101,12 +94,12 @@
                     </div>
 
                     <div class="appointment-meta">
-            <span class="date-text">
-              {{ appointment.dateTime | date:'d MMM, h:mm a' }}
-            </span>
+                        <span class="date-text">
+                          {{ appointment.dateTime | date:'d MMM, h:mm a' }}
+                        </span>
                         <span class="status-text" [class]="getStatusClass(appointment.status)">
-              {{ translateStatus(appointment.status) }}
-            </span>
+                          {{ translateStatus(appointment.status) }}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -117,6 +110,29 @@
                 <mat-icon>add</mat-icon>
                 <span>Nueva Cita</span>
             </button>
+        </div>
+    </div>
+
+    <h2 class="section-title" @fadeInUp>Aprende sobre tu Mascota</h2>
+
+    <div class="video-card" @fadeInUp>
+        <div class="video-responsive-wrapper">
+            <iframe
+                    src="https://www.youtube.com/embed/uYJQIKAVBw8?autoplay=1&mute=0&vq=hd2160&rel=0"
+                    title="10 COSAS QUE LOS PERROS ODIAN"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <div class="video-info">
+            <div class="video-icon">
+                <mat-icon>play_circle</mat-icon>
+            </div>
+            <div class="video-text">
+                <h3>10 Cosas que los perros odian</h3>
+                <p>Calidad 4K • ExpertoAnimal</p>
+            </div>
         </div>
     </div>
 

@@ -10,6 +10,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { GlobalSpinnerComponent } from '@shared/ui/spinner/global-spinner.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
+import { AuthService } from '../../core/services/auth.service'; // Ajusta la ruta a tu servicio
 
 interface MenuItem {
     icon: string;
@@ -36,6 +37,9 @@ interface MenuItem {
     styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
+
+    private authService = inject(AuthService); // Inyectar servicio
+
     private breakpointObserver = inject(BreakpointObserver);
 
     // Referencia al componente visual
@@ -69,6 +73,9 @@ export class MainLayoutComponent {
         { icon: 'settings', label: 'Configuración', route: '/configuracion' }
     ];
 
+    logout() {
+        this.authService.logout();
+    }
     // Botón hamburguesa
     toggleSidenav() {
         this.isOpen = !this.isOpen;

@@ -1,69 +1,77 @@
 <div class="register-container">
-    <mat-card class="register-card">
+    <div class="register-card">
 
         <div class="card-header">
             <div class="icon-circle">
                 <mat-icon>person_add</mat-icon>
             </div>
             <h1>Crear Cuenta</h1>
-            <p>Únete a Dinastía Mascotas</p>
+            <p>Únete a la familia Dinastía</p>
         </div>
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
 
-            <!-- Nombre y Apellido (En una fila) -->
             <div class="row">
-                <mat-form-field appearance="outline" class="half-width">
+                <mat-form-field appearance="outline" class="half-width" color="primary">
                     <mat-label>Nombre</mat-label>
-                    <input matInput formControlName="nombre">
-                    <mat-error>Requerido</mat-error>
+                    <input matInput formControlName="nombre" placeholder="Juan">
+                    @if (registerForm.get('nombre')?.hasError('required')) {
+                        <mat-error>Requerido</mat-error>
+                    }
                 </mat-form-field>
 
-                <mat-form-field appearance="outline" class="half-width">
+                <mat-form-field appearance="outline" class="half-width" color="primary">
                     <mat-label>Apellido</mat-label>
-                    <input matInput formControlName="apellido">
-                    <mat-error>Requerido</mat-error>
+                    <input matInput formControlName="apellido" placeholder="Pérez">
+                    @if (registerForm.get('apellido')?.hasError('required')) {
+                        <mat-error>Requerido</mat-error>
+                    }
                 </mat-form-field>
             </div>
 
-            <!-- Teléfono -->
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Teléfono</mat-label>
-                <input matInput formControlName="telefono" type="tel">
-                <mat-icon matSuffix>phone</mat-icon>
-                <mat-error>Solo números</mat-error>
+            <mat-form-field appearance="outline" class="full-width" color="primary">
+                <mat-label>Teléfono Celular</mat-label>
+                <input matInput formControlName="telefono" type="tel" placeholder="300 123 4567">
+                <mat-icon matSuffix style="color: #666;">smartphone</mat-icon>
+                @if (registerForm.get('telefono')?.hasError('pattern')) {
+                    <mat-error>Solo números válidos</mat-error>
+                }
             </mat-form-field>
 
-            <!-- Correo -->
-            <mat-form-field appearance="outline" class="full-width">
+            <mat-form-field appearance="outline" class="full-width" color="primary">
                 <mat-label>Correo Electrónico</mat-label>
-                <input matInput formControlName="correo" placeholder="ejemplo@correo.com">
-                <mat-icon matSuffix>email</mat-icon>
-                <mat-error>Correo inválido</mat-error>
+                <input matInput formControlName="correo" placeholder="ejemplo@dinastia.co" type="email">
+                <mat-icon matSuffix style="color: #666;">email</mat-icon>
+                @if (registerForm.get('correo')?.hasError('email')) {
+                    <mat-error>Correo inválido</mat-error>
+                }
             </mat-form-field>
 
-            <!-- Contraseña -->
-            <mat-form-field appearance="outline" class="full-width">
+            <mat-form-field appearance="outline" class="full-width" color="primary">
                 <mat-label>Contraseña</mat-label>
-                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="contrasena">
+                <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="contrasena" placeholder="******">
                 <button mat-icon-button matSuffix (click)="togglePassword($event)" type="button">
                     <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
-                <mat-error>Mínimo 6 caracteres</mat-error>
+                @if (registerForm.get('contrasena')?.hasError('minlength')) {
+                    <mat-error>Mínimo 6 caracteres</mat-error>
+                }
             </mat-form-field>
 
-            <!-- Botón -->
-            <button mat-flat-button color="primary" class="full-width register-btn"
+            <button mat-flat-button class="full-width register-btn"
                     type="submit" [disabled]="registerForm.invalid || isLoading">
-                {{ isLoading ? 'Creando...' : 'Registrarse' }}
+                @if (isLoading) {
+                    <span>Creando cuenta...</span>
+                } @else {
+                <span>REGISTRARSE</span>
+            }
             </button>
 
-            <!-- Volver al Login -->
             <div class="login-link-container">
                 <span>¿Ya tienes cuenta? </span>
                 <a routerLink="/login">Inicia Sesión</a>
             </div>
 
         </form>
-    </mat-card>
+    </div>
 </div>

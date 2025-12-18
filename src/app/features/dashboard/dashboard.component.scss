@@ -1,67 +1,89 @@
 // =========================================
-// 🎨 PALETA DINASTÍA (Coherencia con Drawer)
+// 🎨 PALETA DINASTÍA (Nature UI - Premium)
 // =========================================
 $primary: #1B5E20;
-$primary-light: #E8F5E9; // Fondo menta suave
+$primary-light: #E8F5E9;
 $text-primary: #1A1C19;
 $text-secondary: #444744;
 $surface: #FFFFFF;
-$shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.04);
-$border-radius-card: 20px;
+$bg-color: #F5F7F6;
+$shadow-soft: 0 12px 24px rgba(27, 94, 32, 0.06);
+$border-radius-card: 24px;
+
+// --- RESET & HOST ---
+:host {
+  font-family: 'Poppins', sans-serif !important;
+  display: block;
+}
 
 .dashboard-content {
-  padding: 32px; // Un poco más de aire
+  padding: 32px;
   max-width: 1400px;
   margin: 0 auto;
-  font-family: 'Poppins', sans-serif; // 👈 Cambio clave a Poppins
+  font-family: 'Poppins', sans-serif !important;
   box-sizing: border-box;
   color: $text-primary;
+  overflow-x: hidden;
+
+  // --- ENCABEZADO (Bienvenida Premium) ---
+  .page-header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    h1.welcome-title {
+      margin: 0;
+      font-family: 'Poppins', sans-serif !important;
+      font-weight: 500 !important;
+      font-size: 2.4rem;
+      color: $primary;
+      letter-spacing: -0.5px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .header-subtitle {
+      margin: 4px 0 0;
+      font-family: 'Poppins', sans-serif !important;
+      color: $text-secondary;
+      font-size: 1.1rem;
+      font-weight: 400;
+    }
+  }
 }
 
-// --- ENCABEZADO DE PÁGINA ---
-.page-header {
-  margin-bottom: 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-  h1 {
-    margin: 0;
-    font-size: 2.2rem;
-    color: $primary; // Título en verde corporativo
-    font-weight: 700; // Poppins Bold
-    letter-spacing: -0.5px;
-  }
-
-  p {
-    margin: 8px 0 0;
-    color: $text-secondary;
-    font-size: 1rem;
-    font-weight: 400;
-  }
+// --- BOTONES ---
+.logout-btn {
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: 600;
+  border-radius: 14px !important;
+  color: $text-secondary !important;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  background: white;
+  padding: 0 20px;
+  height: 48px;
+  mat-icon { margin-right: 8px; }
 }
 
-// --- GRID DE ESTADÍSTICAS ---
+// --- GRID ESTADÍSTICAS ---
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 24px;
-  margin-bottom: 48px;
+  // margin-bottom eliminado para que lo controle el titulo siguiente
 }
 
 .stat-card {
   border-radius: $border-radius-card;
   background: $surface;
-  box-shadow: $shadow-soft; // Sombra difusa moderna
-  border: 1px solid rgba(0,0,0,0.03); // Borde sutil
-  padding: 0;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: default;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(27, 94, 32, 0.1); // Resplandor verde al hover
-  }
+  box-shadow: $shadow-soft;
+  border: 1px solid rgba(0,0,0,0.02);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  &:hover { transform: translateY(-5px); }
 
   mat-card-content {
     padding: 24px;
@@ -69,345 +91,284 @@ $border-radius-card: 20px;
     align-items: center;
     gap: 20px;
   }
-}
 
-// Iconos de estadísticas (Círculos Menta)
-.stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px; // Squircle
-  background-color: $primary-light; // Fondo verde muy claro
-  color: $primary; // Icono verde fuerte
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-
-  mat-icon {
-    font-size: 30px;
-    width: 30px;
-    height: 30px;
-  }
-}
-
-.stat-info {
   .stat-label {
-    font-size: 0.9rem;
-    color: $text-secondary;
-    font-weight: 500;
-    margin-bottom: 4px;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
   }
 
   .stat-value {
-    font-size: 1.8rem;
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 2rem;
     font-weight: 700;
-    color: $text-primary;
-    line-height: 1.2;
+    line-height: 1;
   }
 }
 
-// --- TÍTULOS DE SECCIÓN ---
+// ==========================================
+// 🏷️ TÍTULOS DE SECCIÓN (CORREGIDO ESPACIO)
+// ==========================================
 .section-title {
-  font-size: 1.4rem;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 1.6rem;
   color: $text-primary;
-  margin-bottom: 24px;
-  font-weight: 600;
+
+  // 🔥 AQUÍ ESTÁ EL CAMBIO IMPORTANTE:
+  margin-top: 64px;    // Mucho espacio arriba para separar
+  margin-bottom: 32px; // Espacio abajo para que no se pegue el contenido
+
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 12px;
 
-  // Pequeña línea decorativa
   &::before {
     content: '';
     display: block;
-    width: 4px;
-    height: 24px;
+    width: 6px;
+    height: 28px;
     background-color: $primary;
-    border-radius: 4px;
+    border-radius: 10px;
   }
 }
 
-// --- CARRUSEL DE MASCOTAS ---
+// ==========================================
+// 🎠 CARRUSEL MASCOTAS
+// ==========================================
 .carousel-container {
   position: relative;
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 48px;
+  // margin-bottom eliminado, el siguiente titulo se encargará del espacio
 }
 
 .carousel-track {
   display: flex;
   gap: 24px;
-  padding: 8px 4px 24px 4px; // Espacio abajo para la sombra
+  padding: 12px 4px 32px 4px;
   flex: 1;
   overflow-x: auto;
   scroll-behavior: smooth;
-
-  // Ocultar scrollbar pero permitir scroll
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #E0E0E0;
-    border-radius: 3px;
-  }
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
 }
 
 .mascota-card {
-  width: 260px;
-  min-width: 260px;
+  flex: 0 0 auto;
+  width: 280px;
   border-radius: $border-radius-card;
   overflow: hidden;
   background: $surface;
   box-shadow: $shadow-soft;
-  border: 1px solid rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.02);
   transition: transform 0.3s ease;
   cursor: pointer;
+  &:hover { transform: translateY(-8px); }
 
-  &:hover {
-    transform: translateY(-6px);
+  .mascota-image {
+    height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+    }
+  }
+
+  .mascota-header {
+    padding: 20px;
+    h3 { font-family: 'Poppins', sans-serif !important; margin: 0; font-weight: 700; font-size: 1.2rem; }
+    p { font-family: 'Poppins', sans-serif !important; margin: 4px 0 0; font-size: 0.9rem; color: $text-secondary; font-weight: 500; }
   }
 }
 
-.mascota-image {
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-
-  // Gradiente sutil sobre la imagen para texto
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 60px;
-    background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-  }
-}
-
-.mascota-header {
-  padding: 16px;
-
-  .mascota-info h3 {
-    margin: 0;
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: $text-primary;
-  }
-
-  .mascota-info p {
-    margin: 4px 0 0;
-    font-size: 0.9rem;
-    color: $text-secondary;
-    font-weight: 500;
-  }
-}
-
-// Botones del carrusel (Flechas)
 .carousel-button {
-  background: white;
-  color: $text-primary;
+  background: white !important;
+  color: $primary !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%; // Totalmente redondos
-  border: 1px solid rgba(0,0,0,0.05);
-
-  &:hover {
-    background-color: $primary;
-    color: white;
-  }
+  width: 48px; height: 48px; border: 1px solid #eee;
+  border-radius: 50% !important;
+  &:disabled { opacity: 0.3; }
 }
 
-// --- CITAS / APPOINTMENTS ---
-.appointments-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
+// --- TARJETAS DE CITAS ---
 .appointment-card {
-  border-radius: 16px;
+  border-radius: 22px;
+  background: $surface;
+  box-shadow: $shadow-soft;
+  border: 1px solid rgba(0,0,0,0.02);
+  margin-bottom: 16px;
+
+  .appointment-title { font-family: 'Poppins', sans-serif !important; font-size: 1.15rem; font-weight: 700; }
+  .appointment-pet { font-family: 'Poppins', sans-serif !important; font-size: 0.95rem; font-weight: 500; }
+  .date-text { font-family: 'Poppins', sans-serif !important; font-size: 0.95rem; color: $primary; font-weight: 700; }
+  .status-text { font-family: 'Poppins', sans-serif !important; font-size: 0.75rem; padding: 6px 14px; border-radius: 30px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+}
+
+// ==========================================
+// 🎥 SECCIÓN DE VIDEO
+// ==========================================
+.video-card {
+  border-radius: $border-radius-card;
+  background: $surface;
+  box-shadow: $shadow-soft;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 80px; // Espacio extra al final de la página
   overflow: hidden;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0,0,0,0.04);
-  transition: box-shadow 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 16px 32px rgba(27, 94, 32, 0.12);
+
+    .video-icon mat-icon {
+      transform: scale(1.1);
+    }
   }
 }
 
-.color-strip {
+.video-responsive-wrapper {
+  position: relative;
   width: 100%;
-  height: 6px; // Más delgada y elegante
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
 }
 
-.card-content-wrapper {
+.video-info {
   padding: 20px 24px;
   display: flex;
-  flex-direction: row; // Icono a la izquierda, texto derecha
   align-items: center;
-  gap: 20px;
-}
+  gap: 16px;
 
-.appointment-icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background-color: #F5F5F5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: $text-secondary;
+  .video-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(27, 94, 32, 0.08);
+    border-radius: 50%;
 
-  mat-icon {
-    font-size: 24px;
+    mat-icon {
+      color: $primary;
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  .video-text {
+    h3 {
+      font-family: 'Poppins', sans-serif !important;
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: $text-primary;
+    }
+
+    p {
+      font-family: 'Poppins', sans-serif !important;
+      margin: 2px 0 0;
+      font-size: 0.9rem;
+      color: $text-secondary;
+    }
   }
 }
 
-.appointment-details {
-  flex: 1;
-}
-
-.appointment-title {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: $text-primary;
-}
-
-.appointment-pet {
-  margin: 2px 0 0;
-  font-size: 0.9rem;
-  color: $text-secondary;
-  font-weight: 500;
-}
-
-.appointment-meta {
-  text-align: right; // Fecha a la derecha
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-.date-text {
-  font-size: 0.9rem;
-  color: $text-secondary;
-  font-weight: 500;
-}
-
-.status-text {
-  font-size: 0.8rem;
-  padding: 4px 12px;
-  border-radius: 20px;
-  background-color: #F0F0F0;
-  color: #666;
+// --- BOTÓN FLOTANTE ---
+.add-pet-btn {
+  height: 56px !important;
+  border-radius: 18px !important;
+  background-color: $primary !important;
+  color: white !important;
+  font-family: 'Poppins', sans-serif !important;
   font-weight: 600;
+  padding: 0 32px !important;
+  box-shadow: 0 8px 20px rgba(27, 94, 32, 0.3);
+}
 
-  &.overdue {
-    background-color: #FFEBEE;
-    color: #D32F2F;
+// ==========================================
+// 📱 MÓVIL (RESPONSIVE)
+// ==========================================
+@media (max-width: 768px) {
+  .dashboard-content .page-header h1.welcome-title { font-size: 1.8rem; }
+
+  // Títulos un poco menos separados en móvil
+  .section-title { margin-top: 48px; margin-bottom: 24px; }
+
+  .carousel-container {
+    margin: 0 -16px 0 -16px; // Eliminado margin bottom
+    width: calc(100% + 32px);
+    padding: 0 16px;
   }
+  .mascota-card { width: 75vw; }
+  .carousel-button { display: none; }
 
-  &.upcoming {
-    background-color: $primary-light;
-    color: $primary;
+  .video-info {
+    padding: 16px;
+    .video-text h3 { font-size: 1rem; }
+    .video-text p { font-size: 0.8rem; }
   }
 }
 
-// --- BOTÓN FLOTANTE (FAB) ---
-.fab-container {
-  margin-top: 40px;
-  display: flex;
-  justify-content: flex-end;
+/* --- ANIMACIONES CSS & MICRO-INTERACCIONES --- */
+.stat-card:active,
+.mascota-card:active,
+.appointment-card:active,
+.video-card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
+
+.mascota-card {
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 30px rgba(27, 94, 32, 0.15);
+    .mascota-image {
+      background-size: 110%;
+      transition: background-size 0.5s ease;
+    }
+  }
 }
 
 .add-pet-btn {
-  height: 56px !important;
-  border-radius: 16px !important; // Coincide con el estilo cuadrado redondeado
-  background-color: $primary !important; // Verde Dinastía
-  color: white !important;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 0 32px !important;
-  box-shadow: 0 8px 20px rgba(27, 94, 32, 0.3); // Sombra verde
-  transition: transform 0.2s;
-
+  animation: pulse-green 2s infinite;
+  transition: all 0.3s ease;
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     box-shadow: 0 12px 24px rgba(27, 94, 32, 0.4);
-  }
-
-  mat-icon {
-    margin-right: 8px;
+    animation: none;
   }
 }
 
-// ==========================================
-// 📱 MÓVIL (Responsivo)
-// ==========================================
-@media (max-width: 768px) {
-  .dashboard-content {
-    padding: 20px;
-    padding-bottom: 100px; // Espacio para scroll final
-  }
+@keyframes pulse-green {
+  0% { box-shadow: 0 0 0 0 rgba(27, 94, 32, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(27, 94, 32, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(27, 94, 32, 0); }
+}
 
-  .page-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-
-    h1 { font-size: 1.8rem; }
-  }
-
-  .stats-grid {
-    grid-template-columns: 1fr; // Una columna
-    gap: 16px;
-  }
-
-  // Carrusel en móvil
-  .carousel-track {
-    padding: 0 0 24px 0;
-  }
-
-  .mascota-card {
-    width: 80vw; // Un poco menos ancho para ver la siguiente tarjeta
-    min-width: 80vw;
-  }
-
-  // Ocultar flechas en móvil (se usa swipe)
-  .carousel-button {
-    display: none;
-  }
-
-  // Ajuste de tarjeta de cita
-  .card-content-wrapper {
-    padding: 16px;
-    gap: 12px;
-  }
-
-  .appointment-icon-wrapper {
-    display: none; // Ahorrar espacio en móvil
-  }
-
-  .appointment-meta {
-    text-align: left;
-    align-items: flex-start;
-    margin-top: 8px;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .add-pet-btn {
-    width: 100%; // Botón ancho completo en móvil
-  }
+.stat-card:hover .stat-icon mat-icon {
+  transform: rotate(15deg) scale(1.1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }

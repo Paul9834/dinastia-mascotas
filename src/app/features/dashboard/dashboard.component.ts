@@ -1,15 +1,17 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { Component, HostListener, OnInit, inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations'; // 👈 IMPORTANTE
+
 import { AuthService } from '../../core/services/auth.service';
 import { Pet } from '../../core/models/pet.model';
 import { PetApiService } from '../../core/services/pet-api.service';
 import { AppointmentService } from '../../core/services/appointment.service';
 import { Appointment } from '../../core/models/appointment.model';
-// 1. IMPORTAR EL PIPE
 import { AgePipe } from '../../shared/pipes/age.pipe';
 
 @Component({
@@ -17,29 +19,69 @@ import { AgePipe } from '../../shared/pipes/age.pipe';
     standalone: true,
     imports: [
         CommonModule,
+        RouterModule,
         MatCardModule,
         MatButtonModule,
         MatIconModule,
-        MatChipsModule],
+        MatChipsModule,
+        AgePipe
+    ],
     templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.scss']
+    styleUrls: ['./dashboard.component.scss'],
+    // 👇👇👇 AQUI ESTÁ LA MAGIA DE LAS ANIMACIONES 👇👇👇
+    animations: [
+        // Animación 1: Entrada suave hacia arriba (Header)
+        trigger('fadeInUp', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(20px)' }),
+                animate('600ms cubic-bezier(0.2, 0.0, 0, 1.0)', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
+        ]),
+        // Animación 2: Lista escalonada (Tarjetas entran una por una)
+        trigger('staggerList', [
+            transition('* => *', [ // Cada vez que cambian los datos
+                query(':enter', [
+                    style({ opacity: 0, transform: 'translateY(30px)' }),
+                    stagger('100ms', [ // Retraso de 100ms entre cada item
+                        animate('500ms cubic-bezier(0.2, 0.0, 0, 1.0)',
+                            style({ opacity: 1, transform: 'translateY(0)' }))
+                    ])
+                ], { optional: true })
+            ])
+        ])
+    ]
 })
 export class DashboardComponent implements OnInit {
-    // ... (El resto de tus inyecciones y variables sigue igual) ...
+    // ... (Tu código TypeScript sigue EXACTAMENTE IGUAL, no borres nada de la lógica) ...
+    // Solo asegúrate de copiar la sección `animations` y los imports de arriba.
+
     private authService = inject(AuthService);
     private petApiService = inject(PetApiService);
     private appointmentService = inject(AppointmentService);
+    private router = inject(Router);
+    private cdr = inject(ChangeDetectorRef);
+
+    @ViewChild('carouselTrack') carouselTrack!: ElementRef<HTMLDivElement>;
 
     mobileQuery = false;
     stats = [
         { icon: 'event', label: 'Citas Pendientes', value: '0', color: '#ff9800' },
-        { icon: 'vaccines', label: 'Total Citas', value: '0', color: '#4caf50' }
+        { icon: 'vaccines', label: 'Total Citas', value: '0', color: '#1B5E20' }
     ];
+
     mascotas: Pet[] = [];
     appointments: Appointment[] = [];
-    currentIndex = 0;
-    visibleCards = 4;
-    fallbackImage = 'https://images.unsplash.com/photo-1633722715463-d30f4f325e24?w=800&h=500&fit=crop';
+    fallbackImage = 'assets/avatar-placeholder.png';
+
+    get canGoBack(): boolean {
+        return this.carouselTrack ? this.carouselTrack.nativeElement.scrollLeft > 0 : false;
+    }
+
+    get canGoForward(): boolean {
+        if (!this.carouselTrack) return false;
+        const { scrollLeft, scrollWidth, clientWidth } = this.carouselTrack.nativeElement;
+        return scrollLeft + clientWidth < scrollWidth - 1;
+    }
 
     ngOnInit() {
         this.checkScreenSize();
@@ -47,74 +89,70 @@ export class DashboardComponent implements OnInit {
         this.loadAppointments();
     }
 
-    // ... (loadPets y loadAppointments siguen igual) ...
-
     loadPets() {
         this.petApiService.getMyPets().subscribe({
             next: (pets) => {
                 this.mascotas = pets;
-                this.validateIndex();
-            }
+                this.cdr.detectChanges();
+            },
+            error: (err) => console.error('Error cargando mascotas', err)
         });
     }
 
     loadAppointments() {
         this.appointmentService.getMyAppointments().subscribe({
             next: (data) => {
-                this.appointments = data;
+                this.appointments = data.sort((a, b) =>
+                    new Date(a.dateTime).getTime() - new Date(b.dateTime).getTime()
+                );
                 const pendientes = data.filter(a => a.status === 'PENDING').length;
                 this.stats[0].value = pendientes.toString();
                 this.stats[1].value = data.length.toString();
-            },
-            error: (err) => console.error('Error cargando citas', err)
+            }
         });
     }
 
-    // 3. NUEVA FUNCIÓN PARA DETECTAR CUMPLEAÑOS
-    isBirthday(dateString: string | Date | undefined): boolean {
-        if (!dateString) return false;
-
-        // Convertimos a fechas reales para comparar solo día y mes
-        // Agregamos "T00:00:00" si es string simple para evitar problemas de zona horaria
-        const dateStr = dateString.toString();
-        const birth = new Date(dateStr.includes('T') ? dateStr : dateStr + 'T00:00:00');
-        const today = new Date();
-
-        return today.getDate() === birth.getDate() &&
-            today.getMonth() === birth.getMonth();
+    scrollLeft() {
+        this.carouselTrack.nativeElement.scrollBy({ left: -320, behavior: 'smooth' });
     }
 
-    // ... (Tus helpers getIconForType, getColorForType, etc. siguen igual) ...
-    getIconForType(type: string): string { /* ... */ return 'event'; } // (abreviado para no repetir)
-    getColorForType(type: string): string { /* ... */ return '#9e9e9e'; }
-    translateStatus(status: string): string { /* ... */ return status; }
-    getStatusClass(status: string): string { return status.toLowerCase(); }
-    cerrarSesion() { this.authService.logout(); }
+    scrollRight() {
+        this.carouselTrack.nativeElement.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+
+    verDetalle(pet: Pet) {
+        this.router.navigate(['/mascotas', pet.id]);
+    }
+
+    cerrarSesion() {
+        this.authService.logout();
+    }
 
     @HostListener('window:resize')
-    onResize() { this.checkScreenSize(); }
+    onResize() {
+        this.checkScreenSize();
+    }
 
     checkScreenSize() {
-        const width = window.innerWidth;
-        this.mobileQuery = width < 768;
-        if (width < 768) this.visibleCards = 1;
-        else if (width < 1280) this.visibleCards = 2;
-        else this.visibleCards = 4;
-        this.validateIndex();
+        this.mobileQuery = window.innerWidth < 768;
     }
 
-    validateIndex() {
-        if (this.currentIndex + this.visibleCards > this.mascotas.length) {
-            this.currentIndex = Math.max(0, this.mascotas.length - this.visibleCards);
-        }
+    getIconForType(type: string): string {
+        const icons: any = { 'VACCINATION': 'vaccines', 'CHECKUP': 'medical_services', 'SURGERY': 'local_hospital', 'GROOMING': 'content_cut' };
+        return icons[type] || 'event';
     }
 
-    get visibleMascotas() {
-        return this.mascotas.slice(this.currentIndex, this.currentIndex + this.visibleCards);
+    getColorForType(type: string): string {
+        const colors: any = { 'VACCINATION': '#1B5E20', 'CHECKUP': '#1976D2', 'SURGERY': '#C62828', 'GROOMING': '#FBC02D' };
+        return colors[type] || '#757575';
     }
 
-    get canGoBack() { return this.currentIndex > 0; }
-    get canGoForward() { return this.currentIndex + this.visibleCards < this.mascotas.length; }
-    scrollLeft() { if (this.canGoBack) this.currentIndex--; }
-    scrollRight() { if (this.canGoForward) this.currentIndex++; }
+    translateStatus(status: string): string {
+        const map: any = { 'PENDING': 'Pendiente', 'COMPLETED': 'Completada', 'CANCELLED': 'Cancelada' };
+        return map[status] || status;
+    }
+
+    getStatusClass(status: string): string {
+        return status === 'PENDING' ? 'upcoming' : status === 'CANCELLED' ? 'overdue' : '';
+    }
 }
