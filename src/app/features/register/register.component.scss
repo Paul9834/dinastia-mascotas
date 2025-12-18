@@ -7,7 +7,11 @@ $bg-color: #F5F7F6;      // Fondo gris verdoso
 $surface: #FFFFFF;
 $text-primary: #1A1C19;
 $text-secondary: #444744;
+$error: #BA1A1A;
 
+// =========================================
+// 🏗️ CONTENEDOR PRINCIPAL
+// =========================================
 .register-container {
   min-height: 100vh;
   width: 100%;
@@ -17,19 +21,49 @@ $text-secondary: #444744;
   background-color: $bg-color;
   padding: 24px;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+
+  // 1. Aplicar Poppins base
+  font-family: 'Poppins', sans-serif !important;
+
+  // 2. Forzar Poppins en TODOS los elementos hijos
+  * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  // 3. Salvar los iconos (Excepción vital)
+  mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
 }
 
-// Ya no usamos mat-card, sino un div limpio con estilos personalizados
+// =========================================
+// 📝 TARJETA DE REGISTRO
+// =========================================
 .register-card {
   width: 100%;
-  max-width: 500px; // Un poco más ancho para el formulario doble
+  max-width: 500px; // Un poco más ancho que el login para el formulario doble
   padding: 48px 40px;
-  border-radius: 28px; // Curva premium
+  border-radius: 28px;
   background: $surface;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0,0,0,0.02);
   box-sizing: border-box;
+
+  // Animación suave de entrada
+  animation: slideUpFade 0.6s ease-out;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- HEADER --- */
@@ -40,10 +74,9 @@ $text-secondary: #444744;
   .icon-circle {
     width: 80px;
     height: 80px;
-    // Degradado sutil verde
     background: linear-gradient(135deg, $primary-light, #C8E6C9);
     color: $primary;
-    border-radius: 24px; // Squircle
+    border-radius: 24px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -77,32 +110,37 @@ $text-secondary: #444744;
 
 .row {
   display: flex;
-  gap: 16px; // Más espacio entre columnas
-
+  gap: 16px; // Espacio entre columnas (Nombre / Apellido)
   .half-width { flex: 1; }
 }
 
-// Personalización de Inputs Material (Redondeados)
 mat-form-field {
   width: 100%;
-  margin-bottom: 4px; // Espacio sutil
+  margin-bottom: 4px;
 
-  // Variable M3 para redondear bordes
+  // Bordes redondeados modernos
   --mdc-outlined-text-field-container-shape: 16px;
 
-  // Colores de foco
+  // Colores consistentes
   --mdc-outlined-text-field-focus-outline-color: #{$primary};
   --mdc-outlined-text-field-label-text-color: #666;
+  --mdc-outlined-text-field-error-outline-color: #{$error};
+  --mdc-outlined-text-field-error-label-text-color: #{$error};
 
-  // Fuente interna
+  // Ajuste fino para la fuente dentro del input
   .mat-mdc-input-element {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     letter-spacing: 0.3px;
+  }
+
+  .mat-mdc-floating-label {
+    font-family: 'Poppins', sans-serif !important;
   }
 }
 
 /* --- BOTÓN REGISTRAR --- */
 .register-btn {
+  width: 100%; // Asegurar ancho completo
   height: 56px !important;
   font-size: 1rem;
   font-weight: 600;
@@ -122,6 +160,7 @@ mat-form-field {
 
   &:disabled {
     background-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.38) !important; // Color texto deshabilitado
     box-shadow: none;
     transform: none;
   }
@@ -138,32 +177,48 @@ mat-form-field {
     text-decoration: none;
     font-weight: 600;
     margin-left: 4px;
+    cursor: pointer;
 
     &:hover { text-decoration: underline; }
   }
 }
 
-/* --- RESPONSIVE --- */
+// =========================================
+// 📱 RESPONSIVE (CORREGIDO)
+// =========================================
 @media (max-width: 480px) {
   .register-container {
-    padding: 0;
-    background-color: $surface;
+    // IMPORTANTE: Mantenemos el padding y el fondo gris
+    padding: 20px;
+    background-color: $bg-color;
+    align-items: center; // Centrado vertical (o flex-start si hay mucho scroll)
+
+    // Si el formulario es muy largo, permitir scroll sin cortar
+    height: auto;
+    min-height: 100vh;
   }
 
   .register-card {
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+    // Restauramos estilo de tarjeta flotante
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
+    border: 1px solid rgba(0,0,0,0.02);
+
     padding: 32px 24px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    min-height: auto;
+    display: block; // Quitamos flex column forzado para evitar estiramientos raros
   }
 
-  // En móvil apilamos nombre y apellido
+  // En móvil apilamos nombre y apellido verticalmente
   .row {
     flex-direction: column;
-    gap: 0;
+    gap: 0; // El margin-bottom de los inputs se encargará del espacio
   }
+
+  .icon-circle {
+    width: 72px; height: 72px;
+    mat-icon { font-size: 32px; width: 32px; height: 32px; }
+  }
+
+  h1 { font-size: 1.5rem; }
 }

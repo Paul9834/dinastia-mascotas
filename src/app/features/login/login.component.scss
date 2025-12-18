@@ -9,6 +9,9 @@ $text-primary: #1A1C19;
 $text-secondary: #444744;
 $error: #BA1A1A;
 
+// =========================================
+// 🏗️ CONTENEDOR PRINCIPAL
+// =========================================
 .login-container {
   min-height: 100vh;
   width: 100%;
@@ -18,9 +21,32 @@ $error: #BA1A1A;
   background-color: $bg-color;
   padding: 24px;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+
+  // 1. Aplicar Poppins base
+  font-family: 'Poppins', sans-serif !important;
+
+  // 2. Forzar Poppins en TODOS los elementos hijos
+  * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  // 3. Salvar los iconos (Excepción vital para que no se rompan)
+  mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
 }
 
+// =========================================
+// 🃏 TARJETA DE LOGIN
+// =========================================
 .login-card {
   width: 100%;
   max-width: 400px;
@@ -30,6 +56,14 @@ $error: #BA1A1A;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
   border: 1px solid rgba(0,0,0,0.02);
   box-sizing: border-box;
+
+  // Animación suave de entrada
+  animation: slideUpFade 0.6s ease-out;
+}
+
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- HEADER --- */
@@ -73,28 +107,39 @@ p {
   font-weight: 400;
 }
 
-/* --- FORMULARIO (CORREGIDO) --- */
+/* --- FORMULARIO --- */
 .form-group {
   margin-bottom: 24px;
   width: 100%;
 }
 
-// AQUÍ ESTÁ EL ARREGLO 👇
 mat-form-field {
   width: 100%;
 
-  // Esta es la forma CORRECTA de redondear inputs en Material 3
-  // sin romper la etiqueta flotante ni los errores.
+  // Bordes redondeados modernos
   --mdc-outlined-text-field-container-shape: 16px;
 
-  // Aseguramos que el color del texto y borde sea consistente
+  // Colores consistentes
   --mdc-outlined-text-field-focus-outline-color: #{$primary};
   --mdc-outlined-text-field-label-text-color: #666;
+  --mdc-outlined-text-field-hover-outline-color: #444;
+  --mdc-outlined-text-field-error-outline-color: #{$error};
+  --mdc-outlined-text-field-error-label-text-color: #{$error};
 
   // Ajuste fino para la fuente dentro del input
   .mat-mdc-input-element {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     letter-spacing: 0.3px;
+  }
+
+  // Ajuste para el placeholder y label flotante
+  .mat-mdc-floating-label {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  // Color de los iconos prefijo/sufijo
+  .mat-icon {
+    color: #757575;
   }
 }
 
@@ -162,21 +207,95 @@ mat-form-field {
   }
 }
 
-/* --- RESPONSIVE --- */
+// =========================================
+// 📱 RESPONSIVE (CORREGIDO)
+// =========================================
 @media (max-width: 480px) {
   .login-container {
-    padding: 0;
-    background-color: $surface;
+    // IMPORTANTE: Mantenemos el padding y el fondo gris para que la tarjeta resalte
+    padding: 20px;
+    background-color: $bg-color;
+    align-items: center;
   }
 
   .login-card {
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+    // Restauramos las propiedades de tarjeta
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); // Sombra un poco más suave para móvil
+    border-radius: 24px; // Mantenemos bordes redondeados
+    border: 1px solid rgba(0,0,0,0.02);
+
+    // Ajustamos el padding interno para pantallas pequeñas
     padding: 32px 24px;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+    // Altura automática (no forzamos 100vh)
+    min-height: auto;
+    height: auto;
+  }
+
+  // Ajustes menores de tamaño para móvil
+  .icon-circle {
+    width: 72px; height: 72px;
+    margin-bottom: 20px;
+    mat-icon { font-size: 36px; width: 36px; height: 36px; }
+  }
+
+  h1 { font-size: 1.5rem; }
+
+  // Botón un poco más compacto si se desea, o mantener igual
+  .login-btn {
+    height: 52px !important;
+  }
+}
+
+// ... (tus variables y estilos anteriores) ...
+
+// =========================================
+// 🃏 TARJETA DE LOGIN
+// =========================================
+.login-card {
+  position: relative; // <--- IMPORTANTE: Necesario para ubicar el botón de volver
+  width: 100%;
+  max-width: 400px;
+  padding: 48px 40px;
+  border-radius: 28px;
+  background: $surface;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0,0,0,0.02);
+  box-sizing: border-box;
+  animation: slideUpFade 0.6s ease-out;
+}
+
+// ... (tus estilos existentes) ...
+
+// =========================================
+// 🔙 BOTÓN VOLVER (NUEVO ESTILO)
+// =========================================
+.back-home-btn {
+  position: absolute !important; // Flota sobre la tarjeta
+  top: 16px;
+  left: 16px;
+  color: $text-secondary; // Gris suave por defecto
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $primary; // Verde al pasar el mouse
+    background-color: rgba(27, 94, 32, 0.08); // Fondo verde muy suave
+  }
+
+  // Ajuste del icono
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+// ... (resto de tus estilos, incluyendo media queries) ...
+
+// Ajuste Responsive para que no quede muy pegado en móvil
+@media (max-width: 480px) {
+  .back-home-btn {
+    top: 12px;
+    left: 12px;
   }
 }
