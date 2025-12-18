@@ -1,3 +1,4 @@
+import { provideZoneChangeDetection } from "@angular/core";
 import { bootstrapApplication, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
@@ -12,7 +13,7 @@ import { errorInterceptor } from './app/core/interceptors/error.interceptor'; //
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideRouter(routes, withComponentInputBinding()),
+        provideZoneChangeDetection(),provideRouter(routes, withComponentInputBinding()),
         provideAnimations(),
 
         // 2. AGREGAMOS EL ERROR INTERCEPTOR A LA LISTA

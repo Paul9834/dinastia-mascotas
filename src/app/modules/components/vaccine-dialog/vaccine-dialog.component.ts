@@ -1,5 +1,5 @@
 import { Component, Inject, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,9 +13,14 @@ import { VaccineService } from '@core/services/vaccine.service';
     selector: 'app-vaccine-dialog',
     standalone: true,
     imports: [
-        CommonModule, ReactiveFormsModule, MatDialogModule, MatButtonModule,
-        MatFormFieldModule, MatInputModule, MatDatepickerModule, MatNativeDateModule
-    ],
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+],
     template: `
     <h2 mat-dialog-title>Registrar Vacuna</h2>
     <form [formGroup]="form" (ngSubmit)="save()">

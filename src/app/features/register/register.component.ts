@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -13,15 +13,14 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     selector: 'app-register',
     standalone: true,
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        RouterModule,
-        MatSnackBarModule
-    ],
+    ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    RouterModule,
+    MatSnackBarModule
+],
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.scss']
 })

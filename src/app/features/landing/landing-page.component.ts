@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router'; // Importamos Router y RouterModule
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,12 +10,11 @@ import { Title, Meta } from '@angular/platform-browser';
     selector: 'app-landing-page',
     standalone: true,
     imports: [
-        CommonModule,
-        RouterModule, // Vital para routerLink
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule
-    ],
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule
+],
     templateUrl: './landing-page.component.html',
     styleUrls: ['./landing-page.component.scss']
 })

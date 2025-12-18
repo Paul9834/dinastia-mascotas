@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,13 +14,12 @@ import { environment } from '../../../environments/environment';
     selector: 'app-mis-mascotas',
     standalone: true,
     imports: [
-        CommonModule,
-        RouterModule,
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatChipsModule
-    ],
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule
+],
     templateUrl: './mis-mascotas.component.html',
     styleUrls: ['./mis-mascotas.component.scss']
 })

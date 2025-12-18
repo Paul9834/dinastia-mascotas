@@ -9,14 +9,16 @@ import { LoadingService } from './core/services/loading.service'; // <--- 2. Imp
     imports: [RouterOutlet, CommonModule],
     template: `
         <router-outlet></router-outlet>
-
-        <div *ngIf="loadingService.isLoading$ | async" class="loading-overlay">
+        
+        @if (loadingService.isLoading$ | async) {
+          <div class="loading-overlay">
             <div class="spinner-container">
-                <div class="spinner"></div>
-                <p>Cargando...</p>
+              <div class="spinner"></div>
+              <p>Cargando...</p>
             </div>
-        </div>
-    `,
+          </div>
+        }
+        `,
     styleUrls: ['./app.component.scss'] // Asegúrate de tener los estilos aquí
 })
 export class AppComponent {

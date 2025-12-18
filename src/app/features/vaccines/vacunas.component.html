@@ -1,82 +1,80 @@
 <div class="page-container">
 
-    <div class="page-header">
-        <div>
-            <h1 class="title">Registro de Vacunación</h1>
-            <p class="subtitle">Historial médico y próximas dosis</p>
-        </div>
-        <button mat-flat-button class="add-btn" (click)="openRegisterDialog()" [disabled]="!selectedPetId">
-            <mat-icon>add</mat-icon> REGISTRAR VACUNA
-        </button>
+  <div class="page-header">
+    <div>
+      <h1 class="title">Registro de Vacunación</h1>
+      <p class="subtitle">Historial médico y próximas dosis</p>
     </div>
+    <button mat-flat-button class="add-btn" (click)="openRegisterDialog()" [disabled]="!selectedPetId">
+      <mat-icon>add</mat-icon> REGISTRAR VACUNA
+    </button>
+  </div>
 
-    <mat-tab-group
-            mat-stretch-tabs="false"
-            animationDuration="0ms"
-            class="custom-tabs"
-            (selectedTabChange)="onTabChange($event)">
+  <mat-tab-group
+    mat-stretch-tabs="false"
+    animationDuration="0ms"
+    class="custom-tabs"
+    (selectedTabChange)="onTabChange($event)">
 
-        <mat-tab *ngFor="let pet of pets" [label]="pet.name"></mat-tab>
-    </mat-tab-group>
+    @for (pet of pets; track pet) {
+      <mat-tab [label]="pet.name"></mat-tab>
+    }
+  </mat-tab-group>
 
-    <div *ngIf="!loading && vaccines.length === 0" class="empty-state">
-        <mat-icon>vaccines</mat-icon>
-        <p>No hay vacunas registradas para esta mascota.</p>
+  @if (!loading && vaccines.length === 0) {
+    <div class="empty-state">
+      <mat-icon>vaccines</mat-icon>
+      <p>No hay vacunas registradas para esta mascota.</p>
     </div>
+  }
 
-    <div class="vaccines-grid">
+  <div class="vaccines-grid">
 
-        <mat-card *ngFor="let v of vaccines" class="vaccine-card">
-            <mat-card-content class="card-content">
+    @for (v of vaccines; track v) {
+      <mat-card class="vaccine-card">
+        <mat-card-content class="card-content">
+          <div class="card-top">
+            <h3 class="vaccine-name">{{ v.name }}</h3>
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>
+                <mat-icon>edit</mat-icon><span>Editar</span>
+              </button>
+              <button mat-menu-item>
+                <mat-icon>delete</mat-icon><span>Eliminar</span>
+              </button>
+            </mat-menu>
+          </div>
+          <div class="status-row">
+            <span class="status-text" [ngClass]="getStatusClass(v.status)">
+              {{ translateStatus(v.status) }}
+            </span>
+          </div>
+          <div class="divider"></div>
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="label">Aplicada</span>
+              <span class="value">{{ v.applicationDate | date:'mediumDate' }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Vence</span>
+              <span class="value" [style.color]="v.status === 'OVERDUE' ? '#FF5252' : 'inherit'">
+                {{ v.nextDueDate ? (v.nextDueDate | date:'mediumDate') : 'Permanente' }}
+              </span>
+            </div>
+            <div class="detail-item full-width">
+              <span class="label">Veterinario</span>
+              <span class="value vet-value">
+                <mat-icon style="font-size: 14px; height: 14px; width: 14px; vertical-align: middle;">medical_services</mat-icon>
+                {{ v.veterinarian || 'No registrado' }}
+              </span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    }
 
-                <div class="card-top">
-                    <h3 class="vaccine-name">{{ v.name }}</h3>
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>
-                            <mat-icon>edit</mat-icon><span>Editar</span>
-                        </button>
-                        <button mat-menu-item>
-                            <mat-icon>delete</mat-icon><span>Eliminar</span>
-                        </button>
-                    </mat-menu>
-                </div>
-
-                <div class="status-row">
-                    <span class="status-text" [ngClass]="getStatusClass(v.status)">
-                        {{ translateStatus(v.status) }}
-                    </span>
-                </div>
-
-                <div class="divider"></div>
-
-                <div class="details-grid">
-                    <div class="detail-item">
-                        <span class="label">Aplicada</span>
-                        <span class="value">{{ v.applicationDate | date:'mediumDate' }}</span>
-                    </div>
-
-                    <div class="detail-item">
-                        <span class="label">Vence</span>
-                        <span class="value" [style.color]="v.status === 'OVERDUE' ? '#FF5252' : 'inherit'">
-                            {{ v.nextDueDate ? (v.nextDueDate | date:'mediumDate') : 'Permanente' }}
-                        </span>
-                    </div>
-
-                    <div class="detail-item full-width">
-                        <span class="label">Veterinario</span>
-                        <span class="value vet-value">
-                            <mat-icon style="font-size: 14px; height: 14px; width: 14px; vertical-align: middle;">medical_services</mat-icon>
-                            {{ v.veterinarian || 'No registrado' }}
-                        </span>
-                    </div>
-                </div>
-
-            </mat-card-content>
-        </mat-card>
-
-    </div>
+  </div>
 </div>

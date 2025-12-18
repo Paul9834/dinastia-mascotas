@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 
@@ -23,19 +23,17 @@ import {environment} from "../../../../environments/environment";
     templateUrl: './anadir-mascota.component.html',
     styleUrls: ['./anadir-mascota.component.scss'],
     imports: [
-        CommonModule,
-        FormsModule,
-        RouterModule,
-
-        MatCardModule,
-        MatButtonModule,
-        MatIconModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule
-    ]
+    FormsModule,
+    RouterModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule
+]
 })
 export class AnadirMascotaComponent {
 

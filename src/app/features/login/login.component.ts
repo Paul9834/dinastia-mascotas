@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
@@ -12,14 +12,13 @@ import { AuthService } from '../../core/services/auth.service'; // Asegúrate qu
     selector: 'app-login',
     standalone: true, // Importante: veo que usas standalone
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        MatCardModule,
-        MatButtonModule,
-        MatInputModule,
-        MatIconModule,
-        RouterModule
-    ],
+    ReactiveFormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    RouterModule
+],
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.scss']
 })
