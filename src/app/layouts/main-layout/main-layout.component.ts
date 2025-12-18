@@ -68,10 +68,7 @@ export class MainLayoutComponent {
     menuItems: MenuItem[] = [
         { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
         { icon: 'pets', label: 'Mis Mascotas', route: '/mascotas' },
-        { icon: 'vaccines', label: 'Vacunas', route: '/vacunas' },
-        { icon: 'event', label: 'Calendario', route: '/calendario' },
-        { icon: 'settings', label: 'Configuración', route: '/configuracion' }
-    ];
+        { icon: 'vaccines', label: 'Vacunas', route: '/vacunas' }];
 
     logout() {
         this.authService.logout();

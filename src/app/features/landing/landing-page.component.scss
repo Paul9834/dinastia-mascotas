@@ -8,12 +8,34 @@ $text-primary: #1A1C19;
 $text-secondary: #444744;
 $card-shadow: 0 20px 40px rgba(27, 94, 32, 0.08);
 
-// --- BASE & CONTAINER ---
+// =========================================
+// 🏗️ BASE & CONTAINER (CORREGIDO)
+// =========================================
 .landing-container {
-  font-family: 'Poppins', sans-serif;
+  // 1. Aplicar Poppins al contenedor base
+  font-family: 'Poppins', sans-serif !important;
   background-color: $bg-color;
   overflow-x: hidden;
   color: $text-primary;
+
+  // 2. Forzar Poppins en TODOS los textos hijos (botones, inputs, etc.)
+  * {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  // 3. 🚑 SALVAR LOS ICONOS (Excepción Vital)
+  // Esto evita que la regla de arriba rompa los iconos
+  mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
 }
 
 .container {
