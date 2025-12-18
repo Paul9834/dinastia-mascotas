@@ -1,125 +1,123 @@
 <div class="dashboard-content">
 
-  <div class="page-header">
-    <div class="header-text">
-      @if (!mobileQuery) {
-        <h1>Bienvenido de nuevo! 👋</h1>
-      }
-      @if (mobileQuery) {
-        <h1>Hola, Alex! 👋</h1>
-      }
-      @if (!mobileQuery) {
-        <p>Gestión integral de tus mascotas</p>
-      }
-    </div>
+    <div class="page-header">
+        <div class="header-text">
+            @if (!mobileQuery) {
+                <h1>¡Bienvenido de nuevo! 👋</h1>
+            } @else {
+            <h1>Hola, Alex! 👋</h1>
+        }
 
-    <button mat-flat-button color="warn" (click)="cerrarSesion()">
-      <mat-icon>logout</mat-icon>
-      @if (!mobileQuery) {
-        <span>Cerrar Sesión</span>
-      }
-    </button>
-  </div>
-
-  <div class="stats-grid">
-    @for (stat of stats; track stat) {
-      <mat-card class="stat-card">
-        <mat-card-content>
-          <div class="stat-icon" [style.background-color]="stat.color + '20'">
-            <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
-          </div>
-          <div class="stat-info">
-            <div class="stat-label">{{ stat.label }}</div>
-            <div class="stat-value">{{ stat.value }}</div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
-  </div>
-
-  <h2 class="section-title">Mis Mascotas</h2>
-
-  <div class="carousel-container">
-    <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack"
-      [style.display]="mobileQuery ? 'none' : 'flex'">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-
-    <div class="carousel-track">
-      @if (mascotas.length === 0) {
-        <div class="empty-message">
-          No tienes mascotas registradas.
+            @if (!mobileQuery) {
+                <p>Gestión integral de tus mascotas</p>
+            }
         </div>
-      }
 
-      @for (pet of visibleMascotas; track pet) {
-        <mat-card class="mascota-card">
-          <div class="mascota-image"
-            [style.background-image]="'url(' + (pet.photoUrl || fallbackImage) + ')'">
-          </div>
-          <mat-card-content>
-            <div class="mascota-header">
-              <mat-icon class="mascota-icon" [style.color]="'#ff9800'">pets</mat-icon>
-              <div class="mascota-info">
-                <h3 class="mascota-nombre">{{ pet.name }}</h3>
-                <p class="mascota-raza">{{ (pet.breed || 'Sin raza') }} • {{ pet.species }}</p>
-              </div>
-            </div>
-            <mat-chip-set>
-              <mat-chip class="edad-chip">{{ pet.birthDate || 'Sin fecha' }}</mat-chip>
-            </mat-chip-set>
-          </mat-card-content>
-        </mat-card>
-      }
+        <button mat-stroked-button (click)="cerrarSesion()">
+            <mat-icon>logout</mat-icon>
+            @if (!mobileQuery) {
+                <span>Cerrar Sesión</span>
+            }
+        </button>
     </div>
 
-    <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward"
-      [style.display]="mobileQuery ? 'none' : 'flex'">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
-
-  <h2 class="section-title" style="margin-top: 48px;">Próximas Citas</h2>
-
-  <div class="appointments-container">
-
-    @if (appointments.length === 0) {
-      <div class="empty-message-citas">
-        <p>No tienes citas programadas.</p>
-      </div>
-    }
-
-    @for (appointment of appointments; track appointment) {
-      <mat-card class="appointment-card">
-        <div class="color-strip" [style.background-color]="getColorForType(appointment.type)"></div>
-        <mat-card-content class="card-content-wrapper">
-          <div class="appointment-icon-wrapper" [style.background-color]="getColorForType(appointment.type) + '20'">
-            <mat-icon [style.color]="getColorForType(appointment.type)">
-              {{ getIconForType(appointment.type) }}
-            </mat-icon>
-          </div>
-          <div class="appointment-details">
-            <h3 class="appointment-title">{{ appointment.title }}</h3>
-            <p class="appointment-pet">Para: <strong>{{ appointment.petName }}</strong></p>
-            <div class="appointment-meta">
-              <span class="date-text">
-                {{ appointment.dateTime | date:'mediumDate' }} • {{ appointment.dateTime | date:'shortTime' }}
-              </span>
-              <span class="status-text" [class]="getStatusClass(appointment.status)">
-                {{ translateStatus(appointment.status) }}
-              </span>
+    <div class="stats-grid">
+        @for (stat of stats; track stat) {
+            <div class="stat-card"> <mat-card-content>
+                <div class="stat-icon" [style.background-color]="stat.color + '20'">
+                    <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-label">{{ stat.label }}</div>
+                    <div class="stat-value">{{ stat.value }}</div>
+                </div>
+            </mat-card-content>
             </div>
-          </div>
-        </mat-card-content>
-      </mat-card>
-    }
-
-    <div class="fab-container">
-      <button mat-fab extended color="warn" class="add-pet-btn">
-        <mat-icon>add</mat-icon>
-        <span>Nuevo</span>
-      </button>
+        }
     </div>
-  </div>
+
+    <h2 class="section-title">Mis Mascotas</h2>
+
+    <div class="carousel-container">
+        @if (!mobileQuery) {
+            <button mat-icon-button class="carousel-button left" (click)="scrollLeft()" [disabled]="!canGoBack">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+        }
+
+        <div class="carousel-track">
+            @if (mascotas.length === 0) {
+                <div class="empty-message">
+                    No tienes mascotas registradas.
+                </div>
+            }
+
+            @for (pet of visibleMascotas; track pet) {
+                <div class="mascota-card" (click)="verDetalle(pet)"> <div class="mascota-image"
+                                                                          [style.background-image]="'url(' + (pet.photoUrl || 'assets/avatar-placeholder.png') + ')'">
+                </div>
+
+                    <div class="mascota-header">
+                        <div class="mascota-info">
+                            <h3>{{ pet.name }}</h3>
+                            <p>{{ (pet.breed || 'Sin raza') }} • {{ pet.species }}</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (!mobileQuery) {
+            <button mat-icon-button class="carousel-button right" (click)="scrollRight()" [disabled]="!canGoForward">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        }
+    </div>
+
+    <h2 class="section-title">Próximas Citas</h2>
+
+    <div class="appointments-container">
+
+        @if (appointments.length === 0) {
+            <div class="empty-message-citas">
+                <p>No tienes citas programadas.</p>
+            </div>
+        }
+
+        @for (appointment of appointments; track appointment) {
+            <div class="appointment-card">
+                <div class="color-strip" [style.background-color]="getColorForType(appointment.type)"></div>
+
+                <div class="card-content-wrapper">
+                    <div class="appointment-icon-wrapper" [style.background-color]="getColorForType(appointment.type) + '15'">
+                        <mat-icon [style.color]="getColorForType(appointment.type)">
+                            {{ getIconForType(appointment.type) }}
+                        </mat-icon>
+                    </div>
+
+                    <div class="appointment-details">
+                        <h3 class="appointment-title">{{ appointment.title }}</h3>
+                        <p class="appointment-pet">Mascota: {{ appointment.petName }}</p>
+                    </div>
+
+                    <div class="appointment-meta">
+            <span class="date-text">
+              {{ appointment.dateTime | date:'d MMM, h:mm a' }}
+            </span>
+                        <span class="status-text" [class]="getStatusClass(appointment.status)">
+              {{ translateStatus(appointment.status) }}
+            </span>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="fab-container">
+            <button mat-fab extended class="add-pet-btn">
+                <mat-icon>add</mat-icon>
+                <span>Nueva Cita</span>
+            </button>
+        </div>
+    </div>
 
 </div>

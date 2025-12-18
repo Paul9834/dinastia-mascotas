@@ -20,9 +20,7 @@ import { AgePipe } from '../../shared/pipes/age.pipe';
         MatCardModule,
         MatButtonModule,
         MatIconModule,
-        MatChipsModule,
-        AgePipe
-    ],
+        MatChipsModule],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss']
 })

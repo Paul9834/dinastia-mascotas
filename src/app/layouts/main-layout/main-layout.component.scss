@@ -1,126 +1,289 @@
+// =========================================
+// 🎨 PALETA DINASTÍA MASCOTAS (Nature UI)
+// =========================================
+
+// Color Principal (Verde Bosque Profundo - Confianza y Naturaleza)
+$primary: #1B5E20;
+// Contenedor Activo (Verde Menta Suave - Frescura)
+$primary-container: #E8F5E9;
+// Texto sobre contenedor activo (Verde Oscuro)
+$on-primary-container: #1B5E20;
+// Fondo General de la App (Gris muy suave con tinte cálido)
+$app-background: #F5F7F6;
+// Superficie de tarjetas y menús (Blanco Puro)
+$surface: #FFFFFF;
+// Texto Principal
+$text-primary: #1A1C19;
+// Texto Secundario
+$text-secondary: #444744;
+
+// Configuración Global
 .sidenav-container {
   width: 100%;
   height: 100vh;
+  background-color: $app-background; // Fondo general diferenciado
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
+// =========================================
+// 📱 BARRA LATERAL (DRAWER)
+// =========================================
 .app-sidenav {
-  width: 260px;
-  background: white;
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  width: 280px;
+  background-color: $surface;
+  border-right: none;
+  // Sombra suave y difusa (Estilo moderno)
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.02);
+  padding: 16px; // Un poco más de aire
+  box-sizing: border-box;
+
+  &.mat-drawer-side {
+    border-right: none;
+  }
 }
 
 .sidenav-content-wrapper {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
+// --- LOGO (Marca) ---
 .logo-container {
-  padding: 24px 20px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  color: #2E7D32;
+  padding: 12px 16px 32px 16px; // Más espacio abajo
+  gap: 16px;
+
+  .logo-icon-bg {
+    background: linear-gradient(135deg, $primary, #4CAF50); // Degradado sutil
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px; // Squircle suave
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2); // Sombra verde brillante
+
+    mat-icon {
+      font-size: 26px;
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  .logo-text {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700; // Más negrita para la marca
+    color: $text-primary;
+    letter-spacing: -0.5px;
+  }
 }
 
-.logo-icon {
-  font-size: 28px;
-  width: 28px;
-  height: 28px;
-}
+// --- MENÚ DE NAVEGACIÓN ---
+.m3-nav-list {
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; // Espacio entre items
 
-.logo-text {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
+  .m3-nav-item {
+    border-radius: 12px !important; // Bordes redondeados modernos (no píldora completa)
+    height: 52px;
+    color: $text-secondary;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    font-size: 0.95rem;
 
-.nav-item {
-  margin: 4px 12px;
-  border-radius: 8px;
-  color: #555;
-}
+    // Iconos
+    mat-icon {
+      margin-right: 16px;
+      color: #72796F; // Gris neutro para inactivos
+      transition: color 0.2s;
+    }
 
-.active-link {
-  background-color: rgba(46, 125, 50, 0.12);
-  color: #2E7D32;
-  font-weight: 600;
-}
+    // --- ESTADO ACTIVO (La magia) ---
+    &.active-link {
+      background-color: $primary-container;
+      color: $on-primary-container;
+      font-weight: 600;
 
-.active-link mat-icon {
-  color: #2E7D32;
+      mat-icon {
+        color: $on-primary-container; // Icono se vuelve verde
+      }
+
+      // Pequeña línea indicador a la izquierda (Opcional, estilo premium)
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        height: 24px;
+        width: 4px;
+        background-color: $on-primary-container;
+        border-radius: 0 4px 4px 0;
+        opacity: 0; // Cambia a 1 si quieres la línea
+      }
+    }
+
+    // Hover
+    &:hover:not(.active-link) {
+      background-color: rgba(0, 0, 0, 0.03);
+      color: $text-primary;
+
+      mat-icon {
+        color: $text-primary;
+      }
+    }
+  }
 }
 
 .spacer {
   flex: 1;
 }
 
-.user-profile {
-  padding: 16px 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+// --- TARJETA DE USUARIO (Footer) ---
+.m3-user-card {
   display: flex;
   align-items: center;
+  padding: 16px;
+  margin-top: 24px;
+  border-radius: 16px;
+  background-color: #F1F3F1; // Gris verdoso muy sutil
+  border: 1px solid transparent;
   gap: 12px;
-  background-color: #fafafa;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: white;
+    border-color: #E0E0E0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  .avatar-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .user-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: $text-primary;
+    }
+    .user-role {
+      font-size: 0.75rem;
+      color: $text-secondary;
+      font-weight: 500;
+    }
+  }
 }
 
-.avatar-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-  color: #81C784;
-}
-
-.user-info {
-  overflow: hidden;
-}
-
-.user-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #333;
-}
-
-.user-email {
-  font-size: 0.8rem;
-  color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
+// =========================================
+// 🖥️ CONTENIDO PRINCIPAL (Dashboard)
+// =========================================
 .main-content {
   display: flex;
   flex-direction: column;
-  background-color: #f1f8e9;
+  background-color: $app-background;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
+// --- TOOLBAR SUPERIOR ---
 .app-toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #2E7D32;
-  color: white;
-}
+  background: transparent;
+  color: $text-primary;
+  padding: 8px 24px; // Más aire lateral
+  height: 70px; // Un poco más alta
 
-.app-toolbar button {
-  color: white;
+  .menu-btn {
+    color: $text-secondary;
+    margin-right: 8px;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+    font-weight: 700; // Título grueso
+    color: $text-primary;
+    letter-spacing: -0.5px;
+  }
 }
 
 .toolbar-spacer {
   flex: 1;
 }
 
-.content-wrapper {
-  padding: 0;
-  flex: 1;
-  overflow-y: auto;
+.actions-container {
+  display: flex;
+  gap: 8px;
+
+  button {
+    color: $text-secondary;
+    background: white;
+    border-radius: 12px; // Botones cuadrados redondeados
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+
+    &:hover {
+      background-color: #FAFAFA;
+      color: $primary;
+    }
+  }
 }
 
+// --- WRAPPER DEL CONTENIDO (La tarjeta blanca grande) ---
+.router-wrapper {
+  flex: 1;
+  background-color: $surface;
+  margin: 0 24px 24px 24px; // Margen generoso
+  border-radius: 28px; // Curva premium estilo iOS/Material 3
+  padding: 32px;
+  overflow: auto;
+  // Sombra suave para levantar el contenido del fondo
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+// ==========================================
+// 📱 MÓVIL (Responsivo)
+// ==========================================
 @media (max-width: 768px) {
+
   .app-sidenav {
-    width: 100%;
+    width: 85vw !important;
+    max-width: 320px !important;
+    // En móvil, bordes curvos solo a la derecha
+    border-radius: 0 28px 28px 0 !important;
+  }
+
+  .app-toolbar {
+    padding: 0 16px;
+    .page-title { font-size: 1.2rem; }
+  }
+
+  .router-wrapper {
+    margin: 0; // Sin margen en móvil
+    border-radius: 28px 28px 0 0; // Solo curva arriba
+    padding: 20px;
+    padding-bottom: 100px;
+    box-shadow: none; // En móvil plano suele verse mejor
   }
 }

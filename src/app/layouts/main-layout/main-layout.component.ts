@@ -1,13 +1,15 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-
+import { Component, inject, viewChild, effect, computed } from '@angular/core';
 import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatBadgeModule } from '@angular/material/badge';
-import { GlobalSpinnerComponent } from '@shared//ui/spinner/global-spinner.component';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { GlobalSpinnerComponent } from '@shared/ui/spinner/global-spinner.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs/operators';
 
 interface MenuItem {
     icon: string;
@@ -19,24 +21,45 @@ interface MenuItem {
     selector: 'app-main-layout',
     standalone: true,
     imports: [
-    RouterModule,
-    RouterLink,
-    RouterLinkActive,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatBadgeModule,
-    GlobalSpinnerComponent
-],
+        RouterModule,
+        RouterLink,
+        RouterLinkActive,
+        MatSidenavModule,
+        MatListModule,
+        MatIconModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatBadgeModule,
+        GlobalSpinnerComponent
+    ],
     templateUrl: './main-layout.component.html',
     styleUrls: ['./main-layout.component.scss']
 })
-export class MainLayoutComponent implements OnInit {
-    mobileQuery = false;
-    sidenavMode: 'side' | 'over' = 'side';
-    isSidenavOpen = true;
+export class MainLayoutComponent {
+    private breakpointObserver = inject(BreakpointObserver);
+
+    // Referencia al componente visual
+    sidenav = viewChild.required<MatSidenav>('sidenav');
+
+    // 1. Detectar Móvil
+    isMobile = toSignal(
+        this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.TabletPortrait])
+            .pipe(map(result => result.matches)),
+        { initialValue: false }
+    );
+
+    // 2. Modo Sidenav
+    sidenavMode = computed(() => this.isMobile() ? 'over' : 'side');
+
+    // 3. Variable de control (Standard Boolean)
+    isOpen = true;
+
+    constructor() {
+        // Sincronizar estado inicial al cargar o redimensionar
+        effect(() => {
+            this.isOpen = !this.isMobile();
+        });
+    }
 
     menuItems: MenuItem[] = [
         { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
@@ -46,30 +69,15 @@ export class MainLayoutComponent implements OnInit {
         { icon: 'settings', label: 'Configuración', route: '/configuracion' }
     ];
 
-    ngOnInit() {
-        this.checkScreenSize();
+    // Botón hamburguesa
+    toggleSidenav() {
+        this.isOpen = !this.isOpen;
     }
 
-    @HostListener('window:resize')
-    onResize() {
-        this.checkScreenSize();
-    }
-
-    checkScreenSize() {
-        const width = window.innerWidth;
-
-        if (width < 768) {
-            this.mobileQuery = true;
-            this.sidenavMode = 'over';
-            this.isSidenavOpen = false;
-        } else {
-            this.mobileQuery = false;
-            this.sidenavMode = 'side';
-            this.isSidenavOpen = true;
+    // 👇 ESTA ES LA FUNCIÓN QUE CIERRA AL HACER CLIC EN UN LINK 👇
+    closeMenu() {
+        if (this.isMobile()) {
+            this.isOpen = false;
         }
-    }
-
-    closeSidenavOnMobile() {
-        if (this.mobileQuery) this.isSidenavOpen = false;
     }
 }

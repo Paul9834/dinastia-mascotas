@@ -1,84 +1,80 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" autosize>
 
-  <app-global-spinner></app-global-spinner>
+    <app-global-spinner></app-global-spinner>
 
-  <mat-sidenav
-    #sidenav
-    [mode]="sidenavMode"
-    [opened]="isSidenavOpen"
-    class="app-sidenav"
-    [fixedInViewport]="mobileQuery"
-    [fixedTopGap]="0"
-    >
-    <div class="sidenav-content-wrapper">
+    <mat-sidenav
+        #sidenav
+        [mode]="sidenavMode()"
+        [(opened)]="isOpen"
+        class="app-sidenav m3-drawer"
+        [fixedInViewport]="true"
+        [fixedTopGap]="0">
 
-      <div class="logo-container">
-        <mat-icon class="logo-icon">pets</mat-icon>
-        <h2 class="logo-text">Dinastía Mascotas</h2>
-      </div>
+        <div class="sidenav-content-wrapper">
+            <div class="logo-container">
+                <div class="logo-icon-bg">
+                    <mat-icon>pets</mat-icon>
+                </div>
+                <h2 class="logo-text">Dinastía</h2>
+            </div>
 
-      <mat-nav-list>
-        @for (item of menuItems; track item) {
-          <a
-            mat-list-item
-            [routerLink]="item.route"
-            routerLinkActive="active-link"
-            (click)="closeSidenavOnMobile()"
-            class="nav-item"
-            >
-            <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
-            <span matListItemTitle>{{ item.label }}</span>
-          </a>
-        }
-      </mat-nav-list>
+            <mat-nav-list class="m3-nav-list">
+                @for (item of menuItems; track item.label) {
+                    <a
+                            mat-list-item
+                            [routerLink]="item.route"
+                            routerLinkActive="active-link"
+                            (click)="closeMenu()"
+                            class="m3-nav-item">
 
-      <div class="spacer"></div>
+                        <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+                        <span matListItemTitle>{{ item.label }}</span>
+                    </a>
+                }
+            </mat-nav-list>
 
-      <div class="user-profile">
-        <mat-icon class="avatar-icon">account_circle</mat-icon>
-        <div class="user-info">
-          <div class="user-name">Alex SEO</div>
-          <div class="user-email">admin&#64;dinastia.co</div>
+            <div class="spacer"></div>
+
+            <div class="user-profile m3-user-card">
+                <img src="assets/avatar-placeholder.png" alt="User" class="avatar-img"
+                     onerror="this.src='https://ui-avatars.com/api/?name=Alex+SEO&background=random'">
+                <div class="user-info">
+                    <span class="user-name">Paul Montealegre</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+            </div>
         </div>
-      </div>
+    </mat-sidenav>
 
-    </div>
-  </mat-sidenav>
+    <mat-sidenav-content class="main-content">
 
-  <mat-sidenav-content class="main-content">
+        <mat-toolbar class="app-toolbar">
+            @if (isMobile()) {
+                <button mat-icon-button (click)="toggleSidenav()" class="menu-btn">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            }
 
-    <mat-toolbar class="app-toolbar">
+            <span class="page-title">
+                @if(isMobile()) { Dinastía } @else { Panel de Control }
+            </span>
 
-      @if (mobileQuery) {
-        <button
-          mat-icon-button
-          class="menu-btn"
-          (click)="sidenav.toggle()"
-          >
-          <mat-icon>menu</mat-icon>
-        </button>
-      }
+            <span class="toolbar-spacer"></span>
 
-      @if (mobileQuery) {
-        <span>Dinastía Mascotas</span>
-      }
+            <div class="actions-container">
+                <button mat-icon-button matBadge="3" matBadgeColor="warn">
+                    <mat-icon>notifications_none</mat-icon>
+                </button>
+                <button mat-icon-button>
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </mat-toolbar>
 
-      <span class="toolbar-spacer"></span>
+        <div class="router-wrapper">
+            <router-outlet></router-outlet>
+        </div>
 
-      <button mat-icon-button matBadge="3" matBadgeColor="warn">
-        <mat-icon>notifications</mat-icon>
-      </button>
-
-      <button mat-icon-button>
-        <mat-icon>account_circle</mat-icon>
-      </button>
-
-    </mat-toolbar>
-
-    <div class="content-wrapper">
-      <router-outlet></router-outlet>
-    </div>
-
-  </mat-sidenav-content>
+    </mat-sidenav-content>
 
 </mat-sidenav-container>
