@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common'; // <--- 1. Importar esto
-import { LoadingService } from './core/services/loading.service'; // <--- 2. Importar tu servicio
+import { CommonModule } from '@angular/common';
+import { LoadingService } from './core/services/loading.service';
 
 @Component({
     selector: 'app-root',
@@ -9,18 +9,19 @@ import { LoadingService } from './core/services/loading.service'; // <--- 2. Imp
     imports: [RouterOutlet, CommonModule],
     template: `
         <router-outlet></router-outlet>
-        
+
         @if (loadingService.isLoading$ | async) {
-          <div class="loading-overlay">
-            <div class="spinner-container">
-              <div class="spinner"></div>
-              <p>Cargando...</p>
+            <div class="loading-overlay">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <p>Cargando...</p>
+                </div>
             </div>
-          </div>
         }
-        `,
-    styleUrls: ['./app.component.scss'] // Asegúrate de tener los estilos aquí
+    `,
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+    // Inyección limpia del servicio de carga
     public loadingService = inject(LoadingService);
 }

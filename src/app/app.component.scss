@@ -1,34 +1,46 @@
-
-
+/* Animación de rotación */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
+/* Capa de fondo que cubre toda la pantalla */
 .loading-overlay {
-  position: fixed; // Fijo respecto a la pantalla
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.7); // Blanco transparente
-  z-index: 9999; // ¡Encima de todo!
+  background-color: rgba(255, 255, 255, 0.8); // Fondo blanco semi-transparente
+  backdrop-filter: blur(3px); // Difumina lo que hay detrás
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(2px); // Efecto borroso moderno
+  z-index: 10000; // Valor muy alto para estar sobre modales o barras de navegación
 }
 
+/* Contenedor central */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  p {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+    font-family: sans-serif;
+    font-weight: 500;
+  }
+}
+
+/* El círculo de carga */
 .spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #4CAF50; // Tu color verde
+  width: 55px;
+  height: 55px;
+  border: 6px solid #e0e0e0; // Color del círculo base (gris claro)
+  border-top: 6px solid #4CAF50; // El color verde de tu imagen
   border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  animation: spin 0.8s linear infinite; // Un poco más rápido para fluidez
 }
