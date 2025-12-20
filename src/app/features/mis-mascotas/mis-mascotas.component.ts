@@ -2,9 +2,9 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-// MatChipsModule ya no es necesario porque hicimos un chip personalizado con CSS
-// MatCardModule ya no es estrictamente necesario si usas divs, pero lo dejamos por si acaso.
 import { MatCardModule } from '@angular/material/card';
+// Importamos las funciones de animación
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { PetApiService } from '../../core/services/pet-api.service';
 import { Pet } from '../../core/models/pet.model';
@@ -20,7 +20,26 @@ import { environment } from '../../../environments/environment';
         MatIconModule
     ],
     templateUrl: './mis-mascotas.component.html',
-    styleUrls: ['./mis-mascotas.component.scss']
+    styleUrls: ['./mis-mascotas.component.scss'],
+    // 👇 DEFINICIÓN DE ANIMACIONES
+    animations: [
+        trigger('fadeInUp', [
+            transition(':enter', [
+                style({ opacity: 0, transform: 'translateY(20px)' }),
+                animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+            ])
+        ]),
+        trigger('staggerList', [
+                transition(':enter', [
+                    query('.pet-card, .add-card-placeholder', [
+                        style({ opacity: 0, transform: 'translateY(20px)' }),
+                        stagger('100ms', [
+                            animate('0.4s cubic-bezier(0.25, 0.8, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+                        ])
+                    ], { optional: true })
+                ])
+            ]
+        )]
 })
 export class MisMascotasComponent implements OnInit {
 
@@ -52,9 +71,10 @@ export class MisMascotasComponent implements OnInit {
     }
 
     getPetImageUrl(photoUrl?: string | null): string {
-        if (!photoUrl) return 'assets/avatar-placeholder.png'; // Asegúrate de tener esta imagen
+        if (!photoUrl) return 'assets/avatar-placeholder.png';
         if (photoUrl.startsWith('http')) return photoUrl;
 
+        // Limpieza de slashes dobles si es necesario
         const path = photoUrl.startsWith('/') ? photoUrl : `/${photoUrl}`;
         return `${this.mediaBaseUrl}${path}`;
     }

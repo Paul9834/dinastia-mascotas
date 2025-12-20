@@ -21,6 +21,20 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   margin: 0 auto;
   font-family: 'Poppins', sans-serif !important;
   color: $text-primary;
+
+  // 🚑 CORRECCIÓN VITAL: PROTEGER ICONOS
+  // Esto asegura que los iconos dentro de las tarjetas se vean bien
+  mat-icon {
+    font-family: 'Material Icons' !important;
+    font-weight: normal !important;
+    font-style: normal !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+  }
 }
 
 // --- HEADER ---
@@ -32,15 +46,13 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   flex-wrap: wrap;
   gap: 24px;
 
-  // 🏆 TÍTULO: POPPINS MEDIUM 500
   h1.title {
     font-size: 2.4rem;
     margin: 0;
     color: $primary;
     font-family: 'Poppins', sans-serif !important;
-    font-weight: 500 !important; // Peso Medium elegante
+    font-weight: 500 !important;
     letter-spacing: -0.5px;
-    -webkit-font-smoothing: antialiased;
   }
 
   .subtitle {
@@ -51,7 +63,7 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   }
 }
 
-// Botón Añadir (Poppins)
+// Botón Añadir
 .add-btn {
   height: 48px;
   padding: 0 24px !important;
@@ -78,7 +90,7 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   align-items: stretch;
 }
 
-// --- TARJETA DE MASCOTA (Nature UI) ---
+// --- TARJETA DE MASCOTA ---
 .pet-card {
   border-radius: 24px !important;
   overflow: hidden;
@@ -87,16 +99,23 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   box-shadow: $card-shadow;
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1),
+  box-shadow 0.3s cubic-bezier(0.2, 0, 0, 1);
   height: 100%;
+  will-change: transform, box-shadow;
+  position: relative; // Para posicionar badges absolutos
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(27, 94, 32, 0.12);
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 16px 32px rgba(27, 94, 32, 0.15);
+  }
+
+  &:active {
+    transform: scale(0.98);
+    transition: transform 0.1s;
   }
 }
 
-// 🏆 FIX: ALTURA DE IMAGEN ASEGURADA
 .pet-image {
   height: 220px;
   width: 100%;
@@ -114,6 +133,23 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   }
 }
 
+// Badge Flotante "Activo"
+.health-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex; align-items: center; gap: 4px;
+  font-size: 0.75rem; font-weight: 700;
+  color: #2E7D32; // Verde
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 2; // Asegurar que esté sobre la imagen
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; display:flex; align-items:center; justify-content:center; }
+}
+
 .pet-content {
   padding: 24px;
   flex: 1;
@@ -122,8 +158,21 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
 .pet-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; // Alineación superior por si el nombre es largo
   margin-bottom: 8px;
+  gap: 12px;
+}
+
+// Contenedor Nombre + Género
+.name-container {
+  display: flex; align-items: center; gap: 6px;
+  max-width: 65%;
+
+  .gender-icon {
+    font-size: 20px; width: 20px; height: 20px;
+    opacity: 0.9;
+    display: flex; align-items: center; justify-content: center;
+  }
 }
 
 .pet-name {
@@ -132,32 +181,62 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   font-family: 'Poppins', sans-serif !important;
   font-weight: 600;
   color: $text-primary;
+  line-height: 1.2;
+
+  // Evitar que nombres largos rompan el diseño
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; // Se ajusta dentro del flex container
 }
 
 .status-chip {
-  padding: 6px 14px;
-  font-size: 0.8rem;
+  padding: 4px 12px;
+  font-size: 0.75rem;
   font-weight: 700;
   background-color: $primary-light;
   color: $primary;
   border-radius: 30px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap; // Evitar que el chip se parta
+}
+
+// Sub-header (Raza y Microchip)
+.sub-header {
+  margin-bottom: 20px;
+  display: flex; flex-direction: column; gap: 6px;
 }
 
 .pet-breed {
   color: $text-secondary;
-  margin: 0 0 24px;
+  margin: 0;
   font-size: 0.95rem;
   font-weight: 500;
+
+  // Evitar texto muy largo
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.microchip-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background-color: #F5F5F5;
+  padding: 2px 8px;
+  border-radius: 6px;
+  width: fit-content;
+
+  mat-icon { font-size: 14px; width: 14px; height: 14px; color: #757575; display:flex; align-items:center; }
+  span { font-size: 0.7rem; color: #616161; font-family: 'Roboto Mono', monospace; letter-spacing: 0.5px; font-weight: 500; }
 }
 
 .pet-stats {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px; // Un poco más de aire entre items
   padding-top: 20px;
-  border-top: 1px solid rgba(0,0,0,0.04);
+  border-top: 1px solid rgba(0,0,0,0.06);
 }
 
 .stat {
@@ -169,12 +248,23 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   font-weight: 500;
 
   .icon-box {
-    width: 32px; height: 32px;
-    border-radius: 10px;
+    width: 36px; height: 36px; // Icono un poquito más grande para mejor click/touch
+    border-radius: 12px;
     background-color: $bg-color;
     display: flex; align-items: center; justify-content: center;
     color: $primary;
-    mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      // Aseguramos alineación perfecta
+      display: flex; justify-content: center; align-items: center;
+    }
+  }
+
+  span {
+    font-family: 'Poppins', sans-serif !important;
   }
 }
 
@@ -187,10 +277,15 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   font-family: 'Poppins', sans-serif !important;
   border-radius: 14px !important;
   height: 48px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     background-color: $primary-light !important;
     border-color: $primary !important;
+  }
+
+  &:active {
+    transform: scale(0.96);
   }
 }
 
@@ -204,7 +299,11 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .placeholder-content {
+    text-align: center;
+  }
 
   .icon-circle {
     width: 80px; height: 80px;
@@ -212,7 +311,7 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
     background-color: #E0E0E0;
     color: #9E9E9E;
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 24px;
+    margin: 0 auto 24px;
     transition: all 0.3s;
     mat-icon { font-size: 40px; width: 40px; height: 40px; }
   }
@@ -223,17 +322,40 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
     color: $text-secondary;
     font-weight: 600;
     font-size: 1.2rem;
+    transition: color 0.3s;
   }
 
   &:hover {
     border-color: $primary;
-    background-color: $primary-light;
+    background-color: rgba(232, 245, 233, 0.6);
     transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(27, 94, 32, 0.1);
 
     .icon-circle {
+      transform: scale(1.1) rotate(10deg);
       background-color: $primary;
       color: white;
+      box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
     }
     h3 { color: $primary; }
   }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
+
+// --- RESPONSIVE ---
+@media (max-width: 768px) {
+  .page-container { padding: 20px; }
+  .pets-grid { gap: 20px; }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .add-btn { width: 100%; }
+  }
+}
+

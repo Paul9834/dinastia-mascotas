@@ -1,6 +1,6 @@
 <div class="page-container">
 
-    <div class="page-header">
+    <div class="page-header" @fadeInUp>
         <div>
             <h1 class="title">Mis Mascotas</h1>
             <p class="subtitle">Gestiona los perfiles médicos de tus compañeros</p>
@@ -12,34 +12,68 @@
         </button>
     </div>
 
-    <div class="pets-grid">
+    @if (loading) {
+        <div style="display: flex; justify-content: center; margin-top: 60px;">
+            <p style="color: #666; font-family: 'Poppins', sans-serif;">Cargando perfiles...</p>
+        </div>
+    } @else {
+    <div class="pets-grid" @staggerList>
 
-        @for (pet of pets; track pet) {
+        @for (pet of pets; track pet.id) {
             <div class="pet-card">
-                <div class="pet-image" [style.background-image]="'url(' + getPetImageUrl(pet.photoUrl) + ')'"></div>
+                <div class="pet-image" [style.background-image]="'url(' + getPetImageUrl(pet.photoUrl) + ')'">
+                    <div class="health-badge healthy">
+                        <mat-icon>verified</mat-icon>
+                        <span>Activo</span>
+                    </div>
+                </div>
 
                 <div class="pet-content">
                     <div class="pet-header">
-                        <h2 class="pet-name">{{ pet.name }}</h2>
-                        <span class="status-chip">{{ pet.age }}</span>
+                        <div class="name-container">
+                            <h2 class="pet-name">{{ pet.name }}</h2>
+                            @if (pet.sex) {
+                                <mat-icon class="gender-icon"
+                                          [style.color]="pet.sex === 'MALE' ? '#1E88E5' : (pet.sex === 'FEMALE' ? '#E91E63' : '#9E9E9E')"
+                                          [title]="pet.sex === 'MALE' ? 'Macho' : (pet.sex === 'FEMALE' ? 'Hembra' : 'Desconocido')">
+                                    {{ pet.sex === 'MALE' ? 'male' : (pet.sex === 'FEMALE' ? 'female' : 'help_outline') }}
+                                </mat-icon>
+                            }
+                        </div>
+                        <span class="status-chip">{{ pet.species || 'Mascota' }}</span>
                     </div>
 
-                    <p class="pet-breed">{{ pet.breed }}</p>
+                    <div class="sub-header">
+                        <p class="pet-breed">{{ pet.breed || 'Raza no especificada' }}</p>
+
+                        @if (pet.microchip) {
+                            <div class="microchip-tag">
+                                <mat-icon>qr_code_2</mat-icon>
+                                <span>{{ pet.microchip }}</span>
+                            </div>
+                        }
+                    </div>
 
                     <div class="pet-stats">
                         <div class="stat">
-                            <div class="icon-box"><mat-icon>vaccines</mat-icon></div>
-                            <span>{{ pet.vaccines }} Vacunas registradas</span>
+                            <div class="icon-box"><mat-icon>cake</mat-icon></div>
+                            <span>{{ pet.birthDate || '12 Sep, 2021' }}</span>
                         </div>
+
                         <div class="stat">
-                            <div class="icon-box"><mat-icon>event</mat-icon></div>
-                            <span>Próx. Cita: {{ pet.nextAppt || 'Sin agendar' }}</span>
+                            <div class="icon-box"><mat-icon>monitor_weight</mat-icon></div>
+                            <span>{{ pet.weight || '14.5 kg' }}</span>
+                        </div>
+
+                        <div class="stat">
+                            <div class="icon-box"><mat-icon>vaccines</mat-icon></div>
+                            <span>{{ pet.vaccines || 0 }} Vacunas al día</span>
                         </div>
                     </div>
                 </div>
 
                 <button mat-stroked-button class="carnet-btn" [routerLink]="['/mascotas', pet.id]">
-                    VER CARNET DIGITAL
+                    VER DETALLE
                 </button>
             </div>
         }
@@ -47,10 +81,11 @@
         <div class="add-card-placeholder" routerLink="/mascotas/nueva">
             <div class="placeholder-content">
                 <div class="icon-circle">
-                    <mat-icon>pets</mat-icon>
+                    <mat-icon>add</mat-icon>
                 </div>
                 <h3>Registrar Nueva Mascota</h3>
             </div>
         </div>
     </div>
+}
 </div>
