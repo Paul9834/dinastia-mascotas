@@ -11,7 +11,7 @@ export class PetApiService {
     private readonly apiUrl = `${environment.apiBaseUrl}/pets`;
 
     getMyPets(): Observable<Pet[]> {
-        return this.http.get<Pet[]>(this.apiUrl);
+        return this.http.get<Pet[]>(`${this.apiUrl}/mine`);
     }
 
     getPetById(id: number): Observable<Pet> {
@@ -29,4 +29,15 @@ export class PetApiService {
     deletePet(id: number): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
     }
+
+    getPendingPets(): Observable<Pet[]> {
+        return this.http.get<Pet[]>(`${this.apiUrl}/pending`);
+    }
+
+
+
+    assignOwner(petId: number, ownerId: number): Observable<Pet> {
+        return this.http.put<Pet>(`${this.apiUrl}/${petId}/assign-owner/${ownerId}`, {});
+    }
+
 }

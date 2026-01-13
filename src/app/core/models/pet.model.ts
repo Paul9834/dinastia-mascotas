@@ -1,5 +1,7 @@
 export type PetSex = 'MALE' | 'FEMALE' | 'UNKNOWN';
 
+
+
 export interface Pet {
     id: number;
     name: string;
@@ -8,7 +10,6 @@ export interface Pet {
     sex?: PetSex | null;
     birthDate?: string | null;
     photoUrl?: string | null;
-    userId: number;
 }
 
 export interface CreatePetRequest {
@@ -16,9 +17,9 @@ export interface CreatePetRequest {
     species: string;
     breed?: string | null;
     sex?: PetSex | null;
-    color: string | null;
     birthDate?: string | null;
     photoUrl?: string | null;
+    ownerId?: number | null;
 }
 
 export interface UpdatePetRequest {

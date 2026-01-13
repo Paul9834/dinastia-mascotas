@@ -5,14 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { trigger, transition, style, animate, query, stagger } from '@angular/animations'; // 👈 IMPORTANTE
+import { trigger, transition, style, animate, query, stagger } from '@angular/animations';
 
 import { AuthService } from '../../core/services/auth.service';
 import { Pet } from '../../core/models/pet.model';
 import { PetApiService } from '../../core/services/pet-api.service';
 import { AppointmentService } from '../../core/services/appointment.service';
 import { Appointment } from '../../core/models/appointment.model';
-import { AgePipe } from '../../shared/pipes/age.pipe';
 
 @Component({
     selector: 'app-dashboard',
@@ -26,21 +25,18 @@ import { AgePipe } from '../../shared/pipes/age.pipe';
         MatChipsModule],
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
-    // 👇👇👇 AQUI ESTÁ LA MAGIA DE LAS ANIMACIONES 👇👇👇
     animations: [
-        // Animación 1: Entrada suave hacia arriba (Header)
         trigger('fadeInUp', [
             transition(':enter', [
                 style({ opacity: 0, transform: 'translateY(20px)' }),
                 animate('600ms cubic-bezier(0.2, 0.0, 0, 1.0)', style({ opacity: 1, transform: 'translateY(0)' }))
             ])
         ]),
-        // Animación 2: Lista escalonada (Tarjetas entran una por una)
         trigger('staggerList', [
-            transition('* => *', [ // Cada vez que cambian los datos
+            transition('* => *', [
                 query(':enter', [
                     style({ opacity: 0, transform: 'translateY(30px)' }),
-                    stagger('100ms', [ // Retraso de 100ms entre cada item
+                    stagger('100ms', [
                         animate('500ms cubic-bezier(0.2, 0.0, 0, 1.0)',
                             style({ opacity: 1, transform: 'translateY(0)' }))
                     ])
@@ -50,9 +46,6 @@ import { AgePipe } from '../../shared/pipes/age.pipe';
     ]
 })
 export class DashboardComponent implements OnInit {
-    // ... (Tu código TypeScript sigue EXACTAMENTE IGUAL, no borres nada de la lógica) ...
-    // Solo asegúrate de copiar la sección `animations` y los imports de arriba.
-
     private authService = inject(AuthService);
     private petApiService = inject(PetApiService);
     private appointmentService = inject(AppointmentService);
@@ -93,7 +86,14 @@ export class DashboardComponent implements OnInit {
                 this.mascotas = pets;
                 this.cdr.detectChanges();
             },
-            error: (err) => console.error('Error cargando mascotas', err)
+            error: (err) => {
+                console.error('Error cargando mascotas', {
+                    status: err.status,
+                    url: err.url,
+                    message: err.message,
+                    body: err.error
+                });
+            }
         });
     }
 

@@ -14,8 +14,10 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { PetApiService } from '@core/services/pet-api.service';
 import { UploadService } from '@core/services/upload.service';
-import { CreatePetForm } from '@core/models/pet.model';
+import {CreatePetForm, CreatePetRequest, PetSex} from '@core/models/pet.model';
 import {environment} from "../../../../environments/environment";
+
+
 
 @Component({
     selector: 'app-anadir-mascota',
@@ -47,8 +49,7 @@ export class AnadirMascotaComponent {
         breed: null,
         sex: null,
         birthDate: null,
-        photoUrl: null
-    };
+        photoUrl: null};
 
 
 
@@ -71,23 +72,25 @@ export class AnadirMascotaComponent {
     }
 
     guardarMascota() {
-        const payload = {
+        const sex: PetSex | null =
+            this.petForm.sex === 'Male' ? 'MALE' :
+                this.petForm.sex === 'Female' ? 'FEMALE' : null;
+
+        const payload: CreatePetRequest = {
             name: this.petForm.name,
             species: this.petForm.species,
             breed: this.petForm.breed ?? null,
-            sex: this.petForm.sex
-                ? this.petForm.sex.toUpperCase() as 'MALE' | 'FEMALE'
-                : null,
+            sex,
             birthDate: this.petForm.birthDate
                 ? this.petForm.birthDate.toISOString().split('T')[0]
                 : null,
-            photoUrl: this.petForm.photoUrl ?? null,
-            color: null
-        };
+            photoUrl: this.petForm.photoUrl ?? null};
 
         this.petApiService.createPet(payload).subscribe({
             next: () => this.router.navigate(['/mascotas']),
             error: err => console.error('Error al crear mascota', err)
         });
     }
+
+
 }
