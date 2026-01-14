@@ -58,12 +58,49 @@
               </button>
             </div>
           </div>
-          <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" class="profile-tabs">
-            <mat-tab label="Historial Vacunas"></mat-tab>
-            <mat-tab label="Tratamientos"></mat-tab>
-            <mat-tab label="Documentos"></mat-tab>
-          </mat-tab-group>
-          <mat-card class="vaccine-table-card">
+            <mat-tab-group mat-stretch-tabs="false" animationDuration="0ms" class="profile-tabs">
+                <mat-tab label="Historial Vacunas"></mat-tab>
+                <mat-tab label="Tratamientos"></mat-tab>
+
+                <mat-tab label="Documentos">
+                    <mat-card class="pdf-card">
+                        <div class="pdf-header">
+                            <h3>Carnet de vacunación</h3>
+
+                            <div class="pdf-actions">
+                                <button mat-stroked-button class="register-btn"
+                                        (click)="loadCarnetPdf(petId!)"
+                                        [disabled]="pdfLoading || !petId">
+                                    <mat-icon>refresh</mat-icon>
+                                    Actualizar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="pdf-shell">
+                            @if (pdfLoading) {
+                                <div class="pdf-state">
+                                    <mat-icon>hourglass_top</mat-icon>
+                                    <span>Cargando PDF...</span>
+                                </div>
+                            } @else if (pdfError) {
+                                <div class="pdf-state error">
+                                    <mat-icon>error_outline</mat-icon>
+                                    <span>{{ pdfError }}</span>
+                                </div>
+                            } @else if (pdfUrl) {
+                                <iframe class="pdf-frame" [src]="pdfUrl" title="Carnet PDF"></iframe>
+                            } @else {
+                                <div class="pdf-state">
+                                    <mat-icon>description</mat-icon>
+                                    <span>No hay documento para mostrar.</span>
+                                </div>
+                            }
+                        </div>
+                    </mat-card>
+                </mat-tab>
+            </mat-tab-group>
+            <mat-card class="vaccine-table-card">
             <div class="table-header">
               <h3>Registro de Vacunación</h3>
               <button mat-stroked-button class="register-btn">

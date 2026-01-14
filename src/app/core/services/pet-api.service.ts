@@ -40,4 +40,10 @@ export class PetApiService {
         return this.http.put<Pet>(`${this.apiUrl}/${petId}/assign-owner/${ownerId}`, {});
     }
 
+    getCarnetPdf(petId: number): Observable<Blob> {
+        return this.http.get(`${this.apiUrl}/${petId}/carnet.pdf`, {
+            responseType: 'blob'
+        });
+    }
+
 }

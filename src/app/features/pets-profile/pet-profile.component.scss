@@ -220,3 +220,78 @@ $card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
   &.st-soon { background-color: #FFF8E1; color: #F57F17; }
   &.st-overdue { background-color: #FFEBEE; color: #D32F2F; }
 }
+
+/* --- PDF PREVIEW (Documentos) --- */
+.pdf-card {
+  @include card-nature;
+  padding: 0;
+}
+
+.pdf-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f3f0;
+
+  h3 {
+    margin: 0;
+    font-weight: 700;
+    color: $text-primary;
+  }
+
+  .pdf-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+.pdf-shell {
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.02);
+  border-top: 1px solid #f0f3f0;
+
+  /* altura responsive: desktop grande, mobile menor */
+  height: 70vh;
+  min-height: 520px;
+  max-height: 900px;
+
+  @media (max-width: 992px) {
+    height: 60vh;
+    min-height: 420px;
+  }
+
+  @media (max-width: 600px) {
+    height: 55vh;
+    min-height: 360px;
+  }
+}
+
+.pdf-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.pdf-state {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  color: $text-secondary;
+  font-weight: 600;
+
+  mat-icon {
+    color: $primary;
+  }
+
+  &.error {
+    color: #b00020;
+    mat-icon { color: #b00020; }
+  }
+}
