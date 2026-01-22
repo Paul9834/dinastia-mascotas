@@ -52,6 +52,7 @@
             "buildTarget": "dinastia-mascotas:build",
             "host": "0.0.0.0",
             "allowedHosts": [
+              "demo.vacunaspet.com",
               "paul9834.com",
               "www.paul9834.com",
               "localhost"

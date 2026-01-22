@@ -5,13 +5,12 @@
             <div class="logo-icon-box">
                 <mat-icon>pets</mat-icon>
             </div>
-            <span>Dinastía</span>
+            <span>VacunasPet</span>
         </div>
+
         <div class="nav-actions">
             <button mat-button (click)="irALogin()" class="nav-link">Acceder</button>
-            <button mat-flat-button class="nav-cta" (click)="irARegistro()">
-                Registro
-            </button>
+            <button mat-flat-button class="nav-cta" (click)="irARegistro()">Registro</button>
         </div>
     </nav>
 
@@ -19,13 +18,16 @@
         <div class="container hero-content">
 
             <div class="text-col animate-fade-in-up">
-                <span class="badge-premium">💎 Calidad Certificada</span>
-                <h1>Tu compañero,<br> <span class="gradient-text">Tu Legado.</span></h1>
-                <p>La plataforma exclusiva para propietarios Dinastía. Gestiona vacunas, certificados y la salud de tu mascota con la mejor tecnología.</p>
+                <span class="badge-premium">✅ Vacunación al día</span>
+                <h1>Tu mascota,<br> <span class="gradient-text">Siempre protegida.</span></h1>
+                <p>
+                    VacunasPet te ayuda a llevar el control de vacunas, certificados y recordatorios de salud
+                    en un solo lugar, fácil y seguro.
+                </p>
 
                 <div class="hero-buttons">
                     <button mat-flat-button class="primary" (click)="irARegistro()">
-                        <mat-icon>person_add</mat-icon> Unirme
+                        <mat-icon>person_add</mat-icon> Crear cuenta
                     </button>
                     <button mat-stroked-button class="secondary" (click)="irALogin()">
                         <mat-icon>login</mat-icon> Acceder
@@ -37,13 +39,18 @@
                 <div class="pet-passport-card">
                     <div class="passport-header">
                         <mat-icon>verified</mat-icon>
-                        <span>DINASTÍA PASSPORT</span>
+                        <span>CARNET DIGITAL • VACUNASPET</span>
                     </div>
+
                     <div class="passport-body">
                         <div class="pet-avatar">
-                            <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&auto=format&fit=crop" alt="Mascota">
+                            <img
+                                    src="https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=600&auto=format&fit=crop"
+                                    alt="Mascota"
+                            >
                             <div class="status-indicator"></div>
                         </div>
+
                         <div class="pet-details">
                             <h2>Maximus</h2>
                             <p class="raza">Golden Retriever</p>
@@ -51,48 +58,51 @@
                             <div class="detail-row">
                                 <div class="d-item">
                                     <span class="label">Estado</span>
-                                    <span class="value success">Protegido</span>
+                                    <span class="value success">Vacunas al día</span>
                                 </div>
                                 <div class="d-item">
-                                    <span class="label">ID Chip</span>
-                                    <span class="value">981098234</span>
+                                    <span class="label">ID Mascota</span>
+                                    <span class="value">VP-981098234</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="passport-footer">
                             <div class="seal">
-                                <mat-icon>check_circle</mat-icon> CERTIFICADO
+                                <mat-icon>check_circle</mat-icon> CERTIFICADO VÁLIDO
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
     <section class="presentation-video container animate-fade-in-up">
         <div class="section-header-center">
-            <h2>La Experiencia Dinastía</h2>
-            <p>Mira cómo cuidamos el legado de tu mejor amigo</p>
+            <h2>La experiencia VacunasPet</h2>
+            <p>Control, recordatorios y certificados para tu tranquilidad</p>
         </div>
 
         <div class="video-card-landing">
             <div class="video-responsive-wrapper">
                 <iframe
                         src="https://www.youtube.com/embed/9QCKe-lQQOo?autoplay=1&mute=1&loop=1&playlist=9QCKe-lQQOo&vq=hd2160&rel=0&controls=1&modestbranding=1"
-                        title="Video Presentación Dinastía"
+                        title="Video Presentación VacunasPet"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen>
                 </iframe>
             </div>
+
             <div class="video-info">
                 <div class="video-icon">
                     <mat-icon>verified</mat-icon>
                 </div>
                 <div class="video-text">
-                    <h3>Bienvenido a la Familia</h3>
-                    <p>Calidad Certificada • Experiencia Premium</p>
+                    <h3>Tu carnet, siempre contigo</h3>
+                    <p>Certificados • Recordatorios • Historial</p>
                 </div>
             </div>
         </div>
@@ -113,8 +123,8 @@
     <section class="cta-banner">
         <div class="cta-overlay"></div>
         <div class="cta-content">
-            <h2>¿Ya eres parte de la familia?</h2>
-            <p>Accede a tu panel de control y revisa el calendario de salud de tu mascota.</p>
+            <h2>¿Listo para organizar la salud de tu mascota?</h2>
+            <p>Entra a tu panel y revisa vacunas pendientes, próximas dosis y certificados.</p>
             <button mat-flat-button class="cta-btn-final" (click)="irALogin()">
                 Ir a mi Cuenta
             </button>
