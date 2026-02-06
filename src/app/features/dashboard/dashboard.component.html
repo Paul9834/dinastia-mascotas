@@ -68,51 +68,6 @@
         </button>
     </div>
 
-    <h2 class="section-title" @fadeInUp>Próximas Citas</h2>
-
-    <div class="appointments-container" @staggerList>
-        @if (appointments.length === 0) {
-            <div class="empty-message-citas">
-                <p>No tienes citas programadas.</p>
-            </div>
-        }
-
-        @for (appointment of appointments; track appointment) {
-            <div class="appointment-card">
-                <div class="color-strip" [style.background-color]="getColorForType(appointment.type)"></div>
-
-                <div class="card-content-wrapper">
-                    <div class="appointment-icon-wrapper" [style.background-color]="getColorForType(appointment.type) + '15'">
-                        <mat-icon [style.color]="getColorForType(appointment.type)">
-                            {{ getIconForType(appointment.type) }}
-                        </mat-icon>
-                    </div>
-
-                    <div class="appointment-details">
-                        <h3 class="appointment-title">{{ appointment.title }}</h3>
-                        <p class="appointment-pet">Mascota: {{ appointment.petName }}</p>
-                    </div>
-
-                    <div class="appointment-meta">
-                        <span class="date-text">
-                          {{ appointment.dateTime | date:'d MMM, h:mm a' }}
-                        </span>
-                        <span class="status-text" [class]="getStatusClass(appointment.status)">
-                          {{ translateStatus(appointment.status) }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        }
-
-        <div class="fab-container">
-            <button mat-fab extended class="add-pet-btn">
-                <mat-icon>add</mat-icon>
-                <span>Nueva Cita</span>
-            </button>
-        </div>
-    </div>
-
     <h2 class="section-title" @fadeInUp>Aprende sobre tu Mascota</h2>
 
     <div class="video-card" @fadeInUp>

@@ -56,6 +56,11 @@ export const routes: Routes = [
                     .then(m => m.VacunasComponent)
             },
             {
+                path: 'deworming',
+                loadComponent: () => import('./features/deworming/deworming.component')
+                    .then(m => m.DewormingComponent)
+            },
+            {
                 path: 'calendario',
                 loadComponent: () => import('./features/calendario/calendario.component')
                     .then(m => m.CalendarioComponent)
