@@ -1,0 +1,122 @@
+<div class="page-container">
+
+    <div class="page-header">
+        <div>
+            <h1 class="title">Registro de Desparasitación</h1>
+            <p class="subtitle">Historial de tratamientos antiparasitarios y próximas dosis</p>
+        </div>
+
+        <button mat-flat-button class="add-btn"
+                (click)="openRegisterDialog()"
+                [disabled]="!selectedPetId">
+            <mat-icon>bug_report</mat-icon>
+            REGISTRAR DESPARASITACIÓN
+        </button>
+    </div>
+
+    <mat-tab-group
+            mat-stretch-tabs="false"
+            animationDuration="300ms"
+            class="custom-tabs"
+            (selectedTabChange)="onTabChange($event)">
+
+        @for (pet of pets; track pet.id) {
+            <mat-tab [label]="pet.name"></mat-tab>
+        }
+    </mat-tab-group>
+
+    @if (!loading && dewormings.length === 0) {
+        <div class="empty-state">
+            <mat-icon>bug_report</mat-icon>
+            <p>No hay desparasitaciones registradas para esta mascota.</p>
+        </div>
+    }
+
+    <div class="vaccines-grid">
+        @for (d of dewormings; track d.id) {
+            <div class="vaccine-card">
+                <div class="card-content">
+
+                    <div class="card-top">
+                        <h3 class="vaccine-name">{{ d.productName }}</h3>
+
+                        <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="menu"
+                                [matMenuTriggerData]="{ item: d }"
+                                class="more-btn">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <ng-template matMenuContent let-item="item">
+                            <button mat-menu-item (click)="edit(item.id)">
+                                <mat-icon>edit</mat-icon>
+                                <span>Editar</span>
+                            </button>
+
+                            <button mat-menu-item (click)="delete(item.id)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Eliminar</span>
+                            </button>
+                        </ng-template>
+                    </mat-menu>
+
+                    <div class="status-row">
+                        <span class="status-text"
+                              [ngClass]="getStatusClass(d.status)">
+                            {{ translateStatus(d.status) }}
+                        </span>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="details-grid">
+
+                        <div class="detail-item">
+                            <span class="label">Aplicado</span>
+                            <span class="value">
+                                {{ d.applicationDate | date:'mediumDate' }}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="label">Próxima dosis</span>
+                            <span class="value"
+                                  [style.color]="d.status === 'OVERDUE' ? '#D32F2F' : 'inherit'">
+                                {{ d.nextDueDate ? (d.nextDueDate | date:'mediumDate') : 'No definida' }}
+                            </span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="label">Tipo</span>
+                            <span class="value">
+                                {{ d.type || 'Interno/Externo' }}
+                            </span>
+                        </div>
+
+                        <div class="detail-item full-width">
+                            <span class="label">Veterinario</span>
+                            <div class="value vet-value">
+                                <mat-icon>medical_services</mat-icon>
+                                <span>{{ d.veterinarian || 'No registrado' }}</span>
+                            </div>
+                        </div>
+
+                        @if (d.notes) {
+                            <div class="detail-item full-width">
+                                <span class="label">Notas</span>
+                                <span class="value">
+                                    {{ d.notes }}
+                                </span>
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

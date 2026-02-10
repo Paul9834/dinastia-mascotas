@@ -1,0 +1,247 @@
+/* src/styles.scss */
+
+/* 1. IMPORTA EL TEMA DE MATERIAL (Obligatorio para que salgan los diálogos) */
+@import '@angular/material/prebuilt-themes/azure-blue.css';
+/* Puedes probar también: indigo-pink.css, purple-green.css, pink-bluegrey.css */
+
+/* 2. ASEGURA LOS ICONOS */
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+/* 3. TU CONFIGURACIÓN GLOBAL (Opcional) */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+// =========================================
+// 🎨 PALETA DINASTÍA (Nature UI)
+// =========================================
+$primary: #1B5E20;
+$primary-light: #E8F5E9;
+$bg-color: #F5F7F6;
+$surface: #FFFFFF;
+$text-primary: #1A1C19;
+$text-secondary: #444744;
+$card-shadow: 0 12px 24px rgba(27, 94, 32, 0.06);
+
+// --- HOST & GLOBAL ---
+:host {
+  font-family: 'Poppins', sans-serif !important;
+  display: block;
+}
+
+.page-container {
+  padding: 32px;
+  max-width: 1000px; // Un poco más estrecho para lectura médica
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif !important;
+  color: $text-primary;
+}
+
+// --- HEADER ---
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 24px;
+
+  // 🏆 TÍTULO: POPPINS MEDIUM 500
+  h1.title {
+    font-size: 2.4rem;
+    margin: 0;
+    color: $primary;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.5px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .subtitle {
+    margin: 4px 0 0;
+    color: $text-secondary;
+    font-size: 1.1rem;
+    font-weight: 400;
+  }
+}
+
+// Botón Añadir Poppins
+.add-btn {
+  height: 48px;
+  padding: 0 24px !important;
+  border-radius: 16px !important;
+  font-weight: 600 !important;
+  font-family: 'Poppins', sans-serif !important;
+  background-color: $primary !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(27, 94, 32, 0.2);
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(27, 94, 32, 0.3);
+  }
+  mat-icon { margin-right: 8px; }
+}
+
+// --- TABS ESTILO M3 ---
+::ng-deep .custom-tabs {
+  margin-bottom: 32px;
+
+  .mat-mdc-tab-labels {
+    font-family: 'Poppins', sans-serif !important;
+  }
+
+  .mdc-tab__text-label {
+    font-weight: 600 !important;
+    color: $text-secondary;
+  }
+
+  .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: $primary !important;
+  }
+
+  .mat-mdc-tab-indicator .mdc-tab-indicator__content--underline {
+    border-color: $primary !important;
+    border-width: 3px !important;
+  }
+}
+
+// --- GRID ---
+.vaccines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+// --- TARJETA DE VACUNA ---
+.vaccine-card {
+  border-radius: 24px !important;
+  background: $surface;
+  box-shadow: $card-shadow;
+  border: 1px solid rgba(0,0,0,0.02);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(27, 94, 32, 0.1);
+  }
+
+  .card-content {
+    padding: 24px !important;
+  }
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+
+  h3.vaccine-name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: 700;
+    color: $text-primary;
+  }
+}
+
+// --- ESTADOS PILLS ---
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  margin-bottom: 16px;
+
+  &.status-active {
+    background-color: $primary-light;
+    color: $primary;
+  }
+  &.status-due {
+    background-color: #FFF8E1;
+    color: #F57F17;
+  }
+  &.status-overdue {
+    background-color: #FFEBEE;
+    color: #D32F2F;
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: rgba(0,0,0,0.05);
+  margin: 8px 0 20px;
+}
+
+// --- DETALLES GRID ---
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+
+    &.full-width { grid-column: span 2; }
+
+    .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #9E9E9E;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: $text-primary;
+    }
+  }
+}
+
+.vet-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: $text-secondary;
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: $primary;
+  }
+}
+
+// --- EMPTY STATE ---
+.empty-state {
+  text-align: center;
+  padding: 60px 24px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 24px;
+  border: 2px dashed #D0D7DE;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: #BDBDBD;
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: $text-secondary;
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+}
