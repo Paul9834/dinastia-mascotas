@@ -1,37 +1,32 @@
-import { provideZoneChangeDetection } from "@angular/core";
-import { bootstrapApplication, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app/app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimations } from '@angular/platform-browser/animations'; // <--- IMPORTANTE
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideZoneChangeDetection } from '@angular/core';
 
-// 1. IMPORTAMOS LOS INTERCEPTORES
+// Tus interceptores
 import { jwtInterceptor } from './app/core/interceptors/jwt.interceptor';
 import { loadingInterceptor } from './app/core/interceptors/loading.interceptor';
-import { errorInterceptor } from './app/core/interceptors/error.interceptor'; // <--- ¡FALTABA ESTE IMPORT!
+import { errorInterceptor } from './app/core/interceptors/error.interceptor';
 
 bootstrapApplication(AppComponent, {
     providers: [
-        provideZoneChangeDetection(),provideRouter(routes, withComponentInputBinding()),
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(routes, withComponentInputBinding()),
+
+        // 1. ANIMACIONES (CRÍTICO PARA DIALOGS)
         provideAnimations(),
 
-        // 2. AGREGAMOS EL ERROR INTERCEPTOR A LA LISTA
+        // 2. HTTP CON INTERCEPTORES
         provideHttpClient(withInterceptors([
-            jwtInterceptor,
             loadingInterceptor,
-            errorInterceptor // <--- ¡AQUÍ ES DONDE OCURRE LA MAGIA!
+            jwtInterceptor,
+            errorInterceptor
         ])),
 
-        provideClientHydration(withEventReplay())
+        // 3. (OPCIONAL) Quita hydration un momento para probar
+        // provideClientHydration()
     ]
-}).catch(err => {
-    const errorMsg = err.message || err.toString();
-    document.body.innerHTML = `
-    <div style="background: #ffebee; color: #c62828; padding: 2rem; font-family: monospace;">
-      <h1>☠️ ERROR FATAL AL INICIAR</h1>
-      <pre style="background: white; padding: 1rem; border: 1px solid #ef9a9a;">${errorMsg}</pre>
-    </div>
-  `;
-    console.error("ERROR CAPTURADO:", err);
-});
+}).catch(err => console.error(err));
