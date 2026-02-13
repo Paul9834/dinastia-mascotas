@@ -19,21 +19,6 @@
         </button>
     </div>
 
-    <div class="stats-grid" @staggerList>
-        @for (stat of stats; track stat) {
-            <div class="stat-card">
-                <mat-card-content>
-                    <div class="stat-icon" [style.background-color]="stat.color + '20'">
-                        <mat-icon [style.color]="stat.color">{{ stat.icon }}</mat-icon>
-                    </div>
-                    <div class="stat-info">
-                        <div class="stat-label">{{ stat.label }}</div>
-                        <div class="stat-value">{{ stat.value }}</div>
-                    </div>
-                </mat-card-content>
-            </div>
-        }
-    </div>
 
     <h2 class="section-title" @fadeInUp>Mis Mascotas</h2>
 
@@ -73,7 +58,7 @@
     <div class="video-card" @fadeInUp>
         <div class="video-responsive-wrapper">
             <iframe
-                    src="https://www.youtube.com/embed/uYJQIKAVBw8?autoplay=1&mute=0&vq=hd2160&rel=0"
+                    src="https://www.youtube.com/embed/dnuuv_7qhmw?si=RzVja0LGA2otSjS4?autoplay=1&mute=0&vq=hd2160&rel=0"
                     title="10 COSAS QUE LOS PERROS ODIAN"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

@@ -8,8 +8,9 @@ export const authGuard: CanActivateFn = (route, state) => {
 
     if (authService.isLoggedIn()) {
         return true; // Pasa, tiene token
-    } else {
-        router.navigate(['/login']); // Fuera, ve al login
-        return false;
     }
+
+    return router.createUrlTree(['/login'], {
+        queryParams: { redirect: state.url }
+    });
 };

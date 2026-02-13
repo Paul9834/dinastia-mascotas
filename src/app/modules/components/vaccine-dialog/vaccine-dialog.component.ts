@@ -6,8 +6,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { VaccineService } from '@core/services/vaccine.service';
+
+const ES_DATE_FORMATS = {
+    parse: {
+        dateInput: null
+    },
+    display: {
+        dateInput: { day: '2-digit', month: '2-digit', year: 'numeric' },
+        monthYearLabel: { year: 'numeric', month: 'short' },
+        dateA11yLabel: { year: 'numeric', month: 'long', day: 'numeric' },
+        monthYearA11yLabel: { year: 'numeric', month: 'long' }
+    }
+};
 
 @Component({
     selector: 'app-vaccine-dialog',
@@ -21,6 +33,10 @@ import { VaccineService } from '@core/services/vaccine.service';
     MatDatepickerModule,
     MatNativeDateModule
 ],
+    providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+        { provide: MAT_DATE_FORMATS, useValue: ES_DATE_FORMATS }
+    ],
     template: `
     <h2 mat-dialog-title>Registrar Vacuna</h2>
     <form [formGroup]="form" (ngSubmit)="save()">
@@ -63,7 +79,8 @@ import { VaccineService } from '@core/services/vaccine.service';
     styles: [`
     .form-content { display: flex; flex-direction: column; gap: 12px; min-width: 350px; }
     .full-width { width: 100%; }
-    .dates-row { display: flex; gap: 12px; }
+    .dates-row { display: flex; gap: 12px; margin: 0 8px; }
+    .dates-row mat-form-field { flex: 1; min-width: 0; }
   `]
 })
 export class VaccineDialogComponent {
@@ -99,6 +116,9 @@ export class VaccineDialogComponent {
     }
 
     private formatDate(date: Date): string {
-        return date.toISOString().split('T')[0];
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
     }
 }

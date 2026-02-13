@@ -136,12 +136,12 @@ export class DashboardComponent implements OnInit {
     }
 
     getIconForType(type: string): string {
-        const icons: any = { 'VACCINATION': 'vaccines', 'CHECKUP': 'medical_services', 'SURGERY': 'local_hospital', 'GROOMING': 'content_cut' };
+        const icons: any = { 'VACCINE': 'vaccines', 'VACCINATION': 'vaccines', 'CHECKUP': 'medical_services', 'SURGERY': 'local_hospital', 'GROOMING': 'content_cut' };
         return icons[type] || 'event';
     }
 
     getColorForType(type: string): string {
-        const colors: any = { 'VACCINATION': '#1B5E20', 'CHECKUP': '#1976D2', 'SURGERY': '#C62828', 'GROOMING': '#FBC02D' };
+        const colors: any = { 'VACCINE': '#1B5E20', 'VACCINATION': '#1B5E20', 'CHECKUP': '#1976D2', 'SURGERY': '#C62828', 'GROOMING': '#FBC02D' };
         return colors[type] || '#757575';
     }
 

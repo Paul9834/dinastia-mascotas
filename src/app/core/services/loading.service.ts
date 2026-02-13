@@ -5,13 +5,21 @@ import { BehaviorSubject } from 'rxjs';
 export class LoadingService {
     private loadingSubject = new BehaviorSubject<boolean>(false);
     public isLoading$ = this.loadingSubject.asObservable();
+    private pendingRequests = 0;
 
     show() {
-        // Usamos Promise.resolve().then() para esperar al siguiente ciclo
-        Promise.resolve().then(() => this.loadingSubject.next(true));
+        this.pendingRequests += 1;
+        this.emit();
     }
 
     hide() {
-        Promise.resolve().then(() => this.loadingSubject.next(false));
+        this.pendingRequests = Math.max(0, this.pendingRequests - 1);
+        this.emit();
+    }
+
+    private emit() {
+        // Usamos Promise.resolve().then() para esperar al siguiente ciclo
+        const isLoading = this.pendingRequests > 0;
+        Promise.resolve().then(() => this.loadingSubject.next(isLoading));
     }
 }

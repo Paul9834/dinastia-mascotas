@@ -129,13 +129,18 @@ export class DewormingComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             if (!result) return;
 
+            const applicationDate = result.applicationDate instanceof Date ? result.applicationDate : new Date();
+            const applicationDateStr = this.formatDateLocal(applicationDate);
+            const nextDueDate = result.nextDueInDays
+                ? this.addDays(applicationDate, result.nextDueInDays)
+                : null;
+
             const payload: CreateDeworming = {
                 petId: this.selectedPetId!,
                 product: result.product,
                 method: 'Interno',
-                veterinarian: result.veterinarian,
-                applicationDate: new Date().toISOString().split('T')[0],
-                nextDueDate: result.nextDueDate ? result.nextDueDate : null,
+                applicationDate: applicationDateStr,
+                nextDueDate,
                 notes: result.notes ? result.notes : null,
                 verified: true
             };
@@ -162,5 +167,18 @@ export class DewormingComponent implements OnInit {
             case 'OVERDUE': return 'Vencido';
             default: return status;
         }
+    }
+
+    private formatDateLocal(date: Date): string {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    private addDays(date: Date, days: number): string {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return this.formatDateLocal(result);
     }
 }

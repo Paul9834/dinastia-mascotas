@@ -69,7 +69,9 @@ export class MainLayoutComponent {
         { icon: 'dashboard', label: 'Dashboard', route: '/dashboard' },
         { icon: 'pets', label: 'Mis Mascotas', route: '/mascotas' },
         { icon: 'vaccines', label: 'Vacunas', route: '/vacunas' },
-        { icon: 'healing', label: 'Desparasitación', route: '/deworming' }];
+        { icon: 'badge', label: 'Carnet Digital', route: '/carnet-digital' },
+        { icon: 'healing', label: 'Desparasitación', route: '/deworming' }
+    ];
 
     logout() {
         this.authService.logout();

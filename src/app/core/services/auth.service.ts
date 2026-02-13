@@ -1,4 +1,5 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,12 +10,14 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
     private http = inject(HttpClient);
     private router = inject(Router);
+    private platformId = inject(PLATFORM_ID);
 
     private readonly baseUrl = environment.apiBaseUrl;
+    private readonly tokenKey = 'token';
 
     login(credentials: LoginRequest): Observable<LoginResponse> {
         return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, credentials).pipe(
-            tap(res => localStorage.setItem('token', res.token))
+            tap(res => this.setToken(res.token))
         );
     }
 
@@ -24,15 +27,32 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('token');
+        this.clearToken();
         this.router.navigate(['/login']);
     }
 
     isLoggedIn(): boolean {
-        return !!localStorage.getItem('token');
+        return !!this.getToken();
     }
 
     getToken(): string | null {
-        return localStorage.getItem('token');
+        if (!isPlatformBrowser(this.platformId)) {
+            return null;
+        }
+        return localStorage.getItem(this.tokenKey);
+    }
+
+    private setToken(token: string) {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        localStorage.setItem(this.tokenKey, token);
+    }
+
+    private clearToken() {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        localStorage.removeItem(this.tokenKey);
     }
 }

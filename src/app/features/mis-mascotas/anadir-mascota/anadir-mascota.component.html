@@ -113,15 +113,7 @@
                             </mat-radio-group>
                         </div>
 
-                        <mat-form-field appearance="outline" class="custom-field">
-                            <mat-label>Foto URL</mat-label>
-                            <input
-                                    matInput
-                                    name="photoUrl"
-                                    placeholder="https://..."
-                                    [(ngModel)]="petForm.photoUrl"
-                            >
-                        </mat-form-field>
+                        <!-- Campo Foto URL oculto: se controla por subida de archivo -->
                     </div>
 
                     <!-- FOOTER -->
@@ -150,23 +142,7 @@
             </mat-card-content>
         </mat-card>
 
-        <div class="side-column">
-            <mat-card class="vaccine-card">
-                <mat-card-content>
-                    <div class="vaccine-header">
-                        <h3>Historial de<br>Vacunación</h3>
-                        <button mat-flat-button type="button" class="register-btn">
-                            <mat-icon>add</mat-icon>
-                            REGISTRAR
-                        </button>
-                    </div>
-
-                    <div class="empty-vaccines">
-                        <p>Aún no hay vacunas registradas</p>
-                    </div>
-                </mat-card-content>
-            </mat-card>
-        </div>
+        <!-- Card de historial de vacunación oculto en esta vista -->
 
     </div>
 
